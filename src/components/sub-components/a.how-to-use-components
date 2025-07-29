@@ -1,0 +1,287 @@
+// HOW TO USE COMPONENTS - EXAMPLES
+
+// 1. RICH TEXT COMPONENT
+import RichText from './rich-text';
+
+// Basic usage
+<RichText
+  heading="Getting Started with Streaming"
+  content="Your streaming journey begins here..."
+/>
+
+// With enhanced SEO features
+<RichText
+  heading="Advanced Streaming Techniques"
+  content={<div>Complex content with <strong>HTML</strong> and <em>formatting</em></div>}
+  headingLevel={2}
+  headingSize="large"
+  maxWidth="6xl"
+  textAlign="center"
+  contentType="article"
+  addStructuredData={true}
+  showDivider={true}
+  className="bg-gray-50 p-6 rounded-lg"
+/>
+
+// 2. FAQ COMPONENT
+import FAQComponent from './faq-component';
+
+// Basic usage
+<FAQComponent
+  faqs={[
+    {
+      question: "How do I get started?",
+      answer: "Just follow these simple steps..."
+    },
+    {
+      question: "What equipment do I need?",
+      answer: "You'll need a camera, microphone, and streaming software."
+    }
+  ]}
+/>
+
+// Full customization with SEO optimization
+<FAQComponent
+  title="Streaming Setup Questions"
+  faqs={streamingFaqs}
+  titleSize="large"
+  showLastUpdated={true}
+  maxWidth="6xl"
+  className="bg-blue-50 border-2 border-blue-200"
+/>
+
+// 3. HOW-TO COMPONENT
+import HowToComponent from './how-to-component';
+
+// Basic How-to guide
+<HowToComponent
+  title="How to Set Up Your First Stream"
+  description="Learn to set up your streaming equipment and software in 6 easy steps."
+  steps={[
+    {
+      name: "Install OBS Studio",
+      text: "Download and install OBS Studio from the official website.",
+      image: "/images/obs-download.jpg"
+    },
+    {
+      name: "Configure Your Camera",
+      text: "Connect your camera and add it as a video source in OBS.",
+      image: "/images/camera-setup.jpg"
+    }
+  ]}
+/>
+
+// Advanced How-to with all features
+<HowToComponent
+  title="Complete Streaming Setup Guide"
+  description="A comprehensive guide to setting up your streaming environment."
+  steps={advancedSteps}
+  supplies={[
+    { name: "Webcam", image: "/images/webcam.jpg" },
+    { name: "Microphone", image: "/images/microphone.jpg" },
+    { name: "Lighting Kit", image: "/images/lighting.jpg" }
+  ]}
+  tools={[
+    { name: "OBS Studio", image: "/images/obs-logo.png" },
+    { name: "Audio Interface", image: "/images/audio-interface.jpg" }
+  ]}
+  totalTime="PT45M"
+  estimatedCost={{ currency: "USD", value: 300 }}
+  difficulty="Intermediate"
+  showStepNumbers={true}
+  maxWidth="6xl"
+  className="bg-white"
+/>
+
+// 4. ENHANCED TITLE COMPONENT
+import Title from './title';
+
+// Basic page title
+<Title
+  title="Complete Streaming Guide"
+  description="Everything you need to know about streaming"
+/>
+
+// Advanced title with SEO features
+<Title
+  title="Equipment Setup"
+  description="Learn about the best streaming equipment"
+  level={2}
+  size="large"
+  maxWidth="6xl"
+  align="center"
+  showDivider={true}
+  className="mb-8"
+/>
+
+// 5. ENHANCED CTA BUTTONS
+import CTAButtons from './cta-buttons';
+
+// Basic CTA
+<CTAButtons
+  buttons={[
+    {
+      label: "Start Streaming Now",
+      href: "/get-started",
+      variant: "primary"
+    }
+  ]}
+/>
+
+// Advanced CTA with SEO features
+<CTAButtons
+  title="Ready to Start Your Streaming Journey?"
+  description="Join thousands of Blue Dream Tea UKs who started with our guides."
+  buttons={[
+    {
+      label: "Get Started Free",
+      href: "/get-started",
+      variant: "primary",
+      ariaLabel: "Start your streaming journey for free",
+      trackingId: "cta-get-started"
+    },
+    {
+      label: "Watch Demo",
+      href: "https://youtube.com/demo",
+      variant: "outline",
+      isExternal: true,
+      ariaLabel: "Watch our streaming demo video",
+      trackingId: "cta-watch-demo"
+    }
+  ]}
+  align="center"
+  titleLevel={2}
+  maxWidth="4xl"
+  showDivider={true}
+  contentType="section"
+  addStructuredData={true}
+  className="my-12"
+/>
+
+// 6. ENHANCED GUIDE LAYOUT
+import GuideLayout from '../../pages/guides/GuideLayout';
+
+// Basic guide layout
+<GuideLayout
+  title="How to Start Streaming on Twitch"
+  description="A complete beginner's guide to Twitch streaming"
+  category="stream-setup"
+  publishDate="2025-01-15T10:00:00Z"
+>
+  {/* Your guide content */}
+</GuideLayout>
+
+// Enhanced guide layout with all SEO features
+<GuideLayout
+  title="Complete Streaming Equipment Guide"
+  description="Everything you need to know about streaming equipment"
+  category="stream-setup"
+  publishDate="2025-01-15T10:00:00Z"
+  lastModified="2025-01-20T14:30:00Z"
+  author="Blue Dream Tea UK Team"
+  featuredImage="/images/streaming-equipment-guide.jpg"
+  keywords={["streaming equipment", "OBS", "microphone", "webcam"]}
+  wordCount={2500}
+  readingTime="12 min read"
+>
+  {/* Your guide content with How-to components, FAQs, etc. */}
+</GuideLayout>
+
+// COMPONENT PROPS REFERENCE:
+
+// RichText Props:
+// - heading: string (required)
+// - content: string | React.ReactNode (required)
+// - className?: string
+// - headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+// - headingSize?: 'small' | 'medium' | 'large'
+// - maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl' | '6xl'
+// - showDivider?: boolean
+// - textAlign?: 'left' | 'center' | 'right'
+// - contentType?: 'article' | 'section' | 'aside' | 'div'
+// - addStructuredData?: boolean
+
+// FAQComponent Props:
+// - faqs: FAQItem[] (required)
+// - title?: string
+// - className?: string
+// - titleSize?: 'small' | 'medium' | 'large'
+// - showLastUpdated?: boolean
+// - maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl' | '6xl'
+
+// HowToComponent Props:
+// - title: string (required)
+// - steps: HowToStep[] (required)
+// - description?: string
+// - supplies?: HowToSupply[]
+// - tools?: HowToTool[]
+// - totalTime?: string (ISO 8601 format)
+// - estimatedCost?: { currency: string; value: number }
+// - difficulty?: 'Beginner' | 'Intermediate' | 'Advanced'
+// - className?: string
+// - showStepNumbers?: boolean
+// - maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl' | '6xl'
+
+// Title Props:
+// - title: string (required)
+// - description?: string
+// - className?: string
+// - align?: 'left' | 'center' | 'right'
+// - level?: 1 | 2 | 3 | 4 | 5 | 6
+// - size?: 'small' | 'medium' | 'large' | 'xlarge'
+// - maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl' | '6xl'
+// - showDivider?: boolean
+
+// CTAButtons Props:
+// - buttons: CTAButton[] (required)
+// - title?: string
+// - description?: string
+// - className?: string
+// - align?: 'left' | 'center' | 'right'
+// - titleLevel?: 1 | 2 | 3 | 4 | 5 | 6
+// - maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl' | '6xl'
+// - showDivider?: boolean
+// - contentType?: 'section' | 'aside' | 'div'
+// - addStructuredData?: boolean
+
+// GuideLayout Props:
+// - title: string (required)
+// - description: string (required)
+// - category: GuideCategory (required)
+// - children: React.ReactNode (required)
+// - publishDate?: string
+// - lastModified?: string
+// - author?: string
+// - featuredImage?: string
+// - keywords?: string[]
+// - wordCount?: number
+// - readingTime?: string
+
+// INTERFACES:
+
+// FAQItem:
+// - question: string
+// - answer: string | React.ReactNode
+
+// HowToStep:
+// - name: string
+// - text: string | React.ReactNode
+// - image?: string
+// - video?: string
+// - url?: string
+
+// HowToSupply:
+// - name: string
+// - image?: string
+
+// HowToTool:
+// - name: string
+// - image?: string
+
+// CTAButton:
+// - label: string
+// - href: string
+// - variant?: 'primary' | 'secondary' | 'outline'
+// - isExternal?: boolean
+// - ariaLabel?: string
+// - trackingId?: string 

@@ -1,0 +1,614 @@
+[
+    {
+        "title": "How the Blue Lotus is Taking Over the Fashion World",
+        "description": "Discover how blue lotus flower has influenced modern fashion, from its ancient symbolism to contemporary designs. Learn about this sacred flower's impact on style and culture.",
+        "slug": "blue-lotus-fashion-influence",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus fashion", "lotus flower design", "fashion history", "floral fashion", "blue lotus culture"],
+        "shopifySlug": "blogs/culture/blue-lotus-fashion",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "Peace in a Petal: How the Blue Lotus Became a Global Symbol of Harmony",
+        "description": "Explore how the Blue Lotus Flower became a symbol of peace across cultures and how it continues to embody tranquility in modern spiritual and artistic practices.",
+        "slug": "blue-lotus-symbol-of-harmony",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus peace", "symbolism of blue lotus", "blue lotus spirituality", "blue lotus harmony", "spiritual symbolism"],
+        "shopifySlug": "blogs/culture/blue-lotus-harmony-symbol",
+        "priority": "medium",
+        "wordCount": 1700
+    },
+    {
+        "title": "Can't Sleep? Discover How Blue Lotus Could Be Your Dream Solution!",
+        "description": "Learn how Blue Lotus Flower can naturally support restful sleep and reduce stress with tea, tinctures, and aromatherapy.",
+        "slug": "blue-lotus-sleep-aid",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus sleep", "natural sleep aid", "blue lotus tea", "herbal sleep remedies", "blue lotus tincture"],
+        "shopifySlug": "blogs/guides/blue-lotus-sleep",
+        "priority": "high",
+        "wordCount": 1900
+    },
+    {
+        "title": "Feeling Down? How Blue Lotus Can Uplift Your Mood Instantly!",
+        "description": "Discover how Blue Lotus Flower helps reduce stress, balance emotions, and uplift your mood using tea, tinctures, and essential oils.",
+        "slug": "blue-lotus-mood-boost",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus mood", "herbal mood enhancer", "natural stress relief", "blue lotus benefits", "uplifting herbs"],
+        "shopifySlug": "blogs/guides/blue-lotus-mood",
+        "priority": "high",
+        "wordCount": 1750
+    },
+    {
+        "title": "Gods and Goddesses: The Divine Connection of the Blue Lotus!",
+        "description": "Explore the divine symbolism of the Blue Lotus in Egyptian and Hindu mythology, and its representation of rebirth and spiritual purity.",
+        "slug": "blue-lotus-divine-connection",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus mythology", "gods and goddesses", "egyptian symbolism", "hindu blue lotus", "spiritual flower"],
+        "shopifySlug": "blogs/culture/blue-lotus-divine",
+        "priority": "medium",
+        "wordCount": 1600
+    },
+    {
+        "title": "Overwatering or Underwatering? Get Your Blue Lotus Watering Right!",
+        "description": "Learn how to properly care for your Blue Lotus with tips for identifying overwatering and underwatering signs.",
+        "slug": "blue-lotus-watering-guide",
+        "category": "gardening-care",
+        "templateType": "how-to",
+        "keywords": ["blue lotus care", "watering blue lotus", "aquatic plant care", "blue lotus health", "blue lotus garden"],
+        "shopifySlug": "blogs/gardening/blue-lotus-watering",
+        "priority": "medium",
+        "wordCount": 1400
+    },
+    {
+        "title": "How Modern Rituals Harness the Power of the Blue Lotus!",
+        "description": "Uncover how Blue Lotus is used in modern rituals including meditation, spiritual healing, and bath ceremonies.",
+        "slug": "modern-blue-lotus-rituals",
+        "category": "spirituality",
+        "templateType": "educational",
+        "keywords": ["blue lotus rituals", "modern spirituality", "spiritual healing", "blue lotus meditation", "flower ceremony"],
+        "shopifySlug": "blogs/spirituality/blue-lotus-rituals",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "Unleash the Power of Blue Lotus Extract for Your Health!",
+        "description": "Explore the health benefits of Blue Lotus Extract including stress relief, better sleep, improved mood, and digestive support.",
+        "slug": "blue-lotus-extract-health-benefits",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus extract", "blue lotus health", "herbal wellness", "natural remedies", "stress relief herb"],
+        "shopifySlug": "blogs/guides/blue-lotus-extract-health",
+        "priority": "high",
+        "wordCount": 1850
+    },
+    {
+        "title": "The Top 10 Herbal Remedies for Spiritual Beings",
+        "description": "Discover the top herbs used in spiritual practices and how to incorporate them, including Blue Lotus, sage, mugwort, and more.",
+        "slug": "top-herbs-for-spirituality",
+        "category": "spirituality",
+        "templateType": "listicle",
+        "keywords": ["herbs for spirituality", "blue lotus benefits", "sage rituals", "spiritual herbs", "herbal guide"],
+        "shopifySlug": "blogs/spirituality/top-herbs",
+        "priority": "medium",
+        "wordCount": 2200
+    },
+    {
+        "title": "What is Blue Lotus Flower? A Complete Guide for Beginners",
+        "description": "An introductory guide to the Blue Lotus Flower including its history, benefits, spiritual uses, and practical applications.",
+        "slug": "blue-lotus-guide-beginners",
+        "category": "introduction-guides",
+        "templateType": "educational",
+        "keywords": ["blue lotus flower", "what is blue lotus", "beginner's guide", "blue lotus benefits", "blue lotus uses"],
+        "shopifySlug": "blogs/guides/blue-lotus-intro",
+        "priority": "high",
+        "wordCount": 1800
+    },
+    {
+        "title": "How the Blue Lotus is Taking Over the Fashion World",
+        "description": "Discover how blue lotus flower has influenced modern fashion, from its ancient symbolism to contemporary designs. Learn about this sacred flower's impact on style and culture.",
+        "slug": "blue-lotus-fashion-influence",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": [
+            "blue lotus fashion",
+            "lotus flower design",
+            "fashion history",
+            "floral fashion",
+            "blue lotus culture"
+        ],
+        "shopifySlug": "blogs/culture/blue-lotus-fashion",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "Peace in a Petal: How the Blue Lotus Became a Global Symbol of Harmony",
+        "description": "Explore how the Blue Lotus Flower became a symbol of peace across cultures and how it continues to embody tranquility in modern spiritual and artistic practices.",
+        "slug": "blue-lotus-symbol-of-harmony",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": [
+            "blue lotus peace",
+            "symbolism of blue lotus",
+            "blue lotus spirituality",
+            "blue lotus harmony",
+            "spiritual symbolism"
+        ],
+        "shopifySlug": "blogs/culture/blue-lotus-harmony-symbol",
+        "priority": "medium",
+        "wordCount": 1700
+    },
+    {
+        "title": "Can't Sleep? Discover How Blue Lotus Could Be Your Dream Solution!",
+        "description": "Learn how Blue Lotus Flower can naturally support restful sleep and reduce stress with tea, tinctures, and aromatherapy.",
+        "slug": "blue-lotus-sleep-aid",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": [
+            "blue lotus sleep",
+            "natural sleep aid",
+            "blue lotus tea",
+            "herbal sleep remedies",
+            "blue lotus tincture"
+        ],
+        "shopifySlug": "blogs/guides/blue-lotus-sleep",
+        "priority": "high",
+        "wordCount": 1900
+    },
+    {
+        "title": "Feeling Down? How Blue Lotus Can Uplift Your Mood Instantly!",
+        "description": "Discover how Blue Lotus Flower helps reduce stress, balance emotions, and uplift your mood using tea, tinctures, and essential oils.",
+        "slug": "blue-lotus-mood-boost",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": [
+            "blue lotus mood",
+            "herbal mood enhancer",
+            "natural stress relief",
+            "blue lotus benefits",
+            "uplifting herbs"
+        ],
+        "shopifySlug": "blogs/guides/blue-lotus-mood",
+        "priority": "high",
+        "wordCount": 1750
+    },
+    {
+        "title": "Gods and Goddesses: The Divine Connection of the Blue Lotus!",
+        "description": "Explore the divine symbolism of the Blue Lotus in Egyptian and Hindu mythology, and its representation of rebirth and spiritual purity.",
+        "slug": "blue-lotus-divine-connection",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": [
+            "blue lotus mythology",
+            "gods and goddesses",
+            "egyptian symbolism",
+            "hindu blue lotus",
+            "spiritual flower"
+        ],
+        "shopifySlug": "blogs/culture/blue-lotus-divine",
+        "priority": "medium",
+        "wordCount": 1600
+    },
+    {
+        "title": "Overwatering or Underwatering? Get Your Blue Lotus Watering Right!",
+        "description": "Learn how to properly care for your Blue Lotus with tips for identifying overwatering and underwatering signs.",
+        "slug": "blue-lotus-watering-guide",
+        "category": "gardening-care",
+        "templateType": "how-to",
+        "keywords": [
+            "blue lotus care",
+            "watering blue lotus",
+            "aquatic plant care",
+            "blue lotus health",
+            "blue lotus garden"
+        ],
+        "shopifySlug": "blogs/gardening/blue-lotus-watering",
+        "priority": "medium",
+        "wordCount": 1400
+    },
+    {
+        "title": "How Modern Rituals Harness the Power of the Blue Lotus!",
+        "description": "Uncover how Blue Lotus is used in modern rituals including meditation, spiritual healing, and bath ceremonies.",
+        "slug": "modern-blue-lotus-rituals",
+        "category": "spirituality",
+        "templateType": "educational",
+        "keywords": [
+            "blue lotus rituals",
+            "modern spirituality",
+            "spiritual healing",
+            "blue lotus meditation",
+            "flower ceremony"
+        ],
+        "shopifySlug": "blogs/spirituality/blue-lotus-rituals",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "Unleash the Power of Blue Lotus Extract for Your Health!",
+        "description": "Explore the health benefits of Blue Lotus Extract including stress relief, better sleep, improved mood, and digestive support.",
+        "slug": "blue-lotus-extract-health-benefits",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": [
+            "blue lotus extract",
+            "blue lotus health",
+            "herbal wellness",
+            "natural remedies",
+            "stress relief herb"
+        ],
+        "shopifySlug": "blogs/guides/blue-lotus-extract-health",
+        "priority": "high",
+        "wordCount": 1850
+    },
+    {
+        "title": "The Top 10 Herbal Remedies for Spiritual Beings",
+        "description": "Discover the top herbs used in spiritual practices and how to incorporate them, including Blue Lotus, sage, mugwort, and more.",
+        "slug": "top-herbs-for-spirituality",
+        "category": "spirituality",
+        "templateType": "listicle",
+        "keywords": [
+            "herbs for spirituality",
+            "blue lotus benefits",
+            "sage rituals",
+            "spiritual herbs",
+            "herbal guide"
+        ],
+        "shopifySlug": "blogs/spirituality/top-herbs",
+        "priority": "medium",
+        "wordCount": 2200
+    },
+    {
+        "title": "What is Blue Lotus Flower? A Complete Guide for Beginners",
+        "description": "An introductory guide to the Blue Lotus Flower including its history, benefits, spiritual uses, and practical applications.",
+        "slug": "blue-lotus-guide-beginners",
+        "category": "introduction-guides",
+        "templateType": "educational",
+        "keywords": [
+            "blue lotus flower",
+            "what is blue lotus",
+            "beginner's guide",
+            "blue lotus benefits",
+            "blue lotus uses"
+        ],
+        "shopifySlug": "blogs/guides/blue-lotus-intro",
+        "priority": "high",
+        "wordCount": 1800
+    },
+    {
+        "title": "How to Make Blue Lotus Incense for Meditation and Relaxation",
+        "description": "A step-by-step guide on making Blue Lotus incense at home. Learn how to incorporate it into your meditation rituals to enhance relaxation and mindfulness.",
+        "slug": "blue-lotus-incense-guide",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus incense", "meditation incense", "DIY incense", "relaxation ritual", "spiritual incense"],
+        "shopifySlug": "blogs/guides/blue-lotus-incense",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "A Beginner’s Guide to Growing Blue Lotus Flower at Home",
+        "description": "Discover how to grow Blue Lotus flower in containers, ponds, or aquariums. This beginner's guide includes step-by-step instructions and care tips.",
+        "slug": "growing-blue-lotus-beginners",
+        "category": "usage-guides",
+        "templateType": "educational",
+        "keywords": ["grow blue lotus", "blue lotus gardening", "lotus container gardening", "homegrown lotus", "blue lotus cultivation"],
+        "shopifySlug": "blogs/guides/growing-blue-lotus",
+        "priority": "medium",
+        "wordCount": 2000
+    },
+    {
+        "title": "How to Incorporate Blue Lotus Flower into Your Daily Routine",
+        "description": "Practical ways to include Blue Lotus in your wellness habits. Learn how to use teas, tinctures, and aromatherapy for stress relief, sleep, and emotional balance.",
+        "slug": "blue-lotus-daily-routine",
+        "category": "usage-guides",
+        "templateType": "lifestyle",
+        "keywords": ["blue lotus routine", "blue lotus wellness", "relaxation tips", "emotional balance herbs", "daily meditation aids"],
+        "shopifySlug": "blogs/guides/daily-blue-lotus",
+        "priority": "high",
+        "wordCount": 1900
+    },
+    {
+        "title": "Blue Lotus Flower in Eastern Spirituality and Medicine",
+        "description": "Explore how Blue Lotus is used in Traditional Chinese Medicine and Ayurveda. Learn about its spiritual symbolism and applications in holistic healing.",
+        "slug": "blue-lotus-eastern-spirituality",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus TCM", "ayurveda blue lotus", "eastern medicine flower", "blue lotus symbolism", "spiritual blue lotus"],
+        "shopifySlug": "blogs/culture/blue-lotus-eastern-medicine",
+        "priority": "medium",
+        "wordCount": 2100
+    },
+    {
+        "title": "The Difference Between Blue Lotus Tea and Tinctures: Which Is Right for You?",
+        "description": "Compare the benefits of Blue Lotus tea vs. tinctures. Learn how each form works, their uses, and how to choose the best one for your needs.",
+        "slug": "blue-lotus-tea-vs-tincture",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus tea", "blue lotus tincture", "blue lotus comparison", "natural remedies", "relaxation methods"],
+        "shopifySlug": "blogs/guides/blue-lotus-tea-tincture",
+        "priority": "high",
+        "wordCount": 1600
+    },
+    {
+        "title": "Blue Lotus Flower vs. Other Relaxation Herbs: Which One Is Best for You?",
+        "description": "Compare Blue Lotus with chamomile, lavender, and valerian root. Understand their differences and discover which herb is best suited to your needs.",
+        "slug": "blue-lotus-vs-relaxation-herbs",
+        "category": "usage-guides",
+        "templateType": "educational",
+        "keywords": ["blue lotus vs chamomile", "lavender vs lotus", "valerian root comparison", "natural stress relief", "calming herbs"],
+        "shopifySlug": "blogs/guides/blue-lotus-vs-herbs",
+        "priority": "medium",
+        "wordCount": 1750
+    },
+    {
+        "title": "The Symbolism of Blue Lotus in Art and Architecture Across Cultures",
+        "description": "Explore how the Blue Lotus has been represented in art and architecture from ancient Egypt to modern design. Discover its spiritual and cultural symbolism.",
+        "slug": "blue-lotus-symbolism-art-architecture",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus symbolism", "lotus art history", "blue lotus architecture", "spiritual design", "cultural lotus meaning"],
+        "shopifySlug": "blogs/culture/blue-lotus-symbolism",
+        "priority": "medium",
+        "wordCount": 1900
+    },
+    {
+        "title": "Blue Lotus Flower for Skin Care: A Natural Remedy for Glowing Skin",
+        "description": "Learn how Blue Lotus Flower supports skin hydration, reduces redness, and provides anti-aging benefits. Discover DIY recipes and top skincare products.",
+        "slug": "blue-lotus-skincare-benefits",
+        "category": "wellness-beauty",
+        "templateType": "lifestyle",
+        "keywords": ["blue lotus skin care", "natural skincare", "anti-aging flower", "blue lotus glow", "herbal beauty remedies"],
+        "shopifySlug": "blogs/wellness/blue-lotus-skincare",
+        "priority": "high",
+        "wordCount": 1800
+    },
+    {
+        "title": "Top 4 Blue Lotus Products You Can Buy in the UK: A Detailed Review",
+        "description": "A review of the best Blue Lotus products from Blue Dream Tea UK, including tea, tinctures, incense, and smoking blends. Discover what suits your lifestyle.",
+        "slug": "blue-lotus-products-uk-review",
+        "category": "product-reviews",
+        "templateType": "review",
+        "keywords": ["blue lotus UK", "blue lotus tea review", "blue lotus products", "where to buy blue lotus", "best blue lotus"],
+        "shopifySlug": "blogs/reviews/blue-lotus-uk-products",
+        "priority": "high",
+        "wordCount": 1500
+    },
+    {
+        "title": "Blue Lotus: A Symbol of Rebirth & Enlightenment",
+        "description": "Explore the spiritual symbolism of Blue Lotus as a representation of rebirth and enlightenment through various cultures and modern spiritual practices.",
+        "slug": "blue-lotus-symbolism-enlightenment",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus rebirth", "lotus enlightenment", "blue lotus symbolism", "spiritual flower", "blue lotus mythology"],
+        "shopifySlug": "blogs/culture/blue-lotus-rebirth-enlightenment",
+        "priority": "medium",
+        "wordCount": 1600
+    },
+    {
+        "title": "Blue Lotus Flower in Mythology and Folklore",
+        "description": "Explore the spiritual and cultural symbolism of Blue Lotus across Egyptian, Hindu, Buddhist, African, and Middle Eastern folklore, and how it influences modern spirituality.",
+        "slug": "blue-lotus-mythology-folklore",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus mythology", "blue lotus folklore", "ancient symbolism", "spiritual flower", "blue lotus traditions"],
+        "shopifySlug": "blogs/culture/blue-lotus-mythology",
+        "priority": "medium",
+        "wordCount": 2100
+    },
+    {
+        "title": "Blue Lotus Flower for Mental Clarity and Focus",
+        "description": "Learn how Blue Lotus Flower supports cognitive health, enhances mental clarity, and serves as a natural remedy for focus, brain fog, and stress.",
+        "slug": "blue-lotus-mental-clarity",
+        "category": "wellness",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus focus", "blue lotus brain fog", "natural nootropics", "mental clarity herbs", "blue lotus benefits"],
+        "shopifySlug": "blogs/wellness/blue-lotus-mental-clarity",
+        "priority": "high",
+        "wordCount": 2500
+    },
+    {
+        "title": "Using Blue Lotus Flower for Digestion and Gut Health",
+        "description": "Discover how Blue Lotus Flower can soothe the digestive tract, reduce inflammation, and support gut healing for conditions like IBS and bloating.",
+        "slug": "blue-lotus-digestion",
+        "category": "wellness",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus digestion", "gut healing", "herbs for IBS", "natural gut remedies", "blue lotus stomach"],
+        "shopifySlug": "blogs/wellness/blue-lotus-digestion",
+        "priority": "medium",
+        "wordCount": 1900
+    },
+    {
+        "title": "How Blue Lotus Flower Helps Mood and Anxiety",
+        "description": "Explore the calming effects of Blue Lotus on the nervous system, and how it supports emotional balance and anxiety relief naturally.",
+        "slug": "blue-lotus-anxiety-mood",
+        "category": "wellness",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus mood", "natural anxiety remedy", "blue lotus calming", "emotional balance", "blue lotus nervous system"],
+        "shopifySlug": "blogs/wellness/blue-lotus-anxiety",
+        "priority": "high",
+        "wordCount": 2400
+    },
+    {
+        "title": "Blue Lotus Flower for Creativity and Inspiration",
+        "description": "Learn how Blue Lotus can stimulate creativity, enhance artistic focus, and promote inspiration through its psychoactive and mood-lifting effects.",
+        "slug": "blue-lotus-creativity",
+        "category": "wellness",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus creativity", "artistic inspiration", "natural creative boost", "blue lotus and flow state", "blue lotus for artists"],
+        "shopifySlug": "blogs/wellness/blue-lotus-creativity",
+        "priority": "medium",
+        "wordCount": 2200
+    },
+    {
+        "title": "The Use of Blue Lotus Flower in Ancient Egyptian Rituals",
+        "description": "Uncover the sacred role of Blue Lotus in ancient Egyptian religious, funerary, and spiritual rituals, including its symbolism and ceremonial uses.",
+        "slug": "blue-lotus-egyptian-rituals",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus Egypt", "ancient rituals", "Egyptian symbolism", "spiritual flower Egypt", "blue lotus history"],
+        "shopifySlug": "blogs/culture/blue-lotus-rituals",
+        "priority": "medium",
+        "wordCount": 2000
+    },
+    {
+        "title": "How to Create a Blue Lotus Elixir for Calm and Clarity",
+        "description": "A step-by-step guide to making your own Blue Lotus Elixir at home for relaxation, focus, and spiritual clarity.",
+        "slug": "blue-lotus-elixir-recipe",
+        "category": "usage-guides",
+        "templateType": "how-to",
+        "keywords": ["blue lotus elixir", "blue lotus recipe", "DIY elixir", "calming herbs", "blue lotus clarity"],
+        "shopifySlug": "blogs/guides/blue-lotus-elixir",
+        "priority": "low",
+        "wordCount": 1600
+    },
+    {
+        "title": "How to Use Blue Lotus Flower in Aromatherapy",
+        "description": "Discover the benefits of Blue Lotus in aromatherapy and how to use it via oils, incense, and diffusers to promote calm and mindfulness.",
+        "slug": "blue-lotus-aromatherapy",
+        "category": "usage-guides",
+        "templateType": "how-to",
+        "keywords": ["blue lotus aromatherapy", "blue lotus essential oil", "blue lotus diffuser", "natural calm", "aromatherapy flower"],
+        "shopifySlug": "blogs/guides/blue-lotus-aromatherapy",
+        "priority": "low",
+        "wordCount": 1800
+    },
+    {
+        "title": "The Detoxifying Effects of Blue Lotus Flower",
+        "description": "Explore how Blue Lotus supports detox, promotes liver health, and helps achieve clear skin through internal and external applications.",
+        "slug": "blue-lotus-detox",
+        "category": "wellness",
+        "templateType": "educational",
+        "keywords": ["blue lotus detox", "natural detox herbs", "blue lotus liver", "blue lotus skin", "cleansing flower"],
+        "shopifySlug": "blogs/wellness/blue-lotus-detox",
+        "priority": "medium",
+        "wordCount": 2000
+    },
+
+    "Are You Risking Your Health? Long-Term Effects of Blue Lotus Revealed!",
+    "Boost Your Love Life: The Sexy Secrets of Blue Lotus!",
+    "Blue Lotus vs. Other Herbs: Which Packs the Biggest Health Punch?",
+    "Discover the Age-Defying Antioxidants in Blue Lotus!",
+    "Mixing Magic: What Combining Blue Lotus and Other Substances Does to You!",
+    "Keep Your Blue Lotus Flourishing All Year with This Seasonal Guide!",
+    "Reveal Radiant Skin with the Benefits of Blue Lotus!",
+    "Sacred Blooms: Exploring the Role of Blue Lotus in Religious Ceremonies",
+    "Spice Up Your Love Life with Blue Lotus—Here’s Why!",
+    "Ancient Healing Secrets: The Blue Lotus in Traditional Medicine!",
+    "Heart Health Secrets: How Blue Lotus Could Help!",
+    "Immediate Bliss: What Happens When You Smoke Blue Lotus?",
+    "Multiply Your Blue Lotus Easily with These Seed Propagation Steps!",
+    "Prune Your Blue Lotus Like a Pro with These Tips!",
+    "Sacred to Delicious: Surprising Uses of the Blue Lotus!",
+    "Sleep Like the Pharaohs: Blue Lotus' Astonishing Effects on Sleep!"
+
+
+# Constructing the structured output format
+data = []
+for title in titles:
+    slug = title.lower().replace("’", "").replace("'", "").replace("—", "-").replace(":", "").replace("?", "").replace(",", "").replace("!", "").replace(" ", "-")
+    entry = {
+        "title": title,
+        "description": "",  # To be filled in manually if needed
+        "slug": slug,
+        "category": "wellness-guides",  # Default category unless otherwise specified
+        "templateType": "educational",
+        "keywords": [],  # Can be filled in based on content
+        "shopifySlug": f"blogs/wellness/{slug}",
+        "priority": "medium",
+        "wordCount": 1800  # Estimated placeholder
+    }
+    data.append(entry)
+
+df = pd.DataFrame(data)
+import ace_tools as tools; tools.display_dataframe_to_user(name="Formatted Blue Lotus Articles", dataframe=df)
+
+import json
+
+# Define the formatted structure for each article
+formatted_articles = [
+    {
+        "title": "Top Must-Visit Festivals Celebrating the Enigmatic Blue Lotus Flower!",
+        "description": "Explore the world's most captivating festivals that celebrate the mystique and beauty of the blue lotus flower, from Egypt to Japan.",
+        "slug": "blue-lotus-festival-guide",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus festivals", "cultural events", "blue lotus celebrations", "lotus flower traditions", "festival travel"],
+        "shopifySlug": "blogs/culture/blue-lotus-festivals",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "Zen Achieved: How Blue Lotus Transforms Meditation and Mindfulness!",
+        "description": "Learn how the blue lotus flower enhances meditation and mindfulness practices, helping you reach new levels of inner peace and clarity.",
+        "slug": "blue-lotus-meditation-guide",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["blue lotus meditation", "mindfulness tips", "blue lotus benefits", "spiritual growth", "lotus tea meditation"],
+        "shopifySlug": "blogs/guides/meditation-blue-lotus",
+        "priority": "high",
+        "wordCount": 2100
+    },
+    {
+        "title": "Boost Your Blue Lotus Growth with These Fertilizer Tricks!",
+        "description": "Discover expert fertiliser techniques to grow healthy, vibrant blue lotus flowers in your pond or garden.",
+        "slug": "blue-lotus-fertilizer-guide",
+        "category": "plant-care",
+        "templateType": "how-to",
+        "keywords": ["blue lotus care", "fertiliser tips", "aquatic plant nutrients", "grow blue lotus", "pond plant health"],
+        "shopifySlug": "blogs/gardening/blue-lotus-fertilizer",
+        "priority": "medium",
+        "wordCount": 1600
+    },
+    {
+        "title": "Boost Your Brain Power with Blue Lotus—Here’s How!",
+        "description": "Unlock the cognitive benefits of blue lotus flower and learn how to incorporate it into your daily routine for mental clarity and focus.",
+        "slug": "blue-lotus-brain-benefits",
+        "category": "wellness",
+        "templateType": "health-guide",
+        "keywords": ["blue lotus cognition", "brain health", "natural nootropics", "mental clarity herbs", "blue lotus tea"],
+        "shopifySlug": "blogs/wellness/blue-lotus-brain",
+        "priority": "high",
+        "wordCount": 1700
+    },
+    {
+        "title": "Protect Your Blue Lotus from These Deadly Pests and Diseases!",
+        "description": "Learn how to prevent and treat common pests and diseases that can damage your blue lotus plants.",
+        "slug": "blue-lotus-pest-disease-guide",
+        "category": "plant-care",
+        "templateType": "how-to",
+        "keywords": ["blue lotus pests", "aquatic plant care", "lotus diseases", "garden tips", "protect lotus plants"],
+        "shopifySlug": "blogs/gardening/blue-lotus-protection",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "Transform Your Home's Atmosphere with Blue Lotus Aromatherapy!",
+        "description": "Use blue lotus essential oils to create a serene, relaxing home environment through aromatherapy.",
+        "slug": "blue-lotus-aromatherapy",
+        "category": "wellness",
+        "templateType": "lifestyle",
+        "keywords": ["blue lotus aroma", "essential oils", "home relaxation", "blue lotus diffuser", "natural aromatherapy"],
+        "shopifySlug": "blogs/wellness/blue-lotus-aromatherapy",
+        "priority": "medium",
+        "wordCount": 1700
+    },
+    {
+        "title": "Ancient Wisdom: The Role of Blue Lotus in Traditional Healing",
+        "description": "Explore how ancient civilizations used blue lotus flower in traditional medicine and healing rituals.",
+        "slug": "blue-lotus-traditional-healing",
+        "category": "culture-history",
+        "templateType": "educational",
+        "keywords": ["blue lotus healing", "traditional medicine", "ancient remedies", "holistic health", "cultural herbal use"],
+        "shopifySlug": "blogs/culture/blue-lotus-healing",
+        "priority": "medium",
+        "wordCount": 1900
+    }
+]
+
+# Output as formatted JSON
+json.dumps(formatted_articles, indent=2)
