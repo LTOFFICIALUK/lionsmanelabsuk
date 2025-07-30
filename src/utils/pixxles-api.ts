@@ -65,7 +65,7 @@ interface Pixxles3DSResponse {
 const PIXXLES_CONFIG: PixxlesConfig = {
   merchantID: import.meta.env.VITE_PIXXLES_MERCHANT_ID || '132779',
   signatureKey: import.meta.env.VITE_PIXXLES_SIGNATURE_KEY || 'gpfu2XDYLKWvbZi',
-  gatewayUrl: import.meta.env.VITE_PIXXLES_GATEWAY_URL || 'https://qa-transactions.pixxlesportal.com/direct',
+  gatewayUrl: '/api/payment/process', // Use our API route instead of direct Pixxles call
   environment: (import.meta.env.VITE_PIXXLES_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox'
 };
 
@@ -252,55 +252,23 @@ class PixxlesService {
     return response;
   }
 
-  // Send transaction to Pixxles gateway
+  // Send transaction to our API route (which then calls Pixxles)
   private async sendTransaction(data: Record<string, any>): Promise<PixxlesTransactionResponse> {
     try {
-      // Convert data to form-urlencoded format
-      const formData = new URLSearchParams();
-      for (const [key, value] of Object.entries(data)) {
-        if (value !== null && value !== undefined) {
-          if (typeof value === 'object') {
-            // Handle nested objects (like threeDSResponse)
-            for (const [nestedKey, nestedValue] of Object.entries(value)) {
-              formData.append(`${key}[${nestedKey}]`, nestedValue as string);
-            }
-          } else {
-            formData.append(key, value.toString());
-          }
-        }
-      }
-
       const response = await fetch(this.config.gatewayUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: formData.toString()
+        body: JSON.stringify(data)
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
       }
 
-      const responseText = await response.text();
-      
-      // Parse the response (it's form-urlencoded)
-      const responseData: Record<string, string> = {};
-      const params = new URLSearchParams(responseText);
-      for (const [key, value] of params.entries()) {
-        responseData[key] = value;
-      }
-
-      // Verify response signature
-      const responseSignature = responseData.signature;
-      delete responseData.signature;
-      
-      const expectedSignature = await createSignature(responseData, this.config.signatureKey);
-      
-      if (responseSignature !== expectedSignature) {
-        throw new Error('Response signature verification failed');
-      }
-
+      const responseData = await response.json();
       return responseData as PixxlesTransactionResponse;
 
     } catch (error) {
