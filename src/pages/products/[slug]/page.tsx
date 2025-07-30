@@ -114,6 +114,7 @@ const ProductPage = () => {
       productImage: product.images?.main || '',
       price: currentPrice,
       originalPrice: currentVariant?.price || product.price,
+      salePrice: currentPrice, // Initially the same as currentPrice (sale price)
       quantity,
       selectedVariants,
       variantLabel: getVariantLabel(),

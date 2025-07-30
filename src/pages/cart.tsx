@@ -144,6 +144,7 @@ const CartPage: React.FC = () => {
       selectedVariants: { size: upsellProduct.upsellVariant.value },
       price: upsellProduct.upsellVariant.salePrice || upsellProduct.upsellVariant.price,
       originalPrice: upsellProduct.upsellVariant.price,
+      salePrice: upsellProduct.upsellVariant.salePrice || upsellProduct.upsellVariant.price,
       quantity: upsellProduct.originalItem.quantity,
     });
 
@@ -366,7 +367,7 @@ const CartPage: React.FC = () => {
                       <div className="flex items-center space-x-2">
                         <HiTag className="h-4 w-4 text-green-600" />
                         <span className="text-sm font-medium text-green-700">
-                          {cart.discountCode}
+                          {cart.discountCode} Applied
                         </span>
                       </div>
                       <button
@@ -412,23 +413,21 @@ const CartPage: React.FC = () => {
                     </span>
                   </div>
 
-                  {cart.discountAmount > 0 && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-green-600">
-                        Discount ({cart.discountCode})
-                      </span>
-                      <span className="text-sm font-medium text-green-600">
-                        -£{cart.discountAmount.toFixed(2)}
-                      </span>
-                    </div>
-                  )}
-
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">Shipping (Standard)</span>
                     <span className="text-sm font-medium text-gray-900">
                       {shippingCost === 0 ? 'Free' : `£${shippingCost.toFixed(2)}`}
                     </span>
                   </div>
+
+                  {cart.subtotal > cart.total && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-green-600">Total Savings</span>
+                      <span className="text-sm font-medium text-green-600">
+                        -£{(cart.subtotal - cart.total).toFixed(2)}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                     <span className="text-lg font-semibold text-gray-900">Total</span>

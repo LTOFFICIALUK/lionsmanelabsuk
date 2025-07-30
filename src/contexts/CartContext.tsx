@@ -23,18 +23,46 @@ type CartAction =
   | { type: 'CLEAR_CART' }
   | { type: 'OPEN_CART' }
   | { type: 'CLOSE_CART' }
-  | { type: 'APPLY_DISCOUNT'; payload: { code: string; discountAmount: number; discountCodeDetails: DiscountCode } }
+  | { type: 'APPLY_DISCOUNT'; payload: { code: string; discountCodeDetails: DiscountCode } }
   | { type: 'REMOVE_DISCOUNT' }
   | { type: 'RECALCULATE_DISCOUNT' }
   | { type: 'LOAD_CART'; payload: CartState };
 
 // Utility function to calculate cart totals
-const calculateTotals = (items: CartItem[], discountAmount: number = 0) => {
-  const subtotal = items.reduce((total, item) => total + (item.price * item.quantity), 0);
+const calculateTotals = (items: CartItem[]) => {
+  const subtotal = items.reduce((total, item) => total + (item.originalPrice * item.quantity), 0); // Use originalPrice for subtotal
+  const cartTotal = items.reduce((total, item) => total + (item.price * item.quantity), 0); // Use sale price for cart total (already includes discounts)
   const totalItems = items.reduce((total, item) => total + item.quantity, 0);
-  const total = Math.max(0, subtotal - discountAmount);
   
-  return { subtotal, totalItems, total };
+  return { subtotal, totalItems, total: cartTotal };
+};
+
+// Utility function to apply discount to individual items
+const applyDiscountToItems = (items: CartItem[], discountCode: DiscountCode): CartItem[] => {
+  // Calculate cart total using salePrice (before any discounts)
+  const cartTotal = items.reduce((total, item) => total + (item.salePrice * item.quantity), 0);
+  
+  if (cartTotal < discountCode.min_order_amount) {
+    return items; // Don't apply discount if minimum not met
+  }
+  
+  let discountAmount: number;
+  if (discountCode.discount_type === 'percentage') {
+    discountAmount = (cartTotal * discountCode.discount_value) / 100;
+    if (discountCode.max_discount) {
+      discountAmount = Math.min(discountAmount, discountCode.max_discount);
+    }
+  } else {
+    discountAmount = discountCode.discount_value;
+  }
+  
+  // Calculate discount ratio to apply to each item proportionally
+  const discountRatio = discountAmount / cartTotal;
+  
+  return items.map(item => ({
+    ...item,
+    price: Math.max(0, item.salePrice * (1 - discountRatio)) // Apply discount to salePrice
+  }));
 };
 
 // Utility function to generate unique cart item ID
@@ -97,18 +125,15 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         newItems = [...state.items, newItem];
       }
       
-      // Recalculate discount if one is applied
-      let newDiscountAmount = state.discountAmount;
+      // Apply discount to items if one is applied
       if (state.discountCode && state.discountCodeDetails) {
-        const newSubtotal = newItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-        newDiscountAmount = discountService.calculateDiscountAmount(state.discountCodeDetails, newSubtotal);
+        newItems = applyDiscountToItems(newItems, state.discountCodeDetails);
       }
       
-      const totals = calculateTotals(newItems, newDiscountAmount);
+      const totals = calculateTotals(newItems);
       return {
         ...state,
         items: newItems,
-        discountAmount: newDiscountAmount,
         ...totals,
         isOpen: true, // Open cart when item is added
       };
@@ -131,18 +156,15 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         newItems = [...state.items, newItem];
       }
       
-      // Recalculate discount if one is applied
-      let newDiscountAmount = state.discountAmount;
+      // Apply discount to items if one is applied
       if (state.discountCode && state.discountCodeDetails) {
-        const newSubtotal = newItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-        newDiscountAmount = discountService.calculateDiscountAmount(state.discountCodeDetails, newSubtotal);
+        newItems = applyDiscountToItems(newItems, state.discountCodeDetails);
       }
       
-      const totals = calculateTotals(newItems, newDiscountAmount);
+      const totals = calculateTotals(newItems);
       return {
         ...state,
         items: newItems,
-        discountAmount: newDiscountAmount,
         ...totals,
       };
     }
@@ -152,61 +174,52 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       
       if (quantity <= 0) {
         // Remove item if quantity is 0 or less
-        const newItems = state.items.filter(item => item.id !== itemId);
+        let newItems = state.items.filter(item => item.id !== itemId);
         
-        // Recalculate discount if one is applied
-        let newDiscountAmount = state.discountAmount;
+        // Apply discount to items if one is applied
         if (state.discountCode && state.discountCodeDetails) {
-          const newSubtotal = newItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-          newDiscountAmount = discountService.calculateDiscountAmount(state.discountCodeDetails, newSubtotal);
+          newItems = applyDiscountToItems(newItems, state.discountCodeDetails);
         }
         
-        const totals = calculateTotals(newItems, newDiscountAmount);
+        const totals = calculateTotals(newItems);
         return {
           ...state,
           items: newItems,
-          discountAmount: newDiscountAmount,
           ...totals,
         };
       }
       
-      const newItems = state.items.map(item =>
+      let newItems = state.items.map(item =>
         item.id === itemId ? { ...item, quantity } : item
       );
       
-      // Recalculate discount if one is applied
-      let newDiscountAmount = state.discountAmount;
+      // Apply discount to items if one is applied
       if (state.discountCode && state.discountCodeDetails) {
-        const newSubtotal = newItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-        newDiscountAmount = discountService.calculateDiscountAmount(state.discountCodeDetails, newSubtotal);
+        newItems = applyDiscountToItems(newItems, state.discountCodeDetails);
       }
       
-      const totals = calculateTotals(newItems, newDiscountAmount);
+      const totals = calculateTotals(newItems);
       
       return {
         ...state,
         items: newItems,
-        discountAmount: newDiscountAmount,
         ...totals,
       };
     }
     
     case 'REMOVE_FROM_CART': {
-      const newItems = state.items.filter(item => item.id !== action.payload.itemId);
+      let newItems = state.items.filter(item => item.id !== action.payload.itemId);
       
-      // Recalculate discount if one is applied
-      let newDiscountAmount = state.discountAmount;
+      // Apply discount to items if one is applied
       if (state.discountCode && state.discountCodeDetails) {
-        const newSubtotal = newItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-        newDiscountAmount = discountService.calculateDiscountAmount(state.discountCodeDetails, newSubtotal);
+        newItems = applyDiscountToItems(newItems, state.discountCodeDetails);
       }
       
-      const totals = calculateTotals(newItems, newDiscountAmount);
+      const totals = calculateTotals(newItems);
       
       return {
         ...state,
         items: newItems,
-        discountAmount: newDiscountAmount,
         ...totals,
       };
     }
@@ -215,23 +228,20 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       const { itemId, newItem } = action.payload;
       const newItemWithId = { ...newItem, id: generateCartItemId(newItem) };
       
-      const newItems = state.items.map(item =>
+      let newItems = state.items.map(item =>
         item.id === itemId ? newItemWithId : item
       );
       
-      // Recalculate discount if one is applied
-      let newDiscountAmount = state.discountAmount;
+      // Apply discount to items if one is applied
       if (state.discountCode && state.discountCodeDetails) {
-        const newSubtotal = newItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-        newDiscountAmount = discountService.calculateDiscountAmount(state.discountCodeDetails, newSubtotal);
+        newItems = applyDiscountToItems(newItems, state.discountCodeDetails);
       }
       
-      const totals = calculateTotals(newItems, newDiscountAmount);
+      const totals = calculateTotals(newItems);
       
       return {
         ...state,
         items: newItems,
-        discountAmount: newDiscountAmount,
         ...totals,
       };
     }
@@ -258,22 +268,30 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     }
     
     case 'APPLY_DISCOUNT': {
-      const totals = calculateTotals(state.items, action.payload.discountAmount);
+      // Apply discount to items
+      let newItems = applyDiscountToItems(state.items, action.payload.discountCodeDetails);
+      const totals = calculateTotals(newItems);
       return {
         ...state,
+        items: newItems,
         discountCode: action.payload.code,
-        discountAmount: action.payload.discountAmount,
         discountCodeDetails: action.payload.discountCodeDetails,
         ...totals,
       };
     }
     
     case 'REMOVE_DISCOUNT': {
-      const totals = calculateTotals(state.items, 0);
+      // Reset items to original sale prices (without discount)
+      let newItems = state.items.map(item => ({
+        ...item,
+        price: item.salePrice // Reset to original sale price (not originalPrice)
+      }));
+      const totals = calculateTotals(newItems);
       return {
         ...state,
+        items: newItems,
         discountCode: undefined,
-        discountAmount: 0,
+        discountCodeDetails: undefined,
         ...totals,
       };
     }
@@ -283,14 +301,16 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         return state; // No discount to recalculate
       }
       
-      // Recalculate discount based on current cart total
-      const newSubtotal = state.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-      const discountAmount = discountService.calculateDiscountAmount(state.discountCodeDetails, newSubtotal);
-      
-      const totals = calculateTotals(state.items, discountAmount);
+      // Reset items to original sale prices first, then apply discount
+      let newItems = state.items.map(item => ({
+        ...item,
+        price: item.salePrice // Reset to original sale price (not originalPrice)
+      }));
+      newItems = applyDiscountToItems(newItems, state.discountCodeDetails);
+      const totals = calculateTotals(newItems);
       return {
         ...state,
-        discountAmount,
+        items: newItems,
         ...totals,
       };
     }
@@ -416,17 +436,16 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   // Discount code validation using discount service
   const applyDiscountCode = async (code: string): Promise<boolean> => {
     try {
-      const { data: discountCode, error } = await discountService.validateDiscountCode(code, cart.subtotal);
+      const cartTotal = cart.items.reduce((total, item) => total + (item.salePrice * item.quantity), 0);
+      const { data: discountCode, error } = await discountService.validateDiscountCode(code, cartTotal);
       
       if (error || !discountCode) {
         return false;
       }
       
-      const discountAmount = discountService.calculateDiscountAmount(discountCode, cart.subtotal);
-      
       dispatch({ 
         type: 'APPLY_DISCOUNT', 
-        payload: { code: discountCode.code, discountAmount, discountCodeDetails: discountCode } 
+        payload: { code: discountCode.code, discountCodeDetails: discountCode } 
       });
       
       return true;

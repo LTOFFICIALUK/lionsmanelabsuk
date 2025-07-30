@@ -9,6 +9,8 @@ import { royalMailService } from '../utils/royal-mail-api';
 import { brevoApiService } from '../utils/brevo-api';
 import { discountService } from '../utils/discount-service';
 import { shippingOptions, calculateShippingCost, getShippingOptionsByCountry } from '../constants/shipping-options';
+import PaymentForm from '../components/PaymentForm';
+import { PixxlesTransactionResponse } from '../utils/pixxles-api';
 
 const CheckoutPage: React.FC = () => {
   const { cart, clearCart } = useCart();
@@ -33,9 +35,18 @@ const CheckoutPage: React.FC = () => {
   });
 
   const [selectedShippingOptionId, setSelectedShippingOptionId] = useState<number>(1); // Default to Standard Shipping
+
+  // Debug logging for shipping option changes
+  const handleShippingOptionChange = (optionId: number) => {
+    console.log('Shipping option changed from', selectedShippingOptionId, 'to', optionId);
+    setSelectedShippingOptionId(optionId);
+  };
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
   const [showAlert, setShowAlert] = useState(false); // New state for alert visibility
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [currentStep, setCurrentStep] = useState<'details' | 'payment'>('details');
 
   // Get available shipping options based on selected country
   const availableShippingOptions = getShippingOptionsByCountry(shippingAddress.country);
@@ -44,9 +55,10 @@ const CheckoutPage: React.FC = () => {
   useEffect(() => {
     const firstOption = availableShippingOptions[0];
     if (firstOption && firstOption.id !== selectedShippingOptionId) {
+      console.log('Country changed, resetting shipping option to:', firstOption.id);
       setSelectedShippingOptionId(firstOption.id);
     }
-  }, [shippingAddress.country, availableShippingOptions, selectedShippingOptionId]);
+  }, [shippingAddress.country, availableShippingOptions]);
 
   // Redirect if cart is empty
   useEffect(() => {
@@ -55,15 +67,7 @@ const CheckoutPage: React.FC = () => {
     }
   }, [cart.items.length, navigate]);
 
-  // Check if user is coming from upsell page and should place order directly
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const placeOrder = urlParams.get('placeOrder');
-    
-    if (placeOrder === 'true' && validateForm()) {
-      handlePlaceOrderDirect();
-    }
-  }, [location.search]);
+
 
   // Calculate shipping cost
   const shippingCost = calculateShippingCost(cart.total, selectedShippingOptionId);
@@ -136,34 +140,18 @@ const CheckoutPage: React.FC = () => {
     return `BDT-${timestamp.slice(-6)}${random}`;
   };
 
-  const handlePlaceOrder = async (e: React.FormEvent) => {
+  const handleContinueToPayment = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
         return;
     }
 
-    // Save checkout data to localStorage before redirecting
-    const checkoutData = {
-      shippingAddress,
-      billingAddress,
-      selectedShippingOptionId,
-      shippingCost,
-      finalTotal
-    };
-    
-    try {
-      localStorage.setItem('blueDreamTea_checkout_data', JSON.stringify(checkoutData));
-    } catch (error) {
-      console.error('Error saving checkout data:', error);
-    }
-
-    // Redirect to pre-purchase upsell page
-    navigate('/pre-purchase-upsell', { replace: true });
-    return;
+    // Move to payment step
+    setCurrentStep('payment');
   };
 
-  const handlePlaceOrderDirect = async () => {
+  const handlePaymentSuccess = async (paymentResponse: PixxlesTransactionResponse) => {
     setIsPlacingOrder(true);
 
     try {
@@ -189,9 +177,12 @@ const CheckoutPage: React.FC = () => {
             discount_code: cart.discountCode || '',
             discount_amount: cart.discountAmount || 0,
             total: finalTotal,
-            status: 'pending',
-            notes: '',
-            tracking_number: ''
+            status: 'paid',
+            notes: `Payment processed via Pixxles. Transaction ID: ${paymentResponse.transactionID}, XRef: ${paymentResponse.xref}`,
+            tracking_number: '',
+            payment_transaction_id: paymentResponse.transactionID,
+            payment_xref: paymentResponse.xref,
+            payment_authorisation_code: paymentResponse.authorisationCode
         };
 
         console.log('Creating order with data:', orderData);
@@ -424,6 +415,15 @@ const CheckoutPage: React.FC = () => {
     }
 };
 
+  const handlePaymentError = (error: string) => {
+    alert(`Payment failed: ${error}`);
+    setShowPaymentForm(false);
+  };
+
+  const handlePaymentProcessing = (isProcessing: boolean) => {
+    setPaymentProcessing(isProcessing);
+  };
+
   return (
     <>
       <Helmet>
@@ -434,7 +434,32 @@ const CheckoutPage: React.FC = () => {
       <div className="max-w-6xl mx-auto py-12 lg:px-12 md:px-8 sm:px-4 px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
-        <form onSubmit={handlePlaceOrder}>
+        {/* Progress Indicator */}
+        <div className="mb-8">
+          <div className="flex items-center justify-center space-x-4">
+            <div className={`flex items-center space-x-2 ${currentStep === 'details' ? 'text-blue-600' : 'text-gray-400'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                currentStep === 'details' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
+              }`}>
+                1
+              </div>
+              <span className="font-medium">Order Details</span>
+            </div>
+            
+            <div className="w-12 h-0.5 bg-gray-300"></div>
+            
+            <div className={`flex items-center space-x-2 ${currentStep === 'payment' ? 'text-blue-600' : 'text-gray-400'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                currentStep === 'payment' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
+              }`}>
+                2
+              </div>
+              <span className="font-medium">Payment</span>
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleContinueToPayment}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Left Column: Forms */}
             <div className="space-y-8">
@@ -634,25 +659,43 @@ const CheckoutPage: React.FC = () => {
                 
                 <div className="space-y-4">
                   {availableShippingOptions.map((option) => (
-                    <label
+                    <div
                       key={option.id}
                       className={`block relative border rounded-lg p-4 cursor-pointer transition-colors ${
                         selectedShippingOptionId === option.id
                           ? 'border-blue-500 bg-blue-50'
                           : 'border-gray-200 hover:border-blue-200'
                       }`}
+                      onClick={() => handleShippingOptionChange(option.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleShippingOptionChange(option.id);
+                        }
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-pressed={selectedShippingOptionId === option.id}
                     >
                       <input
                         type="radio"
                         name="shippingMethod"
                         value={option.id}
                         checked={selectedShippingOptionId === option.id}
-                        onChange={() => setSelectedShippingOptionId(option.id)}
+                        onChange={() => handleShippingOptionChange(option.id)}
                         className="sr-only"
+                        aria-label={`Select ${option.name} shipping`}
                       />
                       <div className="flex justify-between items-start">
-                        <div>
-                          <p className="font-medium text-gray-900">{option.name}</p>
+                        <div className="flex-1">
+                          <div className="flex items-center">
+                            <p className="font-medium text-gray-900">{option.name}</p>
+                            {selectedShippingOptionId === option.id && (
+                              <svg className="ml-2 h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                            )}
+                          </div>
                           <p className="text-sm text-gray-500">{option.description}</p>
                           <p className="text-sm text-gray-500">Estimated delivery: {option.estimatedDays}</p>
                         </div>
@@ -669,7 +712,7 @@ const CheckoutPage: React.FC = () => {
                           </p>
                         </div>
                       </div>
-                    </label>
+                    </div>
                   ))}
                   {formErrors.shipping && (
                     <p className="text-sm text-red-600 mt-1">{formErrors.shipping}</p>
@@ -715,23 +758,21 @@ const CheckoutPage: React.FC = () => {
                     </span>
                   </div>
 
-                  {cart.discountAmount > 0 && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-green-600">
-                        Discount ({cart.discountCode})
-                      </span>
-                      <span className="text-sm font-medium text-green-600">
-                        -£{cart.discountAmount.toFixed(2)}
-                      </span>
-                    </div>
-                  )}
-
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">Shipping</span>
                     <span className="text-sm font-medium text-gray-900">
                       {shippingCost === 0 ? 'Free' : `£${shippingCost.toFixed(2)}`}
                     </span>
                   </div>
+
+                  {cart.subtotal > cart.total && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-green-600">Total Savings</span>
+                      <span className="text-sm font-medium text-green-600">
+                        -£{(cart.subtotal - cart.total).toFixed(2)}
+                      </span>
+                    </div>
+                  )}
                   
                   {shippingAddress.country !== 'United Kingdom' && (
                     <div className="text-xs text-gray-500 italic">
@@ -747,14 +788,14 @@ const CheckoutPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Place Order Button */}
+                {/* Continue to Payment Button */}
                 <button
                   type="submit"
-                  disabled={isPlacingOrder}
+                  disabled={isPlacingOrder || paymentProcessing}
                   className="w-full mt-8 bg-blue-600 text-white py-4 px-6 rounded-md font-semibold text-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
                 >
                   <HiCreditCard className="h-5 w-5" />
-                  <span>{isPlacingOrder ? 'Placing Order...' : 'Pay Now'}</span>
+                  <span>{isPlacingOrder ? 'Placing Order...' : paymentProcessing ? 'Processing Payment...' : 'Continue to Payment'}</span>
                 </button>
 
                 {/* Alert Message */}
@@ -777,6 +818,115 @@ const CheckoutPage: React.FC = () => {
             </div>
           </div>
         </form>
+
+        {/* Payment Section */}
+        {currentStep === 'payment' && (
+          <div className="mt-12">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-gray-900">Payment Information</h2>
+              <button
+                onClick={() => setCurrentStep('details')}
+                className="text-blue-600 hover:text-blue-700 font-medium flex items-center space-x-1"
+                disabled={paymentProcessing}
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>Back to Details</span>
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Payment Form */}
+              <div>
+                <PaymentForm
+                  amount={finalTotal}
+                  currency="GBP"
+                  orderRef={generateOrderNumber()}
+                  customerName={`${shippingAddress.firstName} ${shippingAddress.lastName}`}
+                  customerEmail={billingAddress.email}
+                  customerPhone={shippingAddress.phone}
+                  customerAddress={`${shippingAddress.addressLine1}${shippingAddress.addressLine2 ? `, ${shippingAddress.addressLine2}` : ''}, ${shippingAddress.city}`}
+                  customerPostCode={shippingAddress.postalCode}
+                  customerTown={shippingAddress.city}
+                  customerCountryCode={shippingAddress.country === 'United Kingdom' ? 'GB' : 'US'}
+                  onPaymentSuccess={handlePaymentSuccess}
+                  onPaymentError={handlePaymentError}
+                  onPaymentProcessing={handlePaymentProcessing}
+                />
+              </div>
+
+              {/* Order Summary */}
+              <div className="lg:sticky lg:top-8 lg:h-fit">
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Order Summary</h3>
+
+                  {/* Order Items */}
+                  <div className="space-y-4 mb-6">
+                    {cart.items.map((item) => (
+                      <div key={item.id} className="flex items-center space-x-4">
+                        <img
+                          src={item.productImage}
+                          alt={item.productTitle}
+                          className="h-16 w-16 object-cover rounded-md"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-medium text-gray-900 truncate">
+                            {item.productTitle}
+                          </h4>
+                          <p className="text-xs text-gray-500">{item.variantLabel}</p>
+                          <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                        </div>
+                        <div className="text-sm font-medium text-gray-900">
+                          £{(item.price * item.quantity).toFixed(2)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Order Totals */}
+                  <div className="space-y-3 border-t border-gray-200 pt-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Subtotal</span>
+                      <span className="text-sm font-medium text-gray-900">
+                        £{cart.subtotal.toFixed(2)}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Shipping</span>
+                      <span className="text-sm font-medium text-gray-900">
+                        {shippingCost === 0 ? 'Free' : `£${shippingCost.toFixed(2)}`}
+                      </span>
+                    </div>
+
+                    {cart.subtotal > cart.total && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-green-600">Total Savings</span>
+                        <span className="text-sm font-medium text-green-600">
+                          -£{(cart.subtotal - cart.total).toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between border-t border-gray-200 pt-3">
+                      <span className="text-lg font-semibold text-gray-900">Total</span>
+                      <span className="text-lg font-semibold text-gray-900">
+                        £{finalTotal.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Security Notice */}
+                  <div className="mt-6 flex items-center justify-center space-x-2 text-xs text-gray-500">
+                    <HiLockClosed className="h-4 w-4" />
+                    <span>Secure payment processing</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

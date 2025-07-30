@@ -113,9 +113,11 @@ export interface CartItem {
   productImage: string;
   price: number; // actual price after discounts
   originalPrice: number; // original price
+  salePrice: number; // sale price before any discount codes
   quantity: number;
   selectedVariants: {[key: string]: string};
   variantLabel: string; // human readable variant description
+  isUpgrade?: boolean; // indicates if this item was upgraded
 }
 
 export interface CartState {

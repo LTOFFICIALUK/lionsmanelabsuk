@@ -136,14 +136,12 @@ const CartDrawer: React.FC = () => {
         {/* Footer with totals and actions */}
         {cart.items.length > 0 && (
           <div className="border-t border-gray-200 p-3 space-y-3">
-            {/* Discount Code Display */}
-            {cart.discountCode && (
+            {/* Total Savings Display */}
+            {cart.subtotal > cart.total && (
               <div className="flex items-center justify-between text-xs">
+                <span className="text-green-600 font-medium">Total Savings</span>
                 <span className="text-green-600 font-medium">
-                  Discount ({cart.discountCode})
-                </span>
-                <span className="text-green-600 font-medium">
-                  -£{cart.discountAmount.toFixed(2)}
+                  -£{(cart.subtotal - cart.total).toFixed(2)}
                 </span>
               </div>
             )}

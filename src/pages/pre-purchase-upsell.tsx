@@ -45,7 +45,6 @@ const PrePurchaseUpsellPage: React.FC = () => {
 
   const [selectedShippingOptionId, setSelectedShippingOptionId] = useState<number>(1);
   const [shippingCost, setShippingCost] = useState<number>(0);
-  const [finalTotal, setFinalTotal] = useState<number>(0);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
   const [showAlert, setShowAlert] = useState(false);
@@ -155,13 +154,21 @@ const PrePurchaseUpsellPage: React.FC = () => {
     const cartProductSlugs = cart.items.map(item => item.productSlug);
     const additionalProducts = Object.entries(PRODUCTS)
       .filter(([slug]) => !cartProductSlugs.includes(slug))
-      .map(([slug, product]) => ({
-        slug,
-        ...product,
-        // Apply 25% discount to all additional products
-        discountedPrice: (product.salePrice || product.price) * 0.75,
-        originalPrice: product.salePrice || product.price
-      }))
+      .map(([slug, product]) => {
+        // Get the first variant to calculate the discounted price
+        let firstVariant: any = product.variants[0];
+        if ('options' in firstVariant) {
+          firstVariant = firstVariant.options[0]; // Get first option from group
+        }
+        
+        return {
+          slug,
+          ...product,
+          // Apply 25% discount to the first variant price
+          discountedPrice: (firstVariant.salePrice || firstVariant.price) * 0.75,
+          originalPrice: firstVariant.salePrice || firstVariant.price
+        };
+      })
       .slice(0, 6); // Limit to 6 products
 
     return additionalProducts;
@@ -190,8 +197,10 @@ const PrePurchaseUpsellPage: React.FC = () => {
       variantLabel: upgradeProduct.upgradeVariant.label,
       selectedVariants: { size: upgradeProduct.upgradeVariant.value },
       price: upgradePrice,
-      originalPrice: upgradeProduct.upgradeVariant.salePrice || upgradeProduct.upgradeVariant.price,
+      originalPrice: upgradeProduct.upgradeVariant.price, // Original price before any sale
+      salePrice: upgradeProduct.upgradeVariant.salePrice || upgradeProduct.upgradeVariant.price, // Sale price (if exists)
       quantity: upgradeProduct.originalItem.quantity, // Keep the same quantity
+      isUpgrade: true, // Mark this as an upgrade
     });
 
     // Apply automatic discount code
@@ -226,12 +235,10 @@ const PrePurchaseUpsellPage: React.FC = () => {
       variantLabel: variant.label,
       selectedVariants: { size: variant.value },
       price: discountedPrice,
-      originalPrice: variant.salePrice || variant.price,
+      originalPrice: variant.price, // Original price before any sale
+      salePrice: variant.salePrice || variant.price, // Sale price (if exists)
       quantity: 1,
     });
-
-    // Apply automatic discount code
-    applyDiscountCode('ADDON25');
     
     // Mark as added
     setAddedProducts(prev => new Set(prev).add(productKey));
@@ -349,7 +356,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
         shipping_method: `${selectedShipping.name} - ${selectedShipping.description}`,
         discount_code: cart.discountCode || '',
         discount_amount: cart.discountAmount || 0,
-        total: finalTotal,
+        total: currentTotal,
         status: 'pending',
         notes: '',
         tracking_number: ''
@@ -375,7 +382,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
               savedOrder.id,
               billingAddress.email,
               cart.discountAmount,
-              finalTotal
+              currentTotal
             );
             console.log('✅ Discount code usage recorded');
           }
@@ -398,13 +405,13 @@ const PrePurchaseUpsellPage: React.FC = () => {
           country: shippingAddress.country,
           company: shippingAddress.company,
           orderNumber: savedOrder.order_number,
-          orderTotal: finalTotal,
+          orderTotal: currentTotal,
           products: productNames,
         });
 
         await brevoApiService.trackEvent(billingAddress.email, 'order_completed', {
           orderNumber: savedOrder.order_number,
-          orderTotal: finalTotal,
+          orderTotal: currentTotal,
           products: productNames,
           shippingMethod: selectedShipping.name,
         });
@@ -593,20 +600,49 @@ const PrePurchaseUpsellPage: React.FC = () => {
         setBillingAddress(checkoutData.billingAddress);
         setSelectedShippingOptionId(checkoutData.selectedShippingOptionId);
         setShippingCost(checkoutData.shippingCost);
-        setFinalTotal(checkoutData.finalTotal);
       }
     } catch (error) {
       console.error('Error loading checkout data:', error);
     }
   }, []);
 
-  // Calculate total savings from discounts
-  const totalSavings = cart.items.reduce((total, item) => {
-    if (item.originalPrice !== item.price) {
-      return total + ((item.originalPrice - item.price) * item.quantity);
-    }
-    return total;
-  }, 0) + cart.discountAmount;
+  // Calculate different types of discounts
+  const calculateDiscountBreakdown = () => {
+    const breakdown = {
+      upgradeSavings: 0,
+      prePurchaseSavings: 0,
+      discountCodeSavings: 0,
+      totalSavings: 0
+    };
+
+    // Calculate item-level discounts (upgrades and pre-purchase addons)
+    cart.items.forEach((item) => {
+      const originalPrice = item.originalPrice;
+      const currentPrice = item.price;
+      const priceDifference = (originalPrice - currentPrice) * item.quantity;
+
+      // Check if this is an upgrade by looking at the isUpgrade property
+      if (item.isUpgrade) {
+        breakdown.upgradeSavings += priceDifference;
+      }
+      // Check if this is a pre-purchase addon by looking at the addedProducts set
+      else if (addedProducts.has(`${item.productSlug}-${item.selectedVariants.size}`)) {
+        breakdown.prePurchaseSavings += priceDifference;
+      }
+    });
+
+    // Calculate cart-level discount codes separately
+    // Use the cart's discountAmount which represents the discount code savings
+    breakdown.discountCodeSavings = cart.discountAmount || 0;
+
+    breakdown.totalSavings = breakdown.upgradeSavings + breakdown.prePurchaseSavings + breakdown.discountCodeSavings;
+    return breakdown;
+  };
+
+  // Calculate current totals and savings
+  const currentSubtotal = cart.subtotal;
+  const currentTotal = cart.total + shippingCost;
+  const discountBreakdown = calculateDiscountBreakdown();
 
   return (
     <>
@@ -633,7 +669,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
               <div className="bg-white rounded-lg shadow-lg p-6">
                 <div className="flex items-center space-x-2 mb-2">
                   <HiArrowUp className="h-6 w-6 text-green-600" />
-                  <h2 className="text-2xl font-bold text-gray-900">Upgrade & Save 15%</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">Upgrade & Save More</h2>
                 </div>
                 
                 <p className="text-gray-600 mb-4">
@@ -644,7 +680,8 @@ const PrePurchaseUpsellPage: React.FC = () => {
                   <div className="space-y-4">
                     {upgradeProducts.map((upgrade, index) => {
                       const upgradePrice = (upgrade.upgradeVariant.salePrice || upgrade.upgradeVariant.price) * 0.85;
-                      const savings = ((upgrade.upgradeVariant.salePrice || upgrade.upgradeVariant.price) - upgradePrice) + upgrade.savings;
+                      const savings = (upgrade.upgradeVariant.price - upgradePrice) + upgrade.savings;
+                      const totalDiscountPercentage = Math.round(((upgrade.upgradeVariant.price - upgradePrice) / upgrade.upgradeVariant.price) * 100);
                       
                       const upgradeKey = `${upgrade.originalItem.id}-${upgrade.upgradeVariant.value}`;
                       const isAdded = addedUpgrades.has(upgradeKey);
@@ -671,7 +708,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
                                   Save £{savings.toFixed(2)}
                                 </div>
                                 <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 whitespace-nowrap">
-                                  15% OFF
+                                  {totalDiscountPercentage}% OFF
                                 </div>
                               </div>
                             </div>
@@ -681,7 +718,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
                                 £{upgradePrice.toFixed(2)}
                               </div>
                               <div className="text-xs text-gray-500 line-through">
-                                £{(upgrade.upgradeVariant.salePrice || upgrade.upgradeVariant.price).toFixed(2)}
+                                £{upgrade.upgradeVariant.price.toFixed(2)}
                               </div>
                               <button
                                 onClick={() => handleUpgrade(upgrade)}
@@ -739,7 +776,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
                                  variant = variant.options[0]; // Get first option from group
                                }
                                const discountedPrice = (variant.salePrice || variant.price) * 0.75;
-                               const savings = (variant.salePrice || variant.price) - discountedPrice;
+                               const savings = variant.price - discountedPrice;
                               
                               const productKey = `${product.slug}-${variant.value}`;
                               const isAdded = addedProducts.has(productKey);
@@ -776,7 +813,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
                                         £{discountedPrice.toFixed(2)}
                                       </div>
                                       <div className="text-xs text-gray-500 line-through">
-                                        £{(variant.salePrice || variant.price).toFixed(2)}
+                                        £{variant.price.toFixed(2)}
                                       </div>
                                       <button
                                         onClick={() => handleAddProduct(product)}
@@ -866,7 +903,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
                   {!isCartExpanded && (
                     <div className="text-right">
                       <div className="text-lg font-bold text-gray-900">
-                        £{(cart.total + shippingCost).toFixed(2)}
+                        £{currentTotal.toFixed(2)}
                       </div>
                       <div className="text-sm text-gray-500">
                         Total
@@ -925,20 +962,9 @@ const PrePurchaseUpsellPage: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">Subtotal</span>
                     <span className="text-sm font-medium text-gray-900">
-                      £{cart.subtotal.toFixed(2)}
+                      £{currentSubtotal.toFixed(2)}
                     </span>
                   </div>
-
-                  {cart.discountAmount > 0 && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-green-600">
-                        Discount ({cart.discountCode})
-                      </span>
-                      <span className="text-sm font-medium text-green-600">
-                        -£{cart.discountAmount.toFixed(2)}
-                      </span>
-                    </div>
-                  )}
 
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">Shipping</span>
@@ -947,10 +973,60 @@ const PrePurchaseUpsellPage: React.FC = () => {
                     </span>
                   </div>
 
+                  {(discountBreakdown.totalSavings > 0 || (currentSubtotal - cart.total) > 0) && (
+                    <>
+                      {discountBreakdown.upgradeSavings > 0 && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-green-600">Upgrade Savings</span>
+                          <span className="text-sm font-medium text-green-600">
+                            -£{discountBreakdown.upgradeSavings.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {discountBreakdown.prePurchaseSavings > 0 && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-green-600">Pre-Purchase Offer</span>
+                          <span className="text-sm font-medium text-green-600">
+                            -£{discountBreakdown.prePurchaseSavings.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {discountBreakdown.discountCodeSavings > 0 && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-green-600">Discount Code ({cart.discountCode})</span>
+                          <span className="text-sm font-medium text-green-600">
+                            -£{discountBreakdown.discountCodeSavings.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {/* Fallback for any other savings */}
+                      {discountBreakdown.totalSavings === 0 && (currentSubtotal - cart.total) > 0 && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-green-600">Total Savings</span>
+                          <span className="text-sm font-medium text-green-600">
+                            -£{(currentSubtotal - cart.total).toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {discountBreakdown.totalSavings > 0 && (
+                        <div className="flex items-center justify-between border-t border-gray-200 pt-2">
+                          <span className="text-sm font-semibold text-green-600">Total Savings</span>
+                          <span className="text-sm font-semibold text-green-600">
+                            -£{discountBreakdown.totalSavings.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  )}
+
                   <div className="flex items-center justify-between border-t border-gray-200 pt-3">
                     <span className="text-lg font-semibold text-gray-900">Total</span>
                     <span className="text-lg font-semibold text-gray-900">
-                      £{finalTotal.toFixed(2)}
+                      £{currentTotal.toFixed(2)}
                     </span>
                   </div>
                 </div>
