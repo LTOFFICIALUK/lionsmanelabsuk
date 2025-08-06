@@ -1,44 +1,30 @@
-import { NextRequest } from 'next/server';
-import crypto from 'crypto';
+const crypto = require('crypto');
 
-// Environment variables
-const MERCHANT_ID = process.env.PIXXLES_MERCHANT_ID;
-const SIGNATURE_KEY = process.env.PIXXLES_SIGNATURE_KEY;
-const GATEWAY_URL = process.env.PIXXLES_GATEWAY_URL;
-
-// Configure runtime
-export const config = {
-  runtime: 'edge',
-  regions: ['lhr1'], // London for lowest latency
-};
-
-export default async function handler(req: NextRequest) {
+module.exports = async (req, res) => {
   // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '86400',
-      },
-    });
+    res.status(204).end();
+    return;
   }
 
   // Only allow POST requests
   if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    });
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
   }
 
   try {
-    const data = await req.json();
+    const data = req.body;
+
+    // Environment variables
+    const MERCHANT_ID = process.env.PIXXLES_MERCHANT_ID || '132779';
+    const SIGNATURE_KEY = process.env.PIXXLES_SIGNATURE_KEY || 'test_signature_key';
+    const GATEWAY_URL = process.env.PIXXLES_GATEWAY_URL || 'https://qa-transactions.pixxlesportal.com/direct';
 
     // Add merchant ID
     const transactionData = {
@@ -62,13 +48,16 @@ export default async function handler(req: NextRequest) {
         if (typeof value === 'object') {
           // Handle nested objects (like threeDSResponse)
           for (const [nestedKey, nestedValue] of Object.entries(value)) {
-            formData.append(`${key}[${nestedKey}]`, nestedValue as string);
+            formData.append(`${key}[${nestedKey}]`, nestedValue.toString());
           }
         } else {
           formData.append(key, value.toString());
         }
       }
     }
+
+    console.log('Sending to Pixxles:', GATEWAY_URL);
+    console.log('Form data:', formData.toString());
 
     // Make request to Pixxles
     const response = await fetch(GATEWAY_URL, {
@@ -82,6 +71,8 @@ export default async function handler(req: NextRequest) {
     });
 
     const responseText = await response.text();
+    console.log('Pixxles response status:', response.status);
+    console.log('Pixxles response:', responseText);
     
     // Parse the response
     let responseData;
@@ -105,23 +96,11 @@ export default async function handler(req: NextRequest) {
       }
     }
 
-    return new Response(JSON.stringify(responseData), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    });
-  } catch (error: any) {
+    res.status(200).json(responseData);
+  } catch (error) {
     console.error('Pixxles API Error:', error);
-    return new Response(JSON.stringify({
+    res.status(500).json({
       error: error.message || 'Payment processing failed'
-    }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
     });
   }
-}
+}; 
