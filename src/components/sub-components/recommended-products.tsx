@@ -15,30 +15,59 @@ interface RecommendedProduct {
 }
 
 interface RecommendedProductsProps {
-  currentProductSlug: string;
+  currentProductSlug?: string;
   title?: string;
   maxProducts?: number;
+  // For article pages - show specific products
+  heading?: string;
+  description?: string;
+  productSlugs?: string[];
 }
 
 const RecommendedProducts: React.FC<RecommendedProductsProps> = ({ 
   currentProductSlug, 
   title = "You Might Also Like",
-  maxProducts = 4 
+  maxProducts = 4,
+  heading,
+  description,
+  productSlugs
 }) => {
-  // Get all products except the current one
-  const allProducts = Object.entries(PRODUCTS)
-    .filter(([slug]) => slug !== currentProductSlug)
-    .map(([slug, product]) => ({
-      slug,
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      salePrice: product.salePrice,
-      image: product.images.main,
-      rating: product.reviews.reduce((acc: number, review: any) => acc + review.rating, 0) / product.reviews.length,
-      reviewCount: product.reviews.length
-    }))
-    .slice(0, maxProducts);
+  let allProducts: RecommendedProduct[] = [];
+
+  if (productSlugs && productSlugs.length > 0) {
+    // For article pages - show specific products
+    allProducts = productSlugs
+      .map(slug => {
+        const product = PRODUCTS[slug];
+        if (!product) return null;
+        return {
+          slug,
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          salePrice: product.salePrice,
+          image: product.images.main,
+          rating: product.reviews.reduce((acc: number, review: any) => acc + review.rating, 0) / product.reviews.length,
+          reviewCount: product.reviews.length
+        };
+      })
+      .filter(Boolean) as RecommendedProduct[];
+  } else if (currentProductSlug) {
+    // For product pages - show all products except the current one
+    allProducts = Object.entries(PRODUCTS)
+      .filter(([slug]) => slug !== currentProductSlug)
+      .map(([slug, product]) => ({
+        slug,
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        salePrice: product.salePrice,
+        image: product.images.main,
+        rating: product.reviews.reduce((acc: number, review: any) => acc + review.rating, 0) / product.reviews.length,
+        reviewCount: product.reviews.length
+      }))
+      .slice(0, maxProducts);
+  }
 
   if (allProducts.length === 0) {
     return null;
@@ -60,10 +89,10 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            {title}
+            {heading || title}
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover more premium Blue Lotus products to enhance your experience
+            {description || "Discover more premium Blue Lotus products to enhance your experience"}
           </p>
         </div>
 

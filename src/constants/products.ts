@@ -297,7 +297,6 @@ export const PRODUCTS: Products = {
           ]
         }
       },
-      specifications: {
       productInformation: {
         content: [
           {
@@ -318,6 +317,7 @@ export const PRODUCTS: Products = {
           }
         ]
       },
+      specifications: {
         content: [
           {
             icon: "weight",
@@ -699,7 +699,6 @@ export const PRODUCTS: Products = {
           ]
         }
       },
-      specifications: {
       productInformation: {
         content: [
           {
@@ -720,6 +719,7 @@ export const PRODUCTS: Products = {
           }
         ]
       },
+      specifications: {
         content: [
           {
             icon: "weight",
