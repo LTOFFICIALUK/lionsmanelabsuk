@@ -5,6 +5,10 @@ const SIGNATURE_KEY = process.env.PIXXLES_SIGNATURE_KEY;
 const GATEWAY_URL = process.env.PIXXLES_GATEWAY_URL;
 
 module.exports = async (req, res) => {
+  console.log('Pixxles API route called:', req.method, req.url);
+  console.log('Request headers:', req.headers);
+  console.log('Request body:', req.body);
+  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -12,6 +16,7 @@ module.exports = async (req, res) => {
 
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
+    console.log('Handling OPTIONS request');
     res.status(200).end();
     return;
   }

@@ -1,5 +1,13 @@
 {
   "version": 2,
+  "functions": {
+    "api/pixxles.js": {
+      "maxDuration": 30
+    },
+    "api/royal-mail.js": {
+      "maxDuration": 30
+    }
+  },
   "builds": [
     {
       "src": "api/**/*.js",
