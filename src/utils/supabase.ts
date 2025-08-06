@@ -6,9 +6,12 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.s
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key';
 
 // Check if Supabase is properly configured
-const isSupabaseConfigured = supabaseUrl !== 'https://your-project.supabase.co' && 
-                             supabaseAnonKey !== 'your-anon-key' && 
-                             !supabaseUrl.includes('your-project');
+// In development mode, prefer localStorage to avoid schema issues
+const isSupabaseConfigured = import.meta.env.DEV ? false : (
+    supabaseUrl !== 'https://your-project.supabase.co' && 
+    supabaseAnonKey !== 'your-anon-key' && 
+    !supabaseUrl.includes('your-project')
+);
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -31,7 +34,7 @@ export interface DatabaseOrder {
   discount_amount: number;
   discount_code?: string;
   shipping_cost: number;
-  shipping_method: string; // Add this line
+  shipping_method: string;
   total: number;
   status: string;
   tracking_number?: string;
@@ -39,6 +42,10 @@ export interface DatabaseOrder {
   notes?: string;
   created_at: string;
   updated_at: string;
+  // Payment fields are optional since they don't exist in the current table
+  payment_transaction_id?: string;
+  payment_xref?: string;
+  payment_authorisation_code?: string;
 }
 
 export interface EmailOrderDetails {
@@ -94,11 +101,14 @@ export const orderService = {
         }
         
         try {
+            // Filter out payment fields that don't exist in the current table schema
+            const { payment_transaction_id, payment_xref, payment_authorisation_code, ...orderDataForSupabase } = orderData;
+            
             const { data, error } = await supabase
                 .from('orders')
                 .insert([{
                     id: uuidv4(), // Generate a unique ID
-                    ...orderData,
+                    ...orderDataForSupabase,
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 }])
