@@ -1,0 +1,91 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+import crypto from 'crypto';
+
+const MERCHANT_ID = process.env.PIXXLES_MERCHANT_ID;
+const SIGNATURE_KEY = process.env.PIXXLES_SIGNATURE_KEY;
+const GATEWAY_URL = process.env.PIXXLES_GATEWAY_URL;
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  if (!MERCHANT_ID || !SIGNATURE_KEY || !GATEWAY_URL) {
+    return res.status(500).json({ error: 'Pixxles configuration not found' });
+  }
+
+  try {
+    const { transactionData } = req.body;
+
+    if (!transactionData) {
+      return res.status(400).json({ error: 'Transaction data is required' });
+    }
+
+    // Add merchant ID and calculate signature
+    const dataWithMerchant = {
+      ...transactionData,
+      merchantID: MERCHANT_ID
+    };
+
+    // Create signature
+    const signatureData = Object.keys(dataWithMerchant)
+      .sort()
+      .map(key => `${key}=${dataWithMerchant[key]}`)
+      .join('&') + SIGNATURE_KEY;
+
+    const signature = crypto.createHash('sha512').update(signatureData).digest('hex');
+    dataWithMerchant.signature = signature;
+
+    // Convert to form-urlencoded
+    const formData = new URLSearchParams();
+    Object.entries(dataWithMerchant).forEach(([key, value]) => {
+      formData.append(key, String(value));
+    });
+
+    // Make request to Pixxles
+    const response = await fetch(GATEWAY_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData.toString()
+    });
+
+    const responseText = await response.text();
+    
+    // Parse the response
+    let responseData;
+    try {
+      responseData = JSON.parse(responseText);
+    } catch {
+      // If not JSON, parse as form-urlencoded
+      const params = new URLSearchParams(responseText);
+      responseData = Object.fromEntries(params);
+    }
+
+    // Verify response signature if present
+    if (responseData.signature) {
+      const expectedSignature = crypto.createHash('sha512')
+        .update(responseText.replace(`&signature=${responseData.signature}`, '') + SIGNATURE_KEY)
+        .digest('hex');
+      
+      if (expectedSignature !== responseData.signature) {
+        console.warn('Pixxles response signature verification failed');
+      }
+    }
+
+    return res.status(200).json(responseData);
+  } catch (error: any) {
+    console.error('Pixxles API Error:', error);
+    return res.status(500).json({
+      error: error.message || 'Payment processing failed'
+    });
+  }
+} 

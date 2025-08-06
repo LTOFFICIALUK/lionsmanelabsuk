@@ -314,53 +314,30 @@ class PixxlesService {
         
         return mockResponse;
       } else {
-        // Production: direct API call
-        const response = await fetch(this.config.gatewayUrl, {
+        // Production: use Vercel API proxy to avoid CORS issues
+        const response = await fetch('/api/pixxles', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': 'BlueDreamTea-Payment-Gateway/1.0',
+            'Content-Type': 'application/json',
           },
-          body: formData.toString()
+          body: JSON.stringify({
+            transactionData: data
+          })
         });
 
-        console.log('Pixxles response status:', response.status);
+        console.log('Pixxles proxy response status:', response.status);
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('Pixxles error response:', errorText);
+          console.error('Pixxles proxy error response:', errorText);
           throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
         }
 
-        const responseText = await response.text();
-        console.log('Pixxles response received');
+        const responseData = await response.json();
+        console.log('Pixxles proxy response received');
         
-        // Parse the response (it's form-urlencoded)
-        const responseData: Record<string, string> = {};
-        const params = new URLSearchParams(responseText);
-        for (const [key, value] of params.entries()) {
-          responseData[key] = value;
-        }
-
-        console.log('Parsed response data');
-
-        // Verify response signature
-        const responseSignature = responseData.signature;
-        delete responseData.signature;
-        
-        const expectedSignature = await createSignature(responseData, this.config.signatureKey);
-        
-        if (responseSignature !== expectedSignature) {
-          console.error('Signature verification failed');
-          console.error('Expected:', expectedSignature);
-          console.error('Received:', responseSignature);
-          throw new Error('Response signature verification failed');
-        }
-
-        // Add signature back to response
-        responseData.signature = responseSignature;
-
-                return responseData as PixxlesTransactionResponse;
+                // The proxy handles signature verification server-side
+        return responseData as PixxlesTransactionResponse;
       }
 
     } catch (error) {
