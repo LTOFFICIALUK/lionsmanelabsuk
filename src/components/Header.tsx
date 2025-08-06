@@ -17,7 +17,7 @@ const Header = () => {
   // Create navigation items based on products
   const navItems = [
     { path: '/', label: 'Home' },
-    { path: '/products/blue-lotus-flower-packs', label: 'Flower Packs' },
+    { path: '/products/blue-lotus-flower', label: 'Flower Packs' },
     { path: '/products/blue-lotus-flower-pre-rolls', label: 'Pre Rolls' },
     { path: '/products/blue-lotus-flower-smoking-blend', label: 'Smoking Blend' },
     { path: '/products/blue-lotus-flower-tea-bags', label: 'Tea Bags' },
@@ -229,7 +229,7 @@ const Header = () => {
                     <ul className="space-y-1">
                       <li>
                         <Link
-                          to="/products/blue-lotus-flower-packs"
+                          to="/products/blue-lotus-flower"
                           className="text-sm text-gray-600 hover:text-blue-600 transition-colors block"
                           onClick={() => setIsSearchOpen(false)}
                         >

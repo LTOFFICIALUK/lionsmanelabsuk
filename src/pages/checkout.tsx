@@ -10,6 +10,7 @@ import { brevoApiService } from '../utils/brevo-api';
 import { discountService } from '../utils/discount-service';
 import { shippingOptions, calculateShippingCost, getShippingOptionsByCountry } from '../constants/shipping-options';
 import PaymentForm from '../components/PaymentForm';
+import PaymentTestPanel from '../components/PaymentTestPanel';
 import { PixxlesTransactionResponse } from '../utils/pixxles-api';
 
 const CheckoutPage: React.FC = () => {
@@ -47,6 +48,12 @@ const CheckoutPage: React.FC = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState<'details' | 'payment'>('details');
+  const [selectedTestCard, setSelectedTestCard] = useState<{
+    cardNumber: string;
+    cardCVV: string;
+    cardExpiryMonth: string;
+    cardExpiryYear: string;
+  } | undefined>(undefined);
 
   // Get available shipping options based on selected country
   const availableShippingOptions = getShippingOptionsByCountry(shippingAddress.country);
@@ -422,6 +429,56 @@ const CheckoutPage: React.FC = () => {
 
   const handlePaymentProcessing = (isProcessing: boolean) => {
     setPaymentProcessing(isProcessing);
+  };
+
+  // Test payment handler for development
+  const handleTestPayment = (testData: {
+    cardNumber: string;
+    expiryMonth: string;
+    expiryYear: string;
+    cvv: string;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+    customerAddress: string;
+    customerPostCode: string;
+    customerTown: string;
+    customerCountryCode: string;
+  }) => {
+    // Set the selected test card data
+    setSelectedTestCard({
+      cardNumber: testData.cardNumber,
+      cardCVV: testData.cvv,
+      cardExpiryMonth: testData.expiryMonth,
+      cardExpiryYear: testData.expiryYear
+    });
+
+    // Update form data with test data
+    setShippingAddress(prev => ({
+      ...prev,
+      firstName: testData.customerName.split(' ')[0] || '',
+      lastName: testData.customerName.split(' ').slice(1).join(' ') || '',
+      phone: testData.customerPhone,
+      addressLine1: testData.customerAddress,
+      postalCode: testData.customerPostCode,
+      city: testData.customerTown,
+      country: testData.customerCountryCode === 'GB' ? 'United Kingdom' : 'United States'
+    }));
+
+    setBillingAddress(prev => ({
+      ...prev,
+      email: testData.customerEmail,
+      firstName: testData.customerName.split(' ')[0] || '',
+      lastName: testData.customerName.split(' ').slice(1).join(' ') || '',
+      phone: testData.customerPhone,
+      addressLine1: testData.customerAddress,
+      postalCode: testData.customerPostCode,
+      city: testData.customerTown,
+      country: testData.customerCountryCode === 'GB' ? 'United Kingdom' : 'United States'
+    }));
+
+    // Move to payment step
+    setCurrentStep('payment');
   };
 
   return (
@@ -835,6 +892,11 @@ const CheckoutPage: React.FC = () => {
                 <span>Back to Details</span>
               </button>
             </div>
+
+            {/* Development Test Panel - Only show in development */}
+            {import.meta.env.DEV && (
+              <PaymentTestPanel onTestPayment={handleTestPayment} />
+            )}
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Payment Form */}
@@ -853,6 +915,7 @@ const CheckoutPage: React.FC = () => {
                   onPaymentSuccess={handlePaymentSuccess}
                   onPaymentError={handlePaymentError}
                   onPaymentProcessing={handlePaymentProcessing}
+                  preFilledCardData={selectedTestCard}
                 />
               </div>
 

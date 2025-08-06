@@ -18,7 +18,7 @@ export const createTestOrders = () => {
         },
         {
           id: 'test-item-2',
-          productSlug: 'blue-lotus-flower-packs',
+          productSlug: 'blue-lotus-flower',
           productTitle: 'Blue Lotus Flower Pack',
           productImage: '/src/assets/images/products/blue-lotus-flower-packs/blue-lotus-flower-pack.jpg',
           price: 8.99,

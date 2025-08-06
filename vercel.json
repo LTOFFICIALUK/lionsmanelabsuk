@@ -1,34 +1,32 @@
 {
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/((?!robots\\.txt|sitemap\\.xml|.*\\.(?:js|css|png|jpg|jpeg|gif|ico|svg|webp)).*)",
-      "destination": "/index.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/robots.txt",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/plain"
-        }
-      ]
+      "src": "api/**/*.ts",
+      "use": "@vercel/node"
     },
     {
-      "source": "/sitemap.xml",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/xml"
-        }
-      ]
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "github": {
-    "silent": true
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "PIXXLES_MERCHANT_ID": "132779",
+    "PIXXLES_SIGNATURE_KEY": "gpfu2XDYLKWvbZi",
+    "PIXXLES_GATEWAY_URL": "https://qa-transactions.pixxlesportal.com/direct",
+    "PIXXLES_ENVIRONMENT": "sandbox"
   }
 } 

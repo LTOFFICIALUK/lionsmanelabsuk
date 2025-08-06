@@ -182,7 +182,7 @@ const IsItSafeToSmokeBlueLotus: React.FC = () => {
           productSlugs={[
             'blue-lotus-flower-smoking-blend',
             'blue-lotus-flower-pre-rolls',
-            'blue-lotus-flower-packs'
+            'blue-lotus-flower'
           ]}
         />
 

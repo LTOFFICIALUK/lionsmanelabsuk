@@ -10,6 +10,7 @@ import CartPage from './pages/cart';
 import CheckoutPage from './pages/checkout';
 import PrePurchaseUpsellPage from './pages/pre-purchase-upsell';
 import OrderConfirmationPage from './pages/order-confirmation-page';
+import PaymentCallbackPage from './pages/payment-callback';
 import NotFoundPage from './pages/NotFound';
 import AdminPage from './pages/admin';
 import ArticlesPage from './pages/articles';
@@ -30,6 +31,7 @@ const App: React.FC = () => {
         <Route path="/products/:slug" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/payment-callback" element={<PaymentCallbackPage />} />
         <Route path="/pre-purchase-upsell" element={<PrePurchaseUpsellPage />} />
         <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
         <Route path="/admin" element={<AdminPage />} />

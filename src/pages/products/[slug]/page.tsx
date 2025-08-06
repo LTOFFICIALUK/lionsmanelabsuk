@@ -9,6 +9,7 @@ import { Product, ProductVariant, ProductVariantGroup } from '../../../types';
 import ProductDetailsTable from '../../../components/sub-components/product-details-table';
 import RelatedArticles from '../../../components/sub-components/related-articles';
 import CustomerReviews from '../../../components/CustomerReviews';
+import RecommendedProducts from '../../../components/sub-components/recommended-products';
 
 const ProductPage = () => {
   const { slug } = useParams();
@@ -248,27 +249,230 @@ const ProductPage = () => {
         <meta property="og:description" content={product.description} />
         <meta property="og:type" content="product" />
         <meta property="og:image" content={product.images?.main || ''} />
-        <meta property="og:url" content={`https://yourdomain.com/products/${slug}`} />
+        <meta property="og:url" content={`https://bluedreamtea.co.uk/products/${slug}`} />
+        
+        {/* Comprehensive Schema Markup following Google's recommendations */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Product",
-            name: product.title,
-            description: product.description,
-            offers: {
-              "@type": "Offer",
-              priceCurrency: "GBP",
-              price: currentPrice || product.price,
-              itemCondition: "https://schema.org/NewCondition",
-              availability: "https://schema.org/InStock",
-            },
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: averageRating.toFixed(1),
-              reviewCount: product.reviews.length,
-            },
+            "@graph": [
+              // Organization Schema
+              {
+                "@type": "Organization",
+                "@id": "https://bluedreamtea.co.uk/#/schema/organization/1",
+                "url": "https://bluedreamtea.co.uk",
+                "name": "Blue Dream Tea",
+                "alternateName": "BDT",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://bluedreamtea.co.uk/logo.png"
+                },
+                "hasMerchantReturnPolicy": {
+                  "@type": "MerchantReturnPolicy",
+                  "merchantReturnLink": "https://bluedreamtea.co.uk/policies/refund-policy",
+                  "applicableCountry": "GB",
+                  "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                  "merchantReturnDays": 30
+                },
+                "sameAs": [
+                  "https://www.tiktok.com/@bluedreamworldwide"
+                ],
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "contactType": "customer service",
+                  "availableLanguage": "English"
+                }
+              },
+              // WebSite Schema
+              {
+                "@type": "WebSite",
+                "@id": "https://bluedreamtea.co.uk/#/schema/website/1",
+                "url": "https://bluedreamtea.co.uk",
+                "name": "Blue Dream Tea - Leading Blue Lotus Flower Supplier UK",
+                "alternateName": "Blue Dream Tea",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://bluedreamtea.co.uk/search?q={search_term_string}",
+                  "query-input": "required name=search_term_string"
+                },
+                "publisher": {
+                  "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                },
+                "inLanguage": ["en"]
+              },
+              // ItemPage Schema
+              {
+                "@type": "ItemPage",
+                "@id": `https://bluedreamtea.co.uk/products/${slug}`,
+                "name": `${product.title} - Blue Dream Tea UK`,
+                "description": product.description,
+                "datePublished": "2023-07-30T19:07:49+01:00",
+                "dateModified": new Date().toISOString(),
+                "breadcrumb": {
+                  "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/breadcrumb`
+                },
+                "primaryImageOfPage": {
+                  "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`
+                },
+                "image": [
+                  {
+                    "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`
+                  }
+                ],
+                "isPartOf": {
+                  "@id": "https://bluedreamtea.co.uk/#/schema/website/1"
+                },
+                "url": `https://bluedreamtea.co.uk/products/${slug}`
+              },
+              // ImageObject Schema
+              {
+                "@type": "ImageObject",
+                "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`,
+                "caption": `${product.title} - Premium Blue Lotus Flower Product`,
+                "inLanguage": "en",
+                "width": 1200,
+                "height": 1200,
+                "url": product.images?.main || '',
+                "contentUrl": product.images?.main || ''
+              },
+              // Breadcrumb Schema
+              {
+                "@type": "BreadcrumbList",
+                "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/breadcrumb`,
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://bluedreamtea.co.uk"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Products",
+                    "item": "https://bluedreamtea.co.uk/products"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": product.title,
+                    "item": `https://bluedreamtea.co.uk/products/${slug}`
+                  }
+                ]
+              },
+              // Product Schema (Enhanced)
+              {
+                "@type": "Product",
+                "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/product`,
+                "name": product.title,
+                "description": product.description,
+                "image": [
+                  {
+                    "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`
+                  }
+                ],
+                "brand": {
+                  "@type": "Brand",
+                  "name": "Blue Dream Tea - Blue Lotus Flower Supplier"
+                },
+                "category": "Herbal Products",
+                "sku": slug,
+                "mpn": slug,
+                "gtin": slug,
+                "offers": {
+                  "@type": "Offer",
+                  "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/offer`,
+                  "url": `https://bluedreamtea.co.uk/products/${slug}`,
+                  "priceCurrency": "GBP",
+                  "price": currentPrice || product.price,
+                  "priceValidUntil": new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                  "itemCondition": "https://schema.org/NewCondition",
+                  "availability": "https://schema.org/InStock",
+                  "seller": {
+                    "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                  },
+                  "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "valueAddedTaxIncluded": true,
+                    "price": currentPrice || product.price,
+                    "priceCurrency": "GBP"
+                  }
+                },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": averageRating.toFixed(1),
+                  "reviewCount": product.reviews.length,
+                  "bestRating": "5",
+                  "worstRating": "1"
+                },
+                "review": product.reviews.map(review => ({
+                  "@type": "Review",
+                  "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": review.rating,
+                    "bestRating": "5",
+                    "worstRating": "1"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": review.user
+                  },
+                  "reviewBody": review.comment,
+                  "datePublished": review.date || new Date().toISOString()
+                })),
+                "additionalProperty": [
+                  {
+                    "@type": "PropertyValue",
+                    "name": "composition",
+                    "value": "100% Pure Blue Lotus Flower"
+                  },
+                  {
+                    "@type": "PropertyValue",
+                    "name": "origin",
+                    "value": "Sri Lanka"
+                  },
+                  {
+                    "@type": "PropertyValue",
+                    "name": "processing",
+                    "value": "Hand-crafted pre-rolls"
+                  },
+                  {
+                    "@type": "PropertyValue",
+                    "name": "intended_use",
+                    "value": "Aromatherapy and Decoration"
+                  }
+                ],
+                "mainEntityOfPage": {
+                  "@id": `https://bluedreamtea.co.uk/products/${slug}`
+                }
+              }
+            ]
           })}
         </script>
+        
+        {/* HowTo Schema for Product Instructions */}
+        {product.details.instructions && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "HowTo",
+              "name": `How to Use ${product.title}`,
+              "description": `Step-by-step instructions for using ${product.title}`,
+              "image": product.images?.main || '',
+              "totalTime": "PT5M",
+              "estimatedCost": {
+                "@type": "MonetaryAmount",
+                "currency": "GBP",
+                "value": "0"
+              },
+              "step": product.details.instructions.content.map((instruction, index) => ({
+                "@type": "HowToStep",
+                "position": index + 1,
+                "text": instruction
+              }))
+            })}
+          </script>
+        )}
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12 lg:py-12">
@@ -280,7 +484,7 @@ const ProductPage = () => {
               {allImages.length > 0 ? (
                 <img
                   src={allImages[selectedImage]}
-                  alt={`${product.title} - View ${selectedImage + 1}`}
+                  alt={`${product.title} - Premium Blue Lotus Flower Product`}
                   className="w-full h-full object-center object-cover"
                 />
               ) : (
@@ -339,7 +543,7 @@ const ProductPage = () => {
                   >
                     <img
                       src={image}
-                      alt={`${product.title} thumbnail ${index + 1}`}
+                      alt={`${product.title} - ${index === 0 ? 'Main Product Image' : `Product View ${index + 1}`}`}
                       className="w-full h-full object-center object-cover"
                     />
                   </button>
@@ -386,6 +590,8 @@ const ProductPage = () => {
             <div className="mt-6">
               <p className="text-base text-gray-700">{product.description}</p>
             </div>
+
+
 
             {/* Variant Selection */}
             <div className="mt-8">
@@ -567,6 +773,9 @@ const ProductPage = () => {
             />
           )}
         </div>
+
+        {/* Recommended Products Section */}
+        {slug && <RecommendedProducts currentProductSlug={slug} />}
 
         {/* Customer Reviews Section */}
         <div className="mt-16 border-t border-gray-200 pt-16">

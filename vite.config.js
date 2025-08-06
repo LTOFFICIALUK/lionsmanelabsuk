@@ -33,4 +33,7 @@ export default defineConfig({
     },
   },
   assetsInclude: ['**/*.jpg', '**/*.png', '**/*.svg', '**/*.webp'],
+  server: {
+    port: 5174
+  }
 }); 

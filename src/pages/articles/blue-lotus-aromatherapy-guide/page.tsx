@@ -188,7 +188,7 @@ const BlueLotusAromatherapyGuide: React.FC = () => {
           heading="Essential Blue Lotus Aromatherapy Products"
           description="Discover our selection of Blue Lotus products perfect for aromatherapy:"
           productSlugs={[
-            'blue-lotus-flower-packs',
+            'blue-lotus-flower',
             'blue-lotus-flower-tea-cut'
           ]}
         />

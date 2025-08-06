@@ -5,7 +5,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   const productLinks = [
-    { path: '/products/blue-lotus-flower-packs', label: 'Blue Lotus Flower Packs' },
+    { path: '/products/blue-lotus-flower', label: 'Blue Lotus Flower Packs' },
     { path: '/products/blue-lotus-flower-pre-rolls', label: 'Blue Lotus Pre Rolls' },
     { path: '/products/blue-lotus-flower-smoking-blend', label: 'Blue Lotus Smoking Blend' },
     { path: '/products/blue-lotus-flower-tea-bags', label: 'Blue Lotus Tea Bags' },

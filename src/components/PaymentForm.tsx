@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { HiLockClosed, HiCreditCard, HiShieldCheck } from 'react-icons/hi';
 import { pixxlesService, PixxlesTransactionResponse } from '../utils/pixxles-api';
 
@@ -16,6 +16,12 @@ interface PaymentFormProps {
   onPaymentSuccess: (response: PixxlesTransactionResponse) => void;
   onPaymentError: (error: string) => void;
   onPaymentProcessing: (isProcessing: boolean) => void;
+  preFilledCardData?: {
+    cardNumber: string;
+    cardCVV: string;
+    cardExpiryMonth: string;
+    cardExpiryYear: string;
+  };
 }
 
 interface CardDetails {
@@ -38,7 +44,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
   customerCountryCode,
   onPaymentSuccess,
   onPaymentError,
-  onPaymentProcessing
+  onPaymentProcessing,
+  preFilledCardData
 }) => {
   const [cardDetails, setCardDetails] = useState<CardDetails>({
     cardNumber: '',
@@ -52,6 +59,22 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
   const [show3DSChallenge, setShow3DSChallenge] = useState(false);
   const [threeDSRef, setThreeDSRef] = useState<string>('');
   const [threeDSURL, setThreeDSURL] = useState<string>('');
+  const [threeDSTimeout, setThreeDSTimeout] = useState<NodeJS.Timeout | null>(null);
+  
+  // Use a ref to store threeDSRef to avoid stale closure issues
+  const threeDSRefRef = useRef<string>('');
+
+  // Populate card details when preFilledCardData is provided
+  useEffect(() => {
+    if (preFilledCardData) {
+      setCardDetails({
+        cardNumber: preFilledCardData.cardNumber,
+        cardCVV: preFilledCardData.cardCVV,
+        cardExpiryMonth: preFilledCardData.cardExpiryMonth,
+        cardExpiryYear: preFilledCardData.cardExpiryYear
+      });
+    }
+  }, [preFilledCardData]);
 
   // Generate current year and next 10 years for expiry
   const currentYear = new Date().getFullYear();
@@ -171,9 +194,75 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
     return sum % 10 === 0;
   };
 
+    // Extract 3DS request data from Pixxles response
+  const extract3DSRequestData = (response: any) => {
+    const threeDSRequest: any = {};
+    
+    // Debug: Log the original response keys to see what we're working with
+    console.log('Original response keys:', Object.keys(response));
+    console.log('Keys starting with threeDSRequest:', Object.keys(response).filter(k => k.startsWith('threeDSRequest')));
+    console.log('Keys starting with threeDSDetails:', Object.keys(response).filter(k => k.startsWith('threeDSDetails')));
+    
+    // Look for threeDSRequest fields in the response
+    for (const [key, value] of Object.entries(response)) {
+      if (key.startsWith('threeDSRequest[') && key.endsWith(']')) {
+        // Extract the field name from threeDSRequest[fieldName]
+        const fieldName = key.slice(14, -1); // Remove 'threeDSRequest[' and ']'
+        threeDSRequest[fieldName] = value;
+        console.log(`Extracted from threeDSRequest: ${fieldName} = ${value}`);
+      }
+    }
+    
+    // Also include threeDSDetails fields if present
+    for (const [key, value] of Object.entries(response)) {
+      if (key.startsWith('threeDSDetails[') && key.endsWith(']')) {
+        // Extract the field name from threeDSDetails[fieldName]
+        const fieldName = key.slice(14, -1); // Remove 'threeDSDetails[' and ']'
+        threeDSRequest[fieldName] = value;
+        console.log(`Extracted from threeDSDetails: ${fieldName} = ${value}`);
+      }
+    }
+    
+    // Also include any other 3DS-related fields that might be directly in the response
+    const threeDSFields = [
+      'threeDSMethodData',
+      'transID',
+      'version',
+      'versions',
+      'fallback',
+      'issuerCountryCode',
+      'acquirerCountryCode',
+      'psd2Region',
+      'requestorChallengeIndicator'
+    ];
+    
+    for (const field of threeDSFields) {
+      if (response[field] !== undefined) {
+        threeDSRequest[field] = response[field];
+        console.log(`Found direct field: ${field} = ${response[field]}`);
+      }
+    }
+    
+    console.log('Final extracted 3DS request data:', threeDSRequest);
+    
+    // Clean up any malformed field names (remove leading brackets)
+    const cleanedThreeDSRequest: any = {};
+    for (const [key, value] of Object.entries(threeDSRequest)) {
+      const cleanedKey = key.replace(/^\[+/, ''); // Remove leading brackets
+      cleanedThreeDSRequest[cleanedKey] = value;
+      if (cleanedKey !== key) {
+        console.log(`Cleaned field name: "${key}" -> "${cleanedKey}"`);
+      }
+    }
+    
+    console.log('Cleaned 3DS request data:', cleanedThreeDSRequest);
+    return cleanedThreeDSRequest;
+  };
+
+  // Remove hardcoded ngrok URL and improve validation
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -185,8 +274,12 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
       // Get customer IP (this would ideally come from your backend)
       const customerIP = '127.0.0.1'; // Placeholder - in production, get from server
       
-      // Create redirect URL for 3DS
-      const redirectURL = `${window.location.origin}/payment-callback`;
+      // Get the current URL for 3DS redirect
+      const currentOrigin = window.location.origin;
+      const redirectURL = `${currentOrigin}/payment-callback`;
+      
+      console.log('Starting payment transaction...');
+      console.log('3DS Redirect URL:', redirectURL);
 
       const response = await pixxlesService.createSaleTransaction({
         amount,
@@ -211,16 +304,40 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
 
       if (pixxlesService.is3DSRequired(response)) {
         // Handle 3DS authentication
-        setThreeDSRef(response.threeDSRef || '');
-        setThreeDSURL(response.threeDSURL || '');
+        const refValue = response.threeDSRef || '';
+        console.log('📊 DEBUG: Raw response.threeDSRef:', response.threeDSRef);
+        console.log('📊 DEBUG: Processed refValue:', refValue);
+        console.log('📊 DEBUG: refValue type:', typeof refValue);
+        console.log('📊 DEBUG: refValue length:', refValue.length);
+        
+        setThreeDSRef(refValue);
+        threeDSRefRef.current = refValue; // Store in ref to avoid stale closure
+        
+        // Use configured 3DS URL if available, otherwise use response URL
+        const threeDSURL = pixxlesService.getConfig().threeDSURL || response.threeDSURL || '';
+        setThreeDSURL(threeDSURL);
         setShow3DSChallenge(true);
         
+        console.log('✅ Set threeDSRef:', refValue);
+        console.log('✅ Set threeDSRefRef.current:', threeDSRefRef.current);
+        console.log('✅ Using 3DS URL:', threeDSURL);
+        
+        // Additional safety: Store in localStorage as backup
+        if (refValue) {
+          localStorage.setItem('pixxles_threeDSRef', refValue);
+          console.log('💾 Stored threeDSRef in localStorage as backup');
+        }
+        
         // Create iframe for 3DS challenge
-        if (response.threeDSURL && response.threeDSRequest) {
-          handle3DSChallenge(response.threeDSURL, response.threeDSRequest);
+        if (threeDSURL) {
+          // Extract 3DS request data from the response
+          const threeDSRequest = extract3DSRequestData(response);
+          console.log('3DS Request data:', threeDSRequest);
+          handle3DSChallenge(threeDSURL, threeDSRequest);
         }
       } else if (pixxlesService.isTransactionSuccessful(response)) {
         // Payment successful
+        localStorage.removeItem('pixxles_threeDSRef'); // Clean up backup
         onPaymentSuccess(response);
       } else {
         // Payment failed
@@ -230,7 +347,18 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
 
     } catch (error) {
       console.error('Payment error:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Payment processing failed';
+      let errorMessage = 'Payment processing failed';
+      
+      if (error instanceof Error) {
+        // Handle validation errors specifically
+        if (error.message.includes('Missing required field') || 
+            error.message.includes('Invalid')) {
+          errorMessage = error.message;
+        } else {
+          errorMessage = 'Payment processing failed. Please try again.';
+        }
+      }
+      
       onPaymentError(errorMessage);
     } finally {
       setIsProcessing(false);
@@ -239,64 +367,370 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
   };
 
   const handle3DSChallenge = (acsURL: string, threeDSRequest: any) => {
-    // Create a hidden iframe for 3DS challenge
+    console.log('Starting 3DS challenge with:', { acsURL, threeDSRequest });
+    
+    // Validate ACS URL
+    if (!acsURL || !acsURL.startsWith('http')) {
+      console.error('Invalid ACS URL:', acsURL);
+      onPaymentError('Invalid 3DS authentication URL');
+      return;
+    }
+    
+    // Validate 3DS request data
+    if (!threeDSRequest || Object.keys(threeDSRequest).length === 0) {
+      console.error('Empty or invalid 3DS request data:', threeDSRequest);
+      onPaymentError('Invalid 3DS authentication data');
+      return;
+    }
+    
+    // Create a visible iframe for 3DS challenge
     const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
+    iframe.style.height = '420px';
+    iframe.style.width = '420px';
+    iframe.style.border = '1px solid #ccc';
+    iframe.style.borderRadius = '8px';
+    iframe.style.display = 'block'; // Always show the iframe
+    iframe.style.margin = '20px auto';
+    iframe.style.backgroundColor = '#f9f9f9';
     iframe.name = 'threeds_acs';
-    document.body.appendChild(iframe);
+    
+    console.log('Creating visible 3DS iframe');
+    
+    // Insert iframe into the container or create a visible container
+    let container = document.getElementById('threeds-container') as HTMLDivElement;
+    if (!container) {
+      // Create a visible container if it doesn't exist
+      container = document.createElement('div');
+      container.id = 'threeds-container';
+      container.style.position = 'fixed';
+      container.style.top = '50%';
+      container.style.left = '50%';
+      container.style.transform = 'translate(-50%, -50%)';
+      container.style.zIndex = '9999';
+      container.style.backgroundColor = 'white';
+      container.style.padding = '20px';
+      container.style.borderRadius = '8px';
+      container.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+      container.style.maxWidth = '500px';
+      container.style.width = '100%';
+      
+      // Add close button
+      const closeButton = document.createElement('button');
+      closeButton.textContent = '×';
+      closeButton.style.position = 'absolute';
+      closeButton.style.top = '10px';
+      closeButton.style.right = '15px';
+      closeButton.style.background = 'none';
+      closeButton.style.border = 'none';
+      closeButton.style.fontSize = '24px';
+      closeButton.style.cursor = 'pointer';
+      closeButton.style.color = '#666';
+      closeButton.onclick = () => {
+        if (container && container.parentNode) {
+          container.parentNode.removeChild(container);
+        }
+        onPaymentError('3DS authentication cancelled');
+      };
+      container.appendChild(closeButton);
+      
+      // Add title
+      const title = document.createElement('h3');
+      title.textContent = '3D Secure Authentication';
+      title.style.margin = '0 0 15px 0';
+      title.style.textAlign = 'center';
+      title.style.color = '#333';
+      container.appendChild(title);
+      
+      document.body.appendChild(container);
+      console.log('Created visible 3DS container');
+    }
+    
+    container.appendChild(iframe);
+    console.log('Iframe added to container:', container);
+    console.log('Iframe element:', iframe);
+    
+    // Add error handling for iframe
+    iframe.onerror = (error) => {
+      console.error('Iframe error:', error);
+      onPaymentError('3DS iframe failed to load');
+    };
+    
+    iframe.onload = () => {
+      console.log('Iframe loaded successfully');
+      // Show the container when iframe loads
+      container.style.display = 'block';
+    };
 
     // Create form to submit to ACS
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = acsURL;
     form.target = 'threeds_acs';
+    
+    // Add some debugging attributes
+    form.setAttribute('data-debug', 'true');
+    console.log('Created form with action:', acsURL);
+    console.log('Form target:', 'threeds_acs');
 
     // Add form fields from threeDSRequest
+    console.log('Adding form fields:', threeDSRequest);
     for (const [key, value] of Object.entries(threeDSRequest)) {
+      // Skip empty or null values
+      if (value === null || value === undefined || value === '') {
+        console.log(`Skipping empty field: ${key}`);
+        continue;
+      }
+      
       const input = document.createElement('input');
       input.type = 'hidden';
       input.name = key;
       input.value = value as string;
       form.appendChild(input);
+      console.log(`Added field: ${key} = ${value}`);
     }
+    
+    // Log the final form structure for debugging
+    console.log('Final form structure:');
+    const formInputs = form.querySelectorAll('input');
+    formInputs.forEach((input, index) => {
+      console.log(`Input ${index}: name="${input.name}", value="${input.value}"`);
+    });
 
     // Submit form
+    console.log('Submitting 3DS form to:', acsURL);
+    console.log('Form data:', threeDSRequest);
+    console.log('Form HTML:', form.outerHTML);
+    
     document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+    console.log('Form appended to body');
+    
+    // Add a small delay to ensure form is ready
+    setTimeout(() => {
+      try {
+        console.log('Submitting form...');
+        form.submit();
+        console.log('Form submitted successfully');
+      } catch (error) {
+        console.error('Error submitting 3DS form:', error);
+        onPaymentError('3DS authentication failed - form submission error');
+      } finally {
+        // Clean up form
+        if (document.body.contains(form)) {
+          document.body.removeChild(form);
+          console.log('Form removed from body');
+        }
+      }
+    }, 100);
 
     // Listen for 3DS response
     window.addEventListener('message', handle3DSResponse);
+    console.log('3DS challenge initiated');
+    
+    // Set timeout for 3DS authentication
+    const timeout = setTimeout(() => {
+      console.error('3DS authentication timeout - no response received');
+      
+      // Clean up 3DS container
+      const container = document.getElementById('threeds-container');
+      if (container && container.parentNode) {
+        container.parentNode.removeChild(container);
+      }
+      
+      onPaymentError('3DS authentication timeout - please try again');
+    }, 300000); // 5 minutes timeout
+    
+    // Store timeout reference for cleanup
+    setThreeDSTimeout(timeout);
   };
 
   const handle3DSResponse = async (event: MessageEvent) => {
+    console.log('Received 3DS response event:', event);
+    
+    // Handle 3DS method notification
+    if (event.data.type === '3DS_METHOD_NOTIFICATION') {
+      console.log('📋 Received 3DS method notification:', event.data);
+      console.log('⏳ Waiting for actual challenge response...');
+      // Don't do anything yet - just wait for the actual challenge response
+      return;
+    }
+    
     // Handle 3DS response from iframe
     if (event.data.type === '3DS_RESPONSE') {
+      console.log('Processing 3DS response:', event.data);
+      
+      // Clear timeout since we got a response
+      if (threeDSTimeout) {
+        clearTimeout(threeDSTimeout);
+        setThreeDSTimeout(null);
+      }
+      
       try {
+        // Check if this is just a method notification (not the actual challenge response)
+        const responseValue = event.data.threeDSResponse;
+        console.log('3DS Response value:', responseValue);
+        
+        if (responseValue === 'method') {
+          console.log('📋 This is a 3DS method notification - waiting for actual challenge response...');
+          // Don't send continuation yet - wait for the actual challenge response
+          return;
+        }
+        
+        // Step 2: Send continuation request to Pixxles with the 3DS response
+        let currentThreeDSRef = threeDSRefRef.current; // Use ref to avoid stale closure
+        console.log('🔍 CONTINUATION DEBUG: threeDSRef state:', threeDSRef);
+        console.log('🔍 CONTINUATION DEBUG: threeDSRefRef.current:', currentThreeDSRef);
+        console.log('🔍 CONTINUATION DEBUG: threeDSURL state:', threeDSURL);
+        console.log('🔍 CONTINUATION DEBUG: Received event data:', event.data);
+        
+        if (!currentThreeDSRef) {
+          console.error('threeDSRef is missing! Checking localStorage backup...');
+          const backupRef = localStorage.getItem('pixxles_threeDSRef');
+          if (backupRef) {
+            console.log('🔄 Found threeDSRef in localStorage backup:', backupRef);
+            threeDSRefRef.current = backupRef;
+            currentThreeDSRef = backupRef; // Update local variable
+          } else {
+            console.error('No threeDSRef backup found! This will cause the continuation to fail.');
+            console.error('Debug: Check if threeDSRef was properly set in the initial response');
+            onPaymentError('3DS authentication failed - missing reference');
+            return;
+          }
+        }
+        
+        console.log('🔍 CONTINUATION DEBUG: Final threeDSRef to use:', currentThreeDSRef);
+        console.log('🔍 CONTINUATION DEBUG: Sending request with:', {
+          threeDSRef: currentThreeDSRef,
+          threeDSResponse: responseValue
+        });
+        
+        console.log('About to call continue3DSTransaction with threeDSRef:', currentThreeDSRef);
+        console.log('About to call continue3DSTransaction with threeDSResponse:', responseValue);
+        
         const response = await pixxlesService.continue3DSTransaction(
-          threeDSRef,
-          event.data.threeDSResponse
+          currentThreeDSRef,
+          responseValue
         );
 
-        if (pixxlesService.isTransactionSuccessful(response)) {
+        console.log('3DS continuation response:', response);
+
+        // Check if we need another round of 3DS (challenge)
+        if (response.responseCode === '65802' && response.threeDSRequest && response.threeDSRequest.creq) {
+          console.log('🚀 Second 3DS challenge required');
+          
+          // Use configured 3DS URL if available, otherwise use response URL
+          const challengeURL = pixxlesService.getConfig().threeDSURL || response.threeDSURL;
+          console.log('🚀 Challenge URL:', challengeURL);
+          console.log('🚀 Challenge CREQ:', response.threeDSRequest.creq);
+          console.log('🚀 threeDSRef for challenge:', response.threeDSRef || currentThreeDSRef);
+          
+          // Step 3: Handle challenge request (CREQ)
+          const challengeData = {
+            creq: response.threeDSRequest.creq,
+            threeDSRef: response.threeDSRef || currentThreeDSRef
+          };
+          
+          console.log('🚀 About to submit challenge to ACS with data:', challengeData);
+          
+          // Create or get challenge iframe
+          let challengeIframe = document.getElementById('threeds_acs') as HTMLIFrameElement;
+          if (!challengeIframe) {
+            console.log('🚀 Creating challenge iframe');
+            challengeIframe = document.createElement('iframe');
+            challengeIframe.id = 'threeds_acs';
+            challengeIframe.name = 'threeds_acs';
+            challengeIframe.style.width = '100%';
+            challengeIframe.style.height = '400px';
+            challengeIframe.style.border = '1px solid #ccc';
+            document.body.appendChild(challengeIframe);
+          }
+          
+          // Submit CREQ to ACS for challenge
+          if (challengeURL) {
+            submitChallengeToACS(challengeURL, challengeData);
+          } else {
+            console.error('❌ No threeDSURL provided for challenge!');
+          }
+          
+        } else if (pixxlesService.isTransactionSuccessful(response)) {
+          // Payment successful
+          localStorage.removeItem('pixxles_threeDSRef'); // Clean up backup
+          
+          // Clean up 3DS container
+          const container = document.getElementById('threeds-container');
+          if (container && container.parentNode) {
+            container.parentNode.removeChild(container);
+          }
+          
           onPaymentSuccess(response);
         } else {
+          // Payment failed
           const errorMessage = pixxlesService.getErrorMessage(response);
+          
+          // Clean up 3DS container
+          const container = document.getElementById('threeds-container');
+          if (container && container.parentNode) {
+            container.parentNode.removeChild(container);
+          }
+          
           onPaymentError(errorMessage);
         }
       } catch (error) {
         console.error('3DS continuation error:', error);
+        
+        // Clean up 3DS container
+        const container = document.getElementById('threeds-container');
+        if (container && container.parentNode) {
+          container.parentNode.removeChild(container);
+        }
+        
         onPaymentError('3DS authentication failed');
       }
     }
+  };
+
+  const submitChallengeToACS = (acsURL: string, challengeData: any) => {
+    console.log('🎯 Submitting challenge to ACS:', { acsURL, challengeData });
+    
+    // Create form for challenge submission
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = acsURL;
+    form.target = 'threeds_acs';
+    
+    console.log('🎯 Creating form with target:', form.target);
+    console.log('🎯 Form action:', form.action);
+    
+    // Add challenge data fields
+    Object.entries(challengeData).forEach(([key, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value as string;
+      form.appendChild(input);
+      console.log(`🎯 Added form field: ${key} = ${value?.toString().substring(0, 50)}...`);
+    });
+    
+    console.log('🎯 Form HTML:', form.outerHTML);
+    
+    // Submit form
+    document.body.appendChild(form);
+    console.log('🎯 Form appended to body');
+    form.submit();
+    console.log('🎯 Form submitted');
+    document.body.removeChild(form);
+    console.log('🎯 Form removed from body');
   };
 
   useEffect(() => {
     return () => {
       // Cleanup event listener
       window.removeEventListener('message', handle3DSResponse);
+      // Cleanup timeout
+      if (threeDSTimeout) {
+        clearTimeout(threeDSTimeout);
+      }
     };
-  }, [threeDSRef]);
+  }, [threeDSRef, threeDSTimeout]);
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6">
@@ -312,9 +746,12 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
             3D Secure Authentication
           </h3>
           <p className="text-gray-600 mb-4">
-            Please complete the authentication challenge in the popup window.
+            Please complete the authentication challenge below.
           </p>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <div id="threeds-container" className="flex justify-center">
+            {/* 3DS iframe will be inserted here */}
+          </div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mt-4"></div>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">

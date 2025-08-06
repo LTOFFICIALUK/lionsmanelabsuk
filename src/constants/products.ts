@@ -33,8 +33,8 @@ import blueLotusTeaCut3 from '../assets/images/products/blue-lotus-flower-tea-cu
 
 export const PRODUCTS: Products = {
   'blue-lotus-flower-pre-rolls': {
-    title: 'Blue Lotus Flower Pre Rolls',
-    description: 'Enjoy the calming effects of blue lotus flower with our pre rolls.',
+    title: 'Blue Lotus Flower King Size Pre-Rolls (100% Blue Lotus Flower ONLY)',
+    description: 'Buy Blue Lotus Flower Pre Rolls from the leading supplier in the UK. At Blue Dream Tea UK, we pride ourselves on top quality Blue Lotus Flower Pre Rolls.',
     price: 15.99,
     salePrice: 12.99,
     images: {
@@ -104,6 +104,26 @@ export const PRODUCTS: Products = {
             }
           ]
         }
+      },
+      productInformation: {
+        content: [
+          {
+            heading: "What's so special about our Blue Lotus Pre Rolls?",
+            content: "Discover a new level of serenity with our premium Blue Lotus Pre-Rolls. Expertly crafted to offer a unique smoking experience that stands apart from traditional cigarettes and weed. Embrace the calming allure of Blue Lotus Flower as you smoke your worries away, exploring the soothing effects that set it apart."
+          },
+          {
+            heading: "What Is Blue Lotus Flower?",
+            content: "Organically grown and dried in Sri Lanka, our Blue Lotus Flowers are shipped to the UK where they are crafted into the perfect product for our customer. Blue Lotus Flower is a captivating herb with a rich history and cultural significance. It's delicate celestial blue petals and subtle fragrance evoke tranquility and wonder."
+          },
+          {
+            heading: "What Are The Effects?",
+            content: "Our herbal smokes are traditionally enjoyed for its calming and soothing properties. It may offer the following benefits: Promotes relaxation and a sense of calm, Supports restful sleep, Helps to ease everyday stress and tension, Enhances feelings of well-being, Traditionally used for its aromatic qualities, Supports healthy skin and hair."
+          },
+          {
+            heading: "What Will I Receive?",
+            content: "When ordering your Blue Lotus Pre Rolls from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world to places like: UK, Canada, USA, Asia, Europe and Oceania."
+          }
+        ]
       },
       specifications: {
         content: [
@@ -206,7 +226,7 @@ export const PRODUCTS: Products = {
   },
   'blue-lotus-flower-smoking-blend': {
     title: 'Blue Lotus Flower Smoking Blend',
-    description: 'Smoke the calming effects of blue lotus flower with our smoking blend. Roll your own pre-rolls at home.',
+    description: 'Buy Blue Lotus Smoking Blend from the top supplier in the UK. At Blue Dream Worldwide, we pride ourselves on supplying top quality dried Blue Lotus Blends.',
     price: 15.99,
     salePrice: 12.99,
     images: {
@@ -278,6 +298,26 @@ export const PRODUCTS: Products = {
         }
       },
       specifications: {
+      productInformation: {
+        content: [
+          {
+            heading: "What's so special about our Blue Lotus Smoking Blend?",
+            content: "Discover the perfect harmony of tradition and convenience with our premium Blue Lotus Smoking Blend. Expertly crafted to offer a unique smoking experience that stands apart from traditional alternatives, this blend combines the finest Blue Lotus Flower with complementary herbs for an enhanced experience."
+          },
+          {
+            heading: "What Is Blue Lotus Flower?",
+            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+          },
+          {
+            heading: "What Are The Effects?",
+            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+          },
+          {
+            heading: "What Will I Receive?",
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+          }
+        ]
+      },
         content: [
           {
             icon: "weight",
@@ -372,9 +412,9 @@ export const PRODUCTS: Products = {
     }
   },
 
-  'blue-lotus-flower-packs': {
-    title: 'Blue Lotus Flower Packs',
-    description: 'Pure blue lotus flower in various pack sizes and quantities.',
+  'blue-lotus-flower': {
+    title: 'Blue Lotus Flower',
+    description: 'Buy Blue Lotus Flower from the top supplier in the UK. At Blue Dream Tea UK, we pride ourselves on supplying top quality dried Blue Lotus Flower.',
     price: 15.99,
     salePrice: 12.99,
     images: {
@@ -432,6 +472,26 @@ export const PRODUCTS: Products = {
             }
           ]
         }
+      },
+      productInformation: {
+        content: [
+          {
+            heading: "What's so special about our Blue Lotus Flower?",
+            content: "Step into the world of ancient wisdom with our premium Blue Lotus Flower, thoughtfully cultivated in the pristine fields of Sri Lanka. As the UK's leading supplier, we take pride in bringing you this remarkable botanical treasure in its purest form."
+          },
+          {
+            heading: "What Is Blue Lotus Flower?",
+            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+          },
+          {
+            heading: "What Are The Effects?",
+            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+          },
+          {
+            heading: "What Will I Receive?",
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+          }
+        ]
       },
       specifications: {
         content: [
@@ -553,8 +613,8 @@ export const PRODUCTS: Products = {
     }
   },
   'blue-lotus-flower-tea-bags': {
-    title: 'Blue Lotus Flower Tea Bags',
-    description: 'Brew a soothing cup of blue lotus flower tea. Available in pure blue lotus or chamomile & blue lotus blend.',
+    title: 'Blue Lotus Flower Tea Bags (Ready To Use)',
+    description: 'Introducing our Blue Lotus Flower Tea Bags – the perfect blend of elegance and wellness in every sip. Get free shipping this month only...',
     price: 10.99,
     salePrice: 8.99,
     images: {
@@ -640,6 +700,26 @@ export const PRODUCTS: Products = {
         }
       },
       specifications: {
+      productInformation: {
+        content: [
+          {
+            heading: "What's so special about our Blue Lotus Tea Bags?",
+            content: "Experience the convenience and elegance of our premium Blue Lotus Tea Bags. Each bag is carefully crafted to deliver the authentic Blue Lotus experience in a convenient, ready-to-use format that makes enjoying this ancient herb effortless and enjoyable."
+          },
+          {
+            heading: "What Is Blue Lotus Flower?",
+            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+          },
+          {
+            heading: "What Are The Effects?",
+            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+          },
+          {
+            heading: "What Will I Receive?",
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+          }
+        ]
+      },
         content: [
           {
             icon: "weight",
@@ -840,6 +920,26 @@ export const PRODUCTS: Products = {
             }
           ]
         }
+      },
+      productInformation: {
+        content: [
+          {
+            heading: "What's so special about our Blue Lotus Tea Cut?",
+            content: "Discover the perfect balance of tradition and convenience with our premium Blue Lotus Tea Cut. Expertly processed to the ideal size for tea preparation, this cut preserves all the natural properties while making it easy to brew the perfect cup."
+          },
+          {
+            heading: "What Is Blue Lotus Flower?",
+            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+          },
+          {
+            heading: "What Are The Effects?",
+            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+          },
+          {
+            heading: "What Will I Receive?",
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+          }
+        ]
       },
       specifications: {
         content: [

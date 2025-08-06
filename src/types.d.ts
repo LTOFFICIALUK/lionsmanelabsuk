@@ -21,7 +21,7 @@ declare module '*.webp' {
   export default content;
 }
 
-export type ProductCategory = 'blue-lotus-flower-tea-bags' | 'blue-lotus-flower' | 'blue-lotus-flower-smoking' | 'blue-lotus-flower-packs';
+export type ProductCategory = 'blue-lotus-flower-tea-bags' | 'blue-lotus-flower' | 'blue-lotus-flower-smoking' | 'blue-lotus-flower-pre-rolls' | 'blue-lotus-flower-tea-cut';
 
 export type GuideCategory = 'getting-started' | 'brewing-guides' | 'wellness' | 'recipes' | 'general' | 'usage-guides' | 'product-information' | 'education' | 'culture-history' | 'comparison-guides';
 
@@ -59,6 +59,11 @@ export interface ProductSpecification {
   value: string;
 }
 
+export interface ProductInformationItem {
+  heading: string;
+  content: string;
+}
+
 export interface RelatedArticle {
   slug: string;
   title: string;
@@ -69,6 +74,9 @@ export interface ProductDetailsContent {
   description?: {
     content: string[];
     schema?: Record<string, any>;
+  };
+  productInformation?: {
+    content: ProductInformationItem[];
   };
   specifications?: {
     content: ProductSpecification[];

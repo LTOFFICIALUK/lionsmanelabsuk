@@ -6,6 +6,8 @@ interface PixxlesConfig {
   signatureKey: string;
   gatewayUrl: string;
   environment: 'sandbox' | 'production';
+  // Add 3DS URL override for testing
+  threeDSURL?: string;
 }
 
 interface PixxlesTransactionRequest {
@@ -13,7 +15,6 @@ interface PixxlesTransactionRequest {
   type: string;
   amount: string;
   currencyCode: string;
-  countryCode: string;
   transactionUnique: string;
   orderRef: string;
   cardNumber: string;
@@ -65,8 +66,10 @@ interface Pixxles3DSResponse {
 const PIXXLES_CONFIG: PixxlesConfig = {
   merchantID: import.meta.env.VITE_PIXXLES_MERCHANT_ID || '132779',
   signatureKey: import.meta.env.VITE_PIXXLES_SIGNATURE_KEY || 'gpfu2XDYLKWvbZi',
-  gatewayUrl: '/api/payment/process', // Use our API route instead of direct Pixxles call
-  environment: (import.meta.env.VITE_PIXXLES_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox'
+  gatewayUrl: import.meta.env.VITE_PIXXLES_GATEWAY_URL || 'https://qa-transactions.pixxlesportal.com/direct',
+  environment: (import.meta.env.VITE_PIXXLES_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox',
+  // Add 3DS URL override for testing - set this to override the URL from Pixxles response
+  threeDSURL: import.meta.env.VITE_PIXXLES_3DS_URL || undefined
 };
 
 // Utility functions for signature calculation
@@ -200,25 +203,23 @@ class PixxlesService {
     const amountInPence = Math.round(orderData.amount * 100).toString();
 
     const transactionData: PixxlesTransactionRequest = {
-      merchantID: this.config.merchantID,
       action: 'SALE',
       type: '1', // E-commerce transaction
       amount: amountInPence,
       currencyCode: orderData.currency === 'GBP' ? '826' : '840', // ISO currency codes
-      countryCode: orderData.customerCountryCode === 'GB' ? '826' : '840',
       transactionUnique: this.generateTransactionUnique(),
       orderRef: orderData.orderRef,
       cardNumber: orderData.cardNumber.replace(/\s/g, ''),
       cardCVV: orderData.cardCVV,
       cardExpiryMonth: orderData.cardExpiryMonth,
-      cardExpiryYear: orderData.cardExpiryYear,
+      cardExpiryYear: orderData.cardExpiryYear.slice(-2), // Use 2-digit year format
       customerName: orderData.customerName,
       customerEmail: orderData.customerEmail,
       customerPhone: orderData.customerPhone,
       customerAddress: orderData.customerAddress,
       customerPostCode: orderData.customerPostCode,
       customerTown: orderData.customerTown,
-      customerCountryCode: orderData.customerCountryCode,
+      customerCountryCode: orderData.customerCountryCode === 'GB' ? '826' : '840',
       remoteAddress: orderData.customerIP,
       threeDSRedirectURL: orderData.redirectURL,
       threeDSRequired: 'Y', // Enable 3DS
@@ -227,11 +228,7 @@ class PixxlesService {
       ...this.getDeviceInfo()
     };
 
-    // Create signature
-    const signature = await createSignature(transactionData, this.config.signatureKey);
-    transactionData.signature = signature;
-
-    // Send transaction to Pixxles
+    // Send transaction directly to Pixxles API
     const response = await this.sendTransaction(transactionData);
     return response;
   }
@@ -239,36 +236,98 @@ class PixxlesService {
   // Continue 3DS transaction
   async continue3DSTransaction(threeDSRef: string, threeDSResponse: any): Promise<PixxlesTransactionResponse> {
     const transactionData: Record<string, any> = {
+      action: 'SALE', // Continuation is still part of the original SALE
       threeDSRef,
-      threeDSResponse
+      'threeDSResponse[threeDSMethodData]': threeDSResponse
     };
 
-    // Create signature
-    const signature = await createSignature(transactionData, this.config.signatureKey);
-    transactionData.signature = signature;
+    console.log('3DS continuation data being sent:', transactionData);
+    console.log('threeDSRef value:', threeDSRef);
+    console.log('threeDSRef length:', threeDSRef ? threeDSRef.length : 'undefined/null');
+    console.log('threeDSResponse value:', threeDSResponse);
+    
+    if (!threeDSRef || threeDSRef.trim() === '') {
+      console.error('ERROR: threeDSRef is empty or invalid!');
+      console.trace('Stack trace for empty threeDSRef');
+    }
 
-    // Send continuation request
+    // Send continuation request directly to Pixxles
     const response = await this.sendTransaction(transactionData);
     return response;
   }
 
-  // Send transaction to our API route (which then calls Pixxles)
+  // Send transaction directly to Pixxles API
   private async sendTransaction(data: Record<string, any>): Promise<PixxlesTransactionResponse> {
     try {
+      // Add merchant ID to transaction data
+      data.merchantID = this.config.merchantID;
+      
+      // Create signature
+      const signature = await createSignature(data, this.config.signatureKey);
+      data.signature = signature;
+
+      // Convert data to form-urlencoded format
+      const formData = new URLSearchParams();
+      for (const [key, value] of Object.entries(data)) {
+        if (value !== null && value !== undefined) {
+          if (typeof value === 'object') {
+            // Handle nested objects (like threeDSResponse)
+            for (const [nestedKey, nestedValue] of Object.entries(value)) {
+              formData.append(`${key}[${nestedKey}]`, nestedValue as string);
+            }
+          } else {
+            formData.append(key, value.toString());
+          }
+        }
+      }
+
+      console.log('Sending to Pixxles Gateway:', this.config.gatewayUrl);
+
       const response = await fetch(this.config.gatewayUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'User-Agent': 'BlueDreamTea-Payment-Gateway/1.0',
         },
-        body: JSON.stringify(data)
+        body: formData.toString()
       });
 
+      console.log('Pixxles response status:', response.status);
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Pixxles error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
       }
 
-      const responseData = await response.json();
+      const responseText = await response.text();
+      console.log('Pixxles response received');
+      
+      // Parse the response (it's form-urlencoded)
+      const responseData: Record<string, string> = {};
+      const params = new URLSearchParams(responseText);
+      for (const [key, value] of params.entries()) {
+        responseData[key] = value;
+      }
+
+      console.log('Parsed response data');
+
+      // Verify response signature
+      const responseSignature = responseData.signature;
+      delete responseData.signature;
+      
+      const expectedSignature = await createSignature(responseData, this.config.signatureKey);
+      
+      if (responseSignature !== expectedSignature) {
+        console.error('Signature verification failed');
+        console.error('Expected:', expectedSignature);
+        console.error('Received:', responseSignature);
+        throw new Error('Response signature verification failed');
+      }
+
+      // Add signature back to response
+      responseData.signature = responseSignature;
+
       return responseData as PixxlesTransactionResponse;
 
     } catch (error) {

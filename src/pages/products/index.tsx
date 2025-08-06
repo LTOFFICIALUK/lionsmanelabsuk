@@ -63,6 +63,127 @@ const ProductsIndex: React.FC = () => {
         <meta property="og:title" content="All Products - Blue Dream Tea UK" />
         <meta property="og:description" content="Browse our complete collection of premium blue lotus flower products including tea bags, pre rolls, and flower packs." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bluedreamtea.co.uk/products" />
+        
+        {/* Comprehensive Schema Markup for Products Page */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              // Organization Schema
+              {
+                "@type": "Organization",
+                "@id": "https://bluedreamtea.co.uk/#/schema/organization/1",
+                "url": "https://bluedreamtea.co.uk",
+                "name": "Blue Dream Tea",
+                "alternateName": "BDT",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://bluedreamtea.co.uk/logo.png",
+                  "width": 500,
+                  "height": 500
+                },
+                "hasMerchantReturnPolicy": {
+                  "@type": "MerchantReturnPolicy",
+                  "merchantReturnLink": "https://bluedreamtea.co.uk/policies/refund-policy",
+                  "applicableCountry": "GB",
+                  "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+                  "merchantReturnDays": 30
+                },
+                "sameAs": [
+                  "https://www.tiktok.com/@bluedreamworldwide"
+                ],
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "contactType": "customer service",
+                  "availableLanguage": "English"
+                }
+              },
+              // WebSite Schema
+              {
+                "@type": "WebSite",
+                "@id": "https://bluedreamtea.co.uk/#/schema/website/1",
+                "url": "https://bluedreamtea.co.uk",
+                "name": "Blue Dream Tea - Leading Blue Lotus Flower Supplier UK",
+                "alternateName": "Blue Dream Tea",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://bluedreamtea.co.uk/search?q={search_term_string}",
+                  "query-input": "required name=search_term_string"
+                },
+                "publisher": {
+                  "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                },
+                "inLanguage": ["en"]
+              },
+              // CollectionPage Schema
+              {
+                "@type": "CollectionPage",
+                "@id": "https://bluedreamtea.co.uk/products/#/schema/collectionpage",
+                "name": "All Blue Lotus Flower Products",
+                "description": "Complete collection of premium blue lotus flower products including tea bags, pre rolls, and flower packs",
+                "url": "https://bluedreamtea.co.uk/products",
+                "mainEntity": {
+                  "@type": "ItemList",
+                  "numberOfItems": filteredAndSortedProducts.length,
+                  "itemListElement": filteredAndSortedProducts.map((product, index) => ({
+                    "@type": "ListItem",
+                    "position": index + 1,
+                    "item": {
+                      "@type": "Product",
+                      "@id": `https://bluedreamtea.co.uk/products/${product.slug}/#/schema/product`,
+                      "name": product.title,
+                      "description": product.description,
+                      "image": product.images?.main || '',
+                      "brand": {
+                        "@type": "Brand",
+                        "name": "Blue Dream Tea - Blue Lotus Flower Supplier"
+                      },
+                      "offers": {
+                        "@type": "Offer",
+                        "priceCurrency": "GBP",
+                        "price": product.salePrice || product.price,
+                        "availability": "https://schema.org/InStock",
+                        "seller": {
+                          "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                        }
+                      },
+                      "aggregateRating": {
+                        "@type": "AggregateRating",
+                        "ratingValue": (product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length).toFixed(1),
+                        "reviewCount": product.reviews.length,
+                        "bestRating": "5",
+                        "worstRating": "1"
+                      }
+                    }
+                  }))
+                },
+                "isPartOf": {
+                  "@id": "https://bluedreamtea.co.uk/#/schema/website/1"
+                }
+              },
+              // Breadcrumb Schema
+              {
+                "@type": "BreadcrumbList",
+                "@id": "https://bluedreamtea.co.uk/products/#/schema/breadcrumb",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://bluedreamtea.co.uk"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Products",
+                    "item": "https://bluedreamtea.co.uk/products"
+                  }
+                ]
+              }
+            ]
+          })}
+        </script>
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

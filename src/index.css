@@ -35,6 +35,42 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
+
+  /* Tab navigation utilities */
+  .tab-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .tab-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* Ensure tab text stays within boundaries */
+  .tab-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* Scroll arrow styling */
+  .scroll-arrow {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  
+  .scroll-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Gradient fade indicators for scrollable content */
+  .scroll-fade-left {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.9), transparent);
+  }
+  
+  .scroll-fade-right {
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.9), transparent);
+  }
 }
 
 /* Custom scrollbar styles */

@@ -96,7 +96,7 @@ const VapingBlueLotus: React.FC = () => {
       .filter(([key]) => [
         'blue-lotus-flower-smoking-blend',
         'blue-lotus-flower-pre-rolls',
-        'blue-lotus-flower-packs'
+        'blue-lotus-flower'
       ].includes(key))
       .map(([key, product], index) => ({
         '@type': 'ListItem',
@@ -302,7 +302,7 @@ const VapingBlueLotus: React.FC = () => {
           productSlugs={[
             'blue-lotus-flower-smoking-blend',
             'blue-lotus-flower-pre-rolls',
-            'blue-lotus-flower-packs'
+            'blue-lotus-flower'
           ]}
         />
 

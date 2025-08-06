@@ -184,7 +184,7 @@ const BlueLotusHistory: React.FC = () => {
           productSlugs={[
             'blue-lotus-flower-tea-bags',
             'blue-lotus-flower-tea-cut',
-            'blue-lotus-flower-packs'
+            'blue-lotus-flower'
           ]}
         />
 

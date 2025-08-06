@@ -181,7 +181,7 @@ const CanYouGrowBlueLotusInUS: React.FC = () => {
           heading="Essential Growing Supplies"
           description="Get started with our selection of quality Blue Lotus products:"
           productSlugs={[
-            'blue-lotus-flower-packs',
+            'blue-lotus-flower',
             'blue-lotus-flower-tea-cut'
           ]}
         />

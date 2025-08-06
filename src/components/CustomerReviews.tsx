@@ -155,7 +155,7 @@ const customerReviews: Review[] = [
     date: "2 weeks ago",
     verified: true,
     productPurchased: "Blue Lotus Flower Packs",
-    productSlug: "blue-lotus-flower-packs"
+    productSlug: "blue-lotus-flower"
   },
   {
     id: 14,
@@ -165,7 +165,7 @@ const customerReviews: Review[] = [
     date: "1 month ago",
     verified: true,
     productPurchased: "Blue Lotus Flower Packs",
-    productSlug: "blue-lotus-flower-packs"
+    productSlug: "blue-lotus-flower"
   },
   {
     id: 15,
@@ -175,7 +175,7 @@ const customerReviews: Review[] = [
     date: "3 weeks ago",
     verified: true,
     productPurchased: "Blue Lotus Flower Packs",
-    productSlug: "blue-lotus-flower-packs"
+    productSlug: "blue-lotus-flower"
   }
 ];
 
