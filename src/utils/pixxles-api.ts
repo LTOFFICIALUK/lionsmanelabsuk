@@ -314,8 +314,20 @@ class PixxlesService {
         
         return mockResponse;
       } else {
-        // Production: use Vercel API proxy to avoid CORS issues
-        // Convert data to form-urlencoded format as required by Pixxles
+        // Production: call Pixxles API directly
+        // Add merchant ID to transaction data
+        data.merchantID = this.config.merchantID;
+        
+        // Create signature
+        const signatureData = Object.keys(data)
+          .sort()
+          .map(key => `${key}=${data[key]}`)
+          .join('&') + this.config.signatureKey;
+
+        const signature = await createSignature(data, this.config.signatureKey);
+        data.signature = signature;
+
+        // Convert to form-urlencoded format
         const formData = new URLSearchParams();
         for (const [key, value] of Object.entries(data)) {
           if (value !== null && value !== undefined) {
@@ -330,10 +342,14 @@ class PixxlesService {
           }
         }
 
-        const response = await fetch('/api/pixxles', {
+        const response = await fetch(this.config.gatewayUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'Origin': window.location.origin,
+            'Access-Control-Request-Method': 'POST',
+            'Access-Control-Request-Headers': 'Content-Type'
           },
           body: formData.toString()
         });
