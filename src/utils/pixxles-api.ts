@@ -66,7 +66,7 @@ interface Pixxles3DSResponse {
 const PIXXLES_CONFIG: PixxlesConfig = {
   merchantID: import.meta.env.VITE_PIXXLES_MERCHANT_ID || '132779',
   signatureKey: import.meta.env.VITE_PIXXLES_SIGNATURE_KEY || 'gpfu2XDYLKWvbZi',
-  gatewayUrl: '/api/payment/process', // Use our API route to handle CORS
+  gatewayUrl: import.meta.env.VITE_PIXXLES_GATEWAY_URL || 'https://qa-transactions.pixxlesportal.com/direct',
   environment: (import.meta.env.VITE_PIXXLES_ENVIRONMENT as 'sandbox' | 'production') || 'sandbox',
   // Add 3DS URL override for testing - set this to override the URL from Pixxles response
   threeDSURL: import.meta.env.VITE_PIXXLES_3DS_URL || undefined
@@ -203,7 +203,6 @@ class PixxlesService {
     const amountInPence = Math.round(orderData.amount * 100).toString();
 
     const transactionData: PixxlesTransactionRequest = {
-      merchantID: this.config.merchantID,
       action: 'SALE',
       type: '1', // E-commerce transaction
       amount: amountInPence,
@@ -257,23 +256,85 @@ class PixxlesService {
     return response;
   }
 
-  // Send transaction to our API route (which handles CORS and forwards to Pixxles)
+  // Send transaction directly to Pixxles API
   private async sendTransaction(data: Record<string, any>): Promise<PixxlesTransactionResponse> {
     try {
-      const response = await fetch(this.config.gatewayUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
+      // Add merchant ID to transaction data
+      data.merchantID = this.config.merchantID;
+      
+      // Create signature
+      const signature = await createSignature(data, this.config.signatureKey);
+      data.signature = signature;
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
+      // Convert data to form-urlencoded format
+      const formData = new URLSearchParams();
+      for (const [key, value] of Object.entries(data)) {
+        if (value !== null && value !== undefined) {
+          if (typeof value === 'object') {
+            // Handle nested objects (like threeDSResponse)
+            for (const [nestedKey, nestedValue] of Object.entries(value)) {
+              formData.append(`${key}[${nestedKey}]`, nestedValue as string);
+            }
+          } else {
+            formData.append(key, value.toString());
+          }
+        }
       }
 
-      const responseData = await response.json();
+      console.log('Sending to Pixxles Gateway:', this.config.gatewayUrl);
+
+      // Use a CORS proxy for development, or direct call for production
+      const isDevelopment = import.meta.env.DEV;
+      const targetUrl = isDevelopment 
+        ? `https://cors-anywhere.herokuapp.com/${this.config.gatewayUrl}`
+        : this.config.gatewayUrl;
+
+      const response = await fetch(targetUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'User-Agent': 'BlueDreamTea-Payment-Gateway/1.0',
+          ...(isDevelopment && { 'Origin': window.location.origin })
+        },
+        body: formData.toString()
+      });
+
+      console.log('Pixxles response status:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Pixxles error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+      }
+
+      const responseText = await response.text();
+      console.log('Pixxles response received');
+      
+      // Parse the response (it's form-urlencoded)
+      const responseData: Record<string, string> = {};
+      const params = new URLSearchParams(responseText);
+      for (const [key, value] of params.entries()) {
+        responseData[key] = value;
+      }
+
+      console.log('Parsed response data');
+
+      // Verify response signature
+      const responseSignature = responseData.signature;
+      delete responseData.signature;
+      
+      const expectedSignature = await createSignature(responseData, this.config.signatureKey);
+      
+      if (responseSignature !== expectedSignature) {
+        console.error('Signature verification failed');
+        console.error('Expected:', expectedSignature);
+        console.error('Received:', responseSignature);
+        throw new Error('Response signature verification failed');
+      }
+
+      // Add signature back to response
+      responseData.signature = responseSignature;
+
       return responseData as PixxlesTransactionResponse;
 
     } catch (error) {
