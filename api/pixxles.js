@@ -1,11 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import crypto from 'crypto';
+const crypto = require('crypto');
 
 const MERCHANT_ID = process.env.PIXXLES_MERCHANT_ID;
 const SIGNATURE_KEY = process.env.PIXXLES_SIGNATURE_KEY;
 const GATEWAY_URL = process.env.PIXXLES_GATEWAY_URL;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+module.exports = async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -82,10 +81,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     return res.status(200).json(responseData);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Pixxles API Error:', error);
     return res.status(500).json({
       error: error.message || 'Payment processing failed'
     });
   }
-} 
+}; 

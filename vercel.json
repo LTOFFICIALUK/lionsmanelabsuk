@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/**/*.ts",
+      "src": "api/**/*.js",
       "use": "@vercel/node"
     },
     {
@@ -43,6 +43,7 @@
     "PIXXLES_MERCHANT_ID": "132779",
     "PIXXLES_SIGNATURE_KEY": "gpfu2XDYLKWvbZi",
     "PIXXLES_GATEWAY_URL": "https://qa-transactions.pixxlesportal.com/direct",
-    "PIXXLES_ENVIRONMENT": "sandbox"
+    "PIXXLES_ENVIRONMENT": "sandbox",
+    "VITE_ROYAL_MAIL_API_KEY": "your-royal-mail-api-key-here"
   }
 } 

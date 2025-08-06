@@ -1,10 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
+const axios = require('axios');
 
 const API_KEY = process.env.VITE_ROYAL_MAIL_API_KEY;
 const API_URL = 'https://api.parcel.royalmail.com/api/v1';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+module.exports = async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -48,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     return res.status(200).json(response.data);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Royal Mail API Error:', {
       status: error.response?.status,
       statusText: error.response?.statusText,
@@ -60,4 +59,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       error: error.response?.data || error.message
     });
   }
-} 
+}; 
