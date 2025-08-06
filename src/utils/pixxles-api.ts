@@ -315,14 +315,27 @@ class PixxlesService {
         return mockResponse;
       } else {
         // Production: use Vercel API proxy to avoid CORS issues
+        // Convert data to form-urlencoded format as required by Pixxles
+        const formData = new URLSearchParams();
+        for (const [key, value] of Object.entries(data)) {
+          if (value !== null && value !== undefined) {
+            if (typeof value === 'object') {
+              // Handle nested objects (like threeDSResponse)
+              for (const [nestedKey, nestedValue] of Object.entries(value)) {
+                formData.append(`${key}[${nestedKey}]`, nestedValue as string);
+              }
+            } else {
+              formData.append(key, value.toString());
+            }
+          }
+        }
+
         const response = await fetch('/api/pixxles', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify({
-            transactionData: data
-          })
+          body: formData.toString()
         });
 
         console.log('Pixxles proxy response status:', response.status);

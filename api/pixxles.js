@@ -32,10 +32,20 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { transactionData } = req.body;
-
-    if (!transactionData) {
-      return res.status(400).json({ error: 'Transaction data is required' });
+    // Parse form-urlencoded data from request body
+    let transactionData;
+    
+    if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+      // Parse form-urlencoded data
+      const params = new URLSearchParams(req.body);
+      transactionData = Object.fromEntries(params);
+    } else {
+      // Parse JSON data
+      const { transactionData: jsonData } = req.body;
+      if (!jsonData) {
+        return res.status(400).json({ error: 'Transaction data is required' });
+      }
+      transactionData = jsonData;
     }
 
     // Add merchant ID and calculate signature
