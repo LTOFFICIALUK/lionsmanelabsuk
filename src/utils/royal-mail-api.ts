@@ -94,7 +94,9 @@ class RoyalMailService {
       headers: {
         'Authorization': `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'User-Agent': 'BlueDreamTea-Payment-Gateway/1.0',
+        'X-Requested-With': 'XMLHttpRequest'
       },
     });
   }
@@ -103,19 +105,9 @@ class RoyalMailService {
    * Create a new order in Royal Mail Click & Drop
    */
   async createOrder(order: RoyalMailOrder) {
-    // In development mode, simulate successful Royal Mail order creation
-    if (import.meta.env.DEV) {
-      console.log('Development mode: Simulating Royal Mail order creation', order);
-      return {
-        orderReference: order.orderReference,
-        status: 'created',
-        trackingNumber: `DEV-${Date.now()}`,
-        labelUrl: null,
-        estimatedDelivery: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days from now
-      };
-    }
-
     try {
+      console.log('Creating Royal Mail order:', order.orderReference);
+      
       // Transform the order to match Royal Mail's expected format
       const royalMailOrder = {
         items: [{
@@ -138,13 +130,23 @@ class RoyalMailService {
       };
 
       const response = await this.api.post('/orders', royalMailOrder);
+      console.log('Royal Mail order created successfully:', response.data);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Royal Mail API Error:', {
           status: error.response?.status,
-          data: error.response?.data
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          message: error.message,
+          code: error.code
         });
+        
+        // Handle CORS errors specifically
+        if (error.code === 'ERR_NETWORK' || error.message.includes('CORS')) {
+          console.error('CORS Error: Royal Mail API does not allow direct browser requests');
+          throw new Error('Royal Mail API requires server-side integration due to CORS restrictions');
+        }
       }
       throw error;
     }
@@ -194,6 +196,8 @@ class RoyalMailService {
     includeReturnsLabel?: boolean;
   }) {
     try {
+      console.log('Creating Royal Mail shipping label for:', orderReference);
+      
       const params = new URLSearchParams({
         documentType: 'postageLabel',
         includeReturnsLabel: options?.includeReturnsLabel ? 'true' : 'false',
@@ -203,15 +207,41 @@ class RoyalMailService {
       const response = await this.api.get(`/orders/${orderReference}/label?${params.toString()}`, {
         responseType: 'arraybuffer'
       });
+      
+      console.log('Royal Mail shipping label created successfully');
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Royal Mail API Error:', {
           status: error.response?.status,
-          data: error.response?.data
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          message: error.message,
+          code: error.code
         });
+        
+        // Handle CORS errors specifically
+        if (error.code === 'ERR_NETWORK' || error.message.includes('CORS')) {
+          console.error('CORS Error: Royal Mail API does not allow direct browser requests');
+          throw new Error('Royal Mail API requires server-side integration due to CORS restrictions');
+        }
       }
       throw error;
+    }
+  }
+
+  /**
+   * Test API connection
+   */
+  async testConnection() {
+    try {
+      console.log('Testing Royal Mail API connection...');
+      const response = await this.api.get('/shipping-services');
+      console.log('Royal Mail API connection successful:', response.status);
+      return true;
+    } catch (error) {
+      console.error('Royal Mail API connection failed:', error);
+      return false;
     }
   }
 
