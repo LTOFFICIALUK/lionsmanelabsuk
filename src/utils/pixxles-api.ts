@@ -314,44 +314,13 @@ class PixxlesService {
         
         return mockResponse;
       } else {
-        // Production: call Pixxles API directly
-        // Add merchant ID to transaction data
-        data.merchantID = this.config.merchantID;
-        
-        // Create signature
-        const signatureData = Object.keys(data)
-          .sort()
-          .map(key => `${key}=${data[key]}`)
-          .join('&') + this.config.signatureKey;
-
-        const signature = await createSignature(data, this.config.signatureKey);
-        data.signature = signature;
-
-        // Convert to form-urlencoded format
-        const formData = new URLSearchParams();
-        for (const [key, value] of Object.entries(data)) {
-          if (value !== null && value !== undefined) {
-            if (typeof value === 'object') {
-              // Handle nested objects (like threeDSResponse)
-              for (const [nestedKey, nestedValue] of Object.entries(value)) {
-                formData.append(`${key}[${nestedKey}]`, nestedValue as string);
-              }
-            } else {
-              formData.append(key, value.toString());
-            }
-          }
-        }
-
-        const response = await fetch(this.config.gatewayUrl, {
+        // Production: use Edge Function to proxy request
+        const response = await fetch('/api/pixxles', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            'Origin': window.location.origin,
-            'Access-Control-Request-Method': 'POST',
-            'Access-Control-Request-Headers': 'Content-Type'
+            'Content-Type': 'application/json',
           },
-          body: formData.toString()
+          body: JSON.stringify(data)
         });
 
         console.log('Pixxles proxy response status:', response.status);
