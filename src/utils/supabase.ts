@@ -59,6 +59,33 @@ export interface EmailOrderDetails {
 // Order management functions
 export const orderService = {
     createOrder: async (orderData: Omit<DatabaseOrder, 'id' | 'created_at' | 'updated_at'>) => {
+        if (!isSupabaseConfigured) {
+            // Fallback to localStorage for development
+            try {
+                console.log('Development mode: Saving order to localStorage');
+                const orderId = uuidv4();
+                const now = new Date().toISOString();
+                
+                const order = {
+                    id: orderId,
+                    ...orderData,
+                    created_at: now,
+                    updated_at: now
+                };
+                
+                // Save to localStorage
+                const existingOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+                existingOrders.push(order);
+                localStorage.setItem('blueDreamTea_orders', JSON.stringify(existingOrders));
+                
+                console.log('Order saved to localStorage:', order);
+                return { data: order, error: null };
+            } catch (error) {
+                console.error('Error saving order to localStorage:', error);
+                return { data: null, error: error as any };
+            }
+        }
+        
         try {
             const { data, error } = await supabase
                 .from('orders')
