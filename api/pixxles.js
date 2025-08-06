@@ -21,6 +21,12 @@ module.exports = async (req, res) => {
     return;
   }
 
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    console.log('Method not allowed:', req.method);
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   if (!MERCHANT_ID || !SIGNATURE_KEY || !GATEWAY_URL) {
     return res.status(500).json({ error: 'Pixxles configuration not found' });
   }
