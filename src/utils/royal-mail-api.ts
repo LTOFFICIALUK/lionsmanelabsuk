@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_KEY = import.meta.env.VITE_ROYAL_MAIL_API_KEY;
-const API_URL = 'https://api.parcel.royalmail.com/api/v1';
+const PROXY_URL = '/api/royal-mail';
 
 interface RoyalMailAddress {
   addressLine1: string;
@@ -90,13 +90,10 @@ class RoyalMailService {
 
   constructor() {
     this.api = axios.create({
-      baseURL: API_URL,
+      baseURL: PROXY_URL,
       headers: {
-        'Authorization': `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'User-Agent': 'BlueDreamTea-Payment-Gateway/1.0',
-        'X-Requested-With': 'XMLHttpRequest'
+        'Accept': 'application/json'
       },
     });
   }
@@ -129,7 +126,11 @@ class RoyalMailService {
         }]
       };
 
-      const response = await this.api.post('/orders', royalMailOrder);
+      const response = await this.api.post('', {
+        method: 'POST',
+        endpoint: '/orders',
+        data: royalMailOrder
+      });
       console.log('Royal Mail order created successfully:', response.data);
       return response.data;
     } catch (error) {
@@ -157,7 +158,10 @@ class RoyalMailService {
    */
   async getOrderStatus(orderReference: string) {
     try {
-      const response = await this.api.get(`/orders/${orderReference}`);
+      const response = await this.api.post('', {
+        method: 'GET',
+        endpoint: `/orders/${orderReference}`
+      });
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -175,7 +179,10 @@ class RoyalMailService {
    */
   async getShippingServices() {
     try {
-      const response = await this.api.get('/shipping-services');
+      const response = await this.api.post('', {
+        method: 'GET',
+        endpoint: '/shipping-services'
+      });
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -204,7 +211,10 @@ class RoyalMailService {
         ...(options?.includeCN && { includeCN: 'true' })
       });
 
-      const response = await this.api.get(`/orders/${orderReference}/label?${params.toString()}`, {
+      const response = await this.api.post('', {
+        method: 'GET',
+        endpoint: `/orders/${orderReference}/label?${params.toString()}`
+      }, {
         responseType: 'arraybuffer'
       });
       
@@ -236,7 +246,10 @@ class RoyalMailService {
   async testConnection() {
     try {
       console.log('Testing Royal Mail API connection...');
-      const response = await this.api.get('/shipping-services');
+      const response = await this.api.post('', {
+        method: 'GET',
+        endpoint: '/shipping-services'
+      });
       console.log('Royal Mail API connection successful:', response.status);
       return true;
     } catch (error) {
