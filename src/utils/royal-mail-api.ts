@@ -103,6 +103,18 @@ class RoyalMailService {
    * Create a new order in Royal Mail Click & Drop
    */
   async createOrder(order: RoyalMailOrder) {
+    // In development mode, simulate successful Royal Mail order creation
+    if (import.meta.env.DEV) {
+      console.log('Development mode: Simulating Royal Mail order creation', order);
+      return {
+        orderReference: order.orderReference,
+        status: 'created',
+        trackingNumber: `DEV-${Date.now()}`,
+        labelUrl: null,
+        estimatedDelivery: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days from now
+      };
+    }
+
     try {
       // Transform the order to match Royal Mail's expected format
       const royalMailOrder = {

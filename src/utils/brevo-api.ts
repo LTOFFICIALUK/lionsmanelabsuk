@@ -200,7 +200,14 @@ class BrevoApiService {
    */
   async trackEvent(email: string, eventName: string, properties?: Record<string, any>): Promise<boolean> {
     if (!this.apiKey) {
+      console.log('Brevo API key not configured, skipping event tracking');
       return false;
+    }
+
+    // In development mode, simulate successful event tracking
+    if (import.meta.env.DEV) {
+      console.log(`Development mode: Simulating Brevo event '${eventName}' for ${email}`, properties);
+      return true;
     }
 
     try {

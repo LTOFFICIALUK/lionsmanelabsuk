@@ -275,6 +275,26 @@ export const orderService = {
   },
 
   getOrderByNumber: async (orderNumber: string) => {
+        if (!isSupabaseConfigured) {
+            // Fallback to localStorage for development
+            try {
+                console.log('Development mode: Searching for order in localStorage');
+                const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+                const order = localOrders.find((order: any) => order.order_number === orderNumber);
+                
+                if (order) {
+                    console.log('Order found in localStorage:', order);
+                    return { data: order, error: null };
+                } else {
+                    console.log('Order not found in localStorage');
+                    return { data: null, error: { message: 'Order not found' } };
+                }
+            } catch (error) {
+                console.error('Error searching localStorage:', error);
+                return { data: null, error: error as any };
+            }
+        }
+        
         try {
             const { data, error } = await supabase
                 .from('orders')
@@ -283,13 +303,39 @@ export const orderService = {
                 .single();
 
             if (error) {
-                console.error('Error fetching order:', error);
+                console.error('Error fetching order from Supabase:', error);
+                // If Supabase fails, try localStorage as fallback
+                try {
+                    console.log('Trying localStorage fallback');
+                    const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+                    const order = localOrders.find((order: any) => order.order_number === orderNumber);
+                    
+                    if (order) {
+                        console.log('Order found in localStorage fallback:', order);
+                        return { data: order, error: null };
+                    }
+                } catch (localError) {
+                    console.error('localStorage fallback failed:', localError);
+                }
                 return { data: null, error };
             }
 
             return { data, error: null };
         } catch (error) {
             console.error('Error in getOrderByNumber:', error);
+            // Try localStorage as final fallback
+            try {
+                console.log('Trying localStorage as final fallback');
+                const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+                const order = localOrders.find((order: any) => order.order_number === orderNumber);
+                
+                if (order) {
+                    console.log('Order found in localStorage final fallback:', order);
+                    return { data: order, error: null };
+                }
+            } catch (localError) {
+                console.error('localStorage final fallback failed:', localError);
+            }
             return { data: null, error: error as any };
         }
     },
