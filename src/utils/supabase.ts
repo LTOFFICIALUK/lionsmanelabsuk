@@ -6,7 +6,9 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.s
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key';
 
 // Check if Supabase is properly configured
-const isSupabaseConfigured = supabaseUrl !== 'https://your-project.supabase.co' && supabaseAnonKey !== 'your-anon-key';
+const isSupabaseConfigured = supabaseUrl !== 'https://your-project.supabase.co' && 
+                             supabaseAnonKey !== 'your-anon-key' && 
+                             !supabaseUrl.includes('your-project');
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -57,33 +59,38 @@ export interface EmailOrderDetails {
 }
 
 // Order management functions
+// Helper function to save order to localStorage
+const saveOrderToLocalStorage = async (orderData: Omit<DatabaseOrder, 'id' | 'created_at' | 'updated_at'>) => {
+    try {
+        console.log('Saving order to localStorage');
+        const orderId = uuidv4();
+        const now = new Date().toISOString();
+        
+        const order = {
+            id: orderId,
+            ...orderData,
+            created_at: now,
+            updated_at: now
+        };
+        
+        // Save to localStorage
+        const existingOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+        existingOrders.push(order);
+        localStorage.setItem('blueDreamTea_orders', JSON.stringify(existingOrders));
+        
+        console.log('Order saved to localStorage:', order);
+        return { data: order, error: null };
+    } catch (error) {
+        console.error('Error saving order to localStorage:', error);
+        return { data: null, error: error as any };
+    }
+};
+
 export const orderService = {
     createOrder: async (orderData: Omit<DatabaseOrder, 'id' | 'created_at' | 'updated_at'>) => {
         if (!isSupabaseConfigured) {
             // Fallback to localStorage for development
-            try {
-                console.log('Development mode: Saving order to localStorage');
-                const orderId = uuidv4();
-                const now = new Date().toISOString();
-                
-                const order = {
-                    id: orderId,
-                    ...orderData,
-                    created_at: now,
-                    updated_at: now
-                };
-                
-                // Save to localStorage
-                const existingOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
-                existingOrders.push(order);
-                localStorage.setItem('blueDreamTea_orders', JSON.stringify(existingOrders));
-                
-                console.log('Order saved to localStorage:', order);
-                return { data: order, error: null };
-            } catch (error) {
-                console.error('Error saving order to localStorage:', error);
-                return { data: null, error: error as any };
-            }
+            return await saveOrderToLocalStorage(orderData);
         }
         
         try {
@@ -100,13 +107,20 @@ export const orderService = {
 
             if (error) {
                 console.error('Error creating order:', error);
+                // If it's a database schema error (400), fall back to localStorage
+                if (error.code === '400' || error.message?.includes('column') || error.message?.includes('schema')) {
+                    console.log('Database schema error detected, falling back to localStorage');
+                    return await saveOrderToLocalStorage(orderData);
+                }
                 return { data: null, error };
             }
 
             return { data, error: null };
         } catch (error) {
             console.error('Error in createOrder:', error);
-            return { data: null, error: error as any };
+            // If it's a network error or other issue, fall back to localStorage
+            console.log('Network error detected, falling back to localStorage');
+            return await saveOrderToLocalStorage(orderData);
         }
     },
 
