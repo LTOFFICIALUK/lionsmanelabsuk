@@ -19,6 +19,12 @@
       "dest": "/api/$1"
     },
     {
+      "src": "/assets/(.*)\\.js",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

@@ -35,5 +35,15 @@ export default defineConfig({
   assetsInclude: ['**/*.jpg', '**/*.png', '**/*.svg', '**/*.webp'],
   server: {
     port: 5174
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        format: 'es',
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
+    }
   }
 }); 
