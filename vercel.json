@@ -19,10 +19,20 @@
       "dest": "/api/$1"
     },
     {
-      "src": "/assets/(.*)\\.js",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/images/$1"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml"
     },
     {
       "src": "/(.*)",

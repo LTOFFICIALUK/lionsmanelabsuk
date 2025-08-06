@@ -13,7 +13,7 @@ const ArticlePage: React.FC = () => {
   }
 
   const article = ALL_ARTICLES[slug];
-  const ArticleContent = React.lazy(() => import(`./${slug}/page.tsx`));
+  const ArticleContent = React.lazy(() => import(`./${slug}/page`));
 
   return (
     <GuideLayout

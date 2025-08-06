@@ -27,23 +27,26 @@ const optimizeResourcesPlugin = () => {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
   assetsInclude: ['**/*.jpg', '**/*.png', '**/*.svg', '**/*.webp'],
-  server: {
-    port: 5174
-  },
   build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
     rollupOptions: {
       output: {
-        format: 'es',
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom']
+        }
       }
     }
+  },
+  server: {
+    port: 5174
   }
 }); 
