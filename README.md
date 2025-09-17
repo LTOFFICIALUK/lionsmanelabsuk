@@ -1,14 +1,16 @@
-# Blue Dream Tea UK
+# Lions Mane Labs UK
 
-A comprehensive guide platform for streaming success, built with React, TypeScript, and TailwindCSS.
+A comprehensive ecommerce platform for Lions Mane mushroom supplements, built with React, TypeScript, and TailwindCSS.
 
 ## Features
 
-- Detailed streaming guides and tutorials
-- Category-based content organization
+- Premium Lions Mane supplement products
+- Category-based product organization
 - Responsive design
 - Modern UI with TailwindCSS
 - TypeScript for enhanced development experience
+- Payment processing integration
+- Customer reviews and ratings
 
 ## Tech Stack
 
@@ -30,8 +32,8 @@ A comprehensive guide platform for streaming success, built with React, TypeScri
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/blue-dream-tea-uk.git
-cd blue-dream-tea-uk.com
+git clone https://github.com/yourusername/lions-mane-labs-uk.git
+cd lions-mane-labs-uk
 ```
 
 2. Install dependencies

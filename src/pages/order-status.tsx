@@ -93,7 +93,7 @@ const OrderStatusPage: React.FC = () => {
       }
 
       // Fallback to localStorage
-      const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+      const localOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
       const foundOrder = localOrders.find((o: Order) => o.orderNumber === orderNumber);
 
       if (foundOrder) {
@@ -128,7 +128,7 @@ const OrderStatusPage: React.FC = () => {
     return (
       <>
         <Helmet>
-          <title>Order Status - Blue Dream Tea UK</title>
+          <title>Order Status - Lion\'s Mane Labs UK</title>
           <meta name="robots" content="noindex" />
         </Helmet>
 
@@ -150,7 +150,7 @@ const OrderStatusPage: React.FC = () => {
                 Continue Shopping
               </Link>
               <a
-                href="mailto:support@bluedreamtea.co.uk"
+                href="mailto:support@lionsmanelabs.co.uk"
                 className="bg-gray-100 text-gray-700 px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition-colors"
               >
                 Contact Support
@@ -194,8 +194,8 @@ const OrderStatusPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{`Order ${orderData.orderNumber} Status - Blue Dream Tea UK`}</title>
-        <meta name="description" content={`Track your Blue Dream Tea order ${orderData.orderNumber}`} />
+        <title>{`Order ${orderData.orderNumber} Status - Lion\'s Mane Labs UK`}</title>
+        <meta name="description" content={`Track your Lion\'s Mane Labs order ${orderData.orderNumber}`} />
         <meta name="robots" content="noindex" />
       </Helmet>
 
@@ -365,14 +365,14 @@ const OrderStatusPage: React.FC = () => {
               Shop More Products
             </Link>
             <a
-              href="mailto:support@bluedreamtea.co.uk"
+              href="mailto:support@lionsmanelabs.co.uk"
               className="bg-gray-100 text-gray-700 px-6 py-3 rounded-md font-medium hover:bg-gray-200 transition-colors"
             >
               Contact Support
             </a>
           </div>
           <p className="text-sm text-gray-500">
-            Need help? Contact us at <a href="mailto:support@bluedreamtea.co.uk" className="text-blue-600 hover:underline">support@bluedreamtea.co.uk</a>
+            Need help? Contact us at <a href="mailto:support@lionsmanelabs.co.uk" className="text-blue-600 hover:underline">support@lionsmanelabs.co.uk</a>
           </p>
         </div>
       </div>

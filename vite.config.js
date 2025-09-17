@@ -10,7 +10,7 @@ const optimizeResourcesPlugin = () => {
       order: 'post',
       handler(html, ctx) {
         // Add preconnect hints for the domain
-        const optimizations = `    <link rel="preconnect" href="https://www.bluedreamtea.co.uk" crossorigin>\n`;
+        const optimizations = `    <link rel="preconnect" href="https://www.lionsmanelabs.co.uk" crossorigin>\n`;
         
         // Insert optimizations after the critical CSS
         html = html.replace(

@@ -1,0 +1,112 @@
+[
+    {
+        "title": "Lions Mane: The Ultimate Brain Booster for Cognitive Enhancement",
+        "description": "Discover how Lions Mane mushroom can enhance your cognitive function, improve memory, and support brain health naturally.",
+        "slug": "lions-mane-cognitive-benefits",
+        "category": "health-benefits",
+        "templateType": "educational",
+        "keywords": ["lions mane benefits", "cognitive enhancement", "brain health", "memory improvement", "nootropics"],
+        "shopifySlug": "blogs/health/lions-mane-benefits",
+        "priority": "high",
+        "wordCount": 2000
+    },
+    {
+        "title": "How to Use Lions Mane Powder: Complete Guide for Maximum Benefits",
+        "description": "Learn the best ways to incorporate Lions Mane powder into your daily routine for optimal cognitive enhancement and health benefits.",
+        "slug": "how-to-use-lions-mane-powder",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["lions mane powder", "how to use lions mane", "lions mane recipes", "cognitive supplements", "brain health"],
+        "shopifySlug": "blogs/guides/lions-mane-powder-guide",
+        "priority": "high",
+        "wordCount": 1800
+    },
+    {
+        "title": "Lions Mane vs Other Nootropics: Which is Best for Brain Health?",
+        "description": "Compare Lions Mane with other popular nootropics and cognitive enhancers to find the best option for your brain health goals.",
+        "slug": "lions-mane-vs-other-nootropics",
+        "category": "comparisons",
+        "templateType": "comparison",
+        "keywords": ["lions mane vs nootropics", "brain supplements comparison", "cognitive enhancers", "nootropic comparison", "brain health supplements"],
+        "shopifySlug": "blogs/comparisons/lions-mane-vs-nootropics",
+        "priority": "medium",
+        "wordCount": 2200
+    },
+    {
+        "title": "Lions Mane Dosage Guide: Finding Your Perfect Amount",
+        "description": "Learn the optimal Lions Mane dosage for different goals, from cognitive enhancement to nerve regeneration support.",
+        "slug": "lions-mane-dosage-guide",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["lions mane dosage", "how much lions mane", "lions mane serving size", "cognitive enhancement dosage", "brain supplement dosage"],
+        "shopifySlug": "blogs/guides/lions-mane-dosage",
+        "priority": "high",
+        "wordCount": 1600
+    },
+    {
+        "title": "The Science Behind Lions Mane: Research and Studies",
+        "description": "Explore the scientific research behind Lions Mane mushroom and its proven benefits for brain health and cognitive function.",
+        "slug": "lions-mane-scientific-research",
+        "category": "science-research",
+        "templateType": "educational",
+        "keywords": ["lions mane research", "lions mane studies", "scientific evidence", "brain health research", "cognitive enhancement studies"],
+        "shopifySlug": "blogs/science/lions-mane-research",
+        "priority": "medium",
+        "wordCount": 2500
+    },
+    {
+        "title": "Lions Mane for Memory: Can It Really Improve Your Recall?",
+        "description": "Discover how Lions Mane mushroom can enhance memory formation, retention, and recall through its unique neuroprotective properties.",
+        "slug": "lions-mane-memory-enhancement",
+        "category": "health-benefits",
+        "templateType": "educational",
+        "keywords": ["lions mane memory", "memory improvement", "cognitive enhancement", "brain health", "memory supplements"],
+        "shopifySlug": "blogs/health/lions-mane-memory",
+        "priority": "high",
+        "wordCount": 1900
+    },
+    {
+        "title": "Lions Mane Tea: A Delicious Way to Boost Your Brain",
+        "description": "Learn how to brew the perfect cup of Lions Mane tea and discover the cognitive benefits of this ancient brain-boosting beverage.",
+        "slug": "lions-mane-tea-benefits",
+        "category": "usage-guides",
+        "templateType": "product-guide",
+        "keywords": ["lions mane tea", "brain boosting tea", "cognitive enhancement tea", "lions mane brewing", "brain health tea"],
+        "shopifySlug": "blogs/guides/lions-mane-tea",
+        "priority": "medium",
+        "wordCount": 1700
+    },
+    {
+        "title": "Lions Mane for Focus and Concentration: Natural ADHD Support",
+        "description": "Explore how Lions Mane mushroom can help improve focus, concentration, and attention span naturally without stimulants.",
+        "slug": "lions-mane-focus-concentration",
+        "category": "health-benefits",
+        "templateType": "educational",
+        "keywords": ["lions mane focus", "concentration improvement", "ADHD natural support", "attention enhancement", "focus supplements"],
+        "shopifySlug": "blogs/health/lions-mane-focus",
+        "priority": "high",
+        "wordCount": 2000
+    },
+    {
+        "title": "Lions Mane Extract vs Powder: Which Form is Best?",
+        "description": "Compare Lions Mane extract and powder to determine which form offers the best bioavailability and cognitive benefits.",
+        "slug": "lions-mane-extract-vs-powder",
+        "category": "comparisons",
+        "templateType": "comparison",
+        "keywords": ["lions mane extract", "lions mane powder", "extract vs powder", "bioavailability", "cognitive supplements"],
+        "shopifySlug": "blogs/comparisons/lions-mane-forms",
+        "priority": "medium",
+        "wordCount": 1800
+    },
+    {
+        "title": "Lions Mane for Nerve Regeneration: Healing from Within",
+        "description": "Discover how Lions Mane mushroom supports nerve regeneration and may help with nerve damage and neurological conditions.",
+        "slug": "lions-mane-nerve-regeneration",
+        "category": "health-benefits",
+        "templateType": "educational",
+        "keywords": ["lions mane nerve regeneration", "nerve healing", "neurological support", "nerve damage", "brain repair"],
+        "shopifySlug": "blogs/health/lions-mane-nerve-healing",
+        "priority": "medium",
+        "wordCount": 2100
+    }
+]

@@ -1,7 +1,7 @@
 {
-  "name": "bluedreamtea.co.uk",
+  "name": "lions-mane-labs-uk",
   "version": "1.0.0",
-  "description": "Leading Blue Lotus Flower Tea Supplier in the UK",
+  "description": "Leading Lions Mane Mushroom Supplements Supplier in the UK",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,11 +15,11 @@
     "prebuild": "npm run clean"
   },
   "keywords": [
-    "streaming",
-    "twitch",
-    "youtube",
-    "content creation",
-    "guides"
+    "lions mane",
+    "mushroom supplements",
+    "nootropics",
+    "cognitive enhancement",
+    "brain health"
   ],
   "author": "",
   "license": "ISC",
@@ -44,7 +44,6 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^6.22.1",
-    "sib-api-v3-sdk": "^8.5.0",
     "tailwindcss": "^3.4.1",
     "uuid": "^11.1.0"
   },

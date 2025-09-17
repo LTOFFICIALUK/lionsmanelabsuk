@@ -58,12 +58,12 @@ const ProductsIndex: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>All Products - Blue Dream Tea UK</title>
-        <meta name="description" content="Browse our complete collection of premium blue lotus flower products including tea bags, pre rolls, and flower packs." />
-        <meta property="og:title" content="All Products - Blue Dream Tea UK" />
-        <meta property="og:description" content="Browse our complete collection of premium blue lotus flower products including tea bags, pre rolls, and flower packs." />
+        <title>All Products - Lion's Mane Labs UK</title>
+        <meta name="description" content="Browse our complete collection of premium Lion's Mane mushroom supplements including capsules, powder, extract, and tea." />
+        <meta property="og:title" content="All Products - Lion's Mane Labs UK" />
+        <meta property="og:description" content="Browse our complete collection of premium Lion's Mane mushroom supplements including capsules, powder, extract, and tea." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bluedreamtea.co.uk/products" />
+        <meta property="og:url" content="https://lionsmanelabs.co.uk/products" />
         
         {/* Comprehensive Schema Markup for Products Page */}
         <script type="application/ld+json">
@@ -73,25 +73,25 @@ const ProductsIndex: React.FC = () => {
               // Organization Schema
               {
                 "@type": "Organization",
-                "@id": "https://bluedreamtea.co.uk/#/schema/organization/1",
-                "url": "https://bluedreamtea.co.uk",
-                "name": "Blue Dream Tea",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1",
+                "url": "https://lionsmanelabs.co.uk",
+                "name": "Lion's Mane Labs",
                 "alternateName": "BDT",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://bluedreamtea.co.uk/logo.png",
+                  "url": "https://lionsmanelabs.co.uk/logo.png",
                   "width": 500,
                   "height": 500
                 },
                 "hasMerchantReturnPolicy": {
                   "@type": "MerchantReturnPolicy",
-                  "merchantReturnLink": "https://bluedreamtea.co.uk/policies/refund-policy",
+                  "merchantReturnLink": "https://lionsmanelabs.co.uk/policies/refund-policy",
                   "applicableCountry": "GB",
                   "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
                   "merchantReturnDays": 30
                 },
                 "sameAs": [
-                  "https://www.tiktok.com/@bluedreamworldwide"
+                  "https://www.tiktok.com/@lionsmanelabs"
                 ],
                 "contactPoint": {
                   "@type": "ContactPoint",
@@ -102,27 +102,27 @@ const ProductsIndex: React.FC = () => {
               // WebSite Schema
               {
                 "@type": "WebSite",
-                "@id": "https://bluedreamtea.co.uk/#/schema/website/1",
-                "url": "https://bluedreamtea.co.uk",
-                "name": "Blue Dream Tea - Leading Blue Lotus Flower Supplier UK",
-                "alternateName": "Blue Dream Tea",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/website/1",
+                "url": "https://lionsmanelabs.co.uk",
+                "name": "Lion's Mane Labs - Leading Lion's Mane Mushroom Supplier UK",
+                "alternateName": "Lion's Mane Labs",
                 "potentialAction": {
                   "@type": "SearchAction",
-                  "target": "https://bluedreamtea.co.uk/search?q={search_term_string}",
+                  "target": "https://lionsmanelabs.co.uk/search?q={search_term_string}",
                   "query-input": "required name=search_term_string"
                 },
                 "publisher": {
-                  "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                  "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1"
                 },
                 "inLanguage": ["en"]
               },
               // CollectionPage Schema
               {
                 "@type": "CollectionPage",
-                "@id": "https://bluedreamtea.co.uk/products/#/schema/collectionpage",
-                "name": "All Blue Lotus Flower Products",
-                "description": "Complete collection of premium blue lotus flower products including tea bags, pre rolls, and flower packs",
-                "url": "https://bluedreamtea.co.uk/products",
+                "@id": "https://lionsmanelabs.co.uk/products/#/schema/collectionpage",
+                "name": "All Lion's Mane Mushroom Products",
+                "description": "Complete collection of premium Lion's Mane mushroom supplements including capsules, powder, extract, and tea",
+                "url": "https://lionsmanelabs.co.uk/products",
                 "mainEntity": {
                   "@type": "ItemList",
                   "numberOfItems": filteredAndSortedProducts.length,
@@ -131,13 +131,13 @@ const ProductsIndex: React.FC = () => {
                     "position": index + 1,
                     "item": {
                       "@type": "Product",
-                      "@id": `https://bluedreamtea.co.uk/products/${product.slug}/#/schema/product`,
+                      "@id": `https://lionsmanelabs.co.uk/products/${product.slug}/#/schema/product`,
                       "name": product.title,
                       "description": product.description,
                       "image": product.images?.main || '',
                       "brand": {
                         "@type": "Brand",
-                        "name": "Blue Dream Tea - Blue Lotus Flower Supplier"
+                        "name": "Lion's Mane Labs - Lion's Mane Mushroom Supplier"
                       },
                       "offers": {
                         "@type": "Offer",
@@ -145,7 +145,7 @@ const ProductsIndex: React.FC = () => {
                         "price": product.salePrice || product.price,
                         "availability": "https://schema.org/InStock",
                         "seller": {
-                          "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                          "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1"
                         }
                       },
                       "aggregateRating": {
@@ -159,25 +159,25 @@ const ProductsIndex: React.FC = () => {
                   }))
                 },
                 "isPartOf": {
-                  "@id": "https://bluedreamtea.co.uk/#/schema/website/1"
+                  "@id": "https://lionsmanelabs.co.uk/#/schema/website/1"
                 }
               },
               // Breadcrumb Schema
               {
                 "@type": "BreadcrumbList",
-                "@id": "https://bluedreamtea.co.uk/products/#/schema/breadcrumb",
+                "@id": "https://lionsmanelabs.co.uk/products/#/schema/breadcrumb",
                 "itemListElement": [
                   {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://bluedreamtea.co.uk"
+                    "item": "https://lionsmanelabs.co.uk"
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Products",
-                    "item": "https://bluedreamtea.co.uk/products"
+                    "item": "https://lionsmanelabs.co.uk/products"
                   }
                 ]
               }
@@ -193,8 +193,8 @@ const ProductsIndex: React.FC = () => {
             All Products
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover our complete range of premium blue lotus flower products, 
-            carefully sourced and prepared for the perfect relaxation experience.
+            Discover our complete range of premium Lion's Mane mushroom supplements, 
+            carefully sourced and prepared for optimal cognitive enhancement and brain health.
           </p>
         </div>
 
@@ -292,8 +292,8 @@ const ProductsIndex: React.FC = () => {
                     ) : (
                       <div className="w-full h-64 flex items-center justify-center text-gray-500">
                         <div className="text-center">
-                          <div className="text-6xl mb-2">🌸</div>
-                          <div className="text-sm">Blue Lotus Product</div>
+                          <div className="text-6xl mb-2">🍄</div>
+                          <div className="text-sm">Lion's Mane Product</div>
                         </div>
                       </div>
                     )}
@@ -362,8 +362,8 @@ const ProductsIndex: React.FC = () => {
               Need Help Choosing?
             </h2>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Not sure which blue lotus product is right for you? Our customer service team 
-              is here to help you find the perfect product for your needs.
+              Not sure which Lion's Mane product is right for you? Our customer service team 
+              is here to help you find the perfect supplement for your cognitive enhancement needs.
             </p>
             <Link
               to="/contact"

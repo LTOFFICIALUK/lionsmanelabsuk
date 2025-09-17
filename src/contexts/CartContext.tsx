@@ -328,8 +328,8 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // Local storage keys
-const CART_STORAGE_KEY = 'blueDreamTea_cart';
-const CART_TIMESTAMP_KEY = 'blueDreamTea_cart_timestamp';
+const CART_STORAGE_KEY = 'lionsManeLabs_cart';
+const CART_TIMESTAMP_KEY = 'lionsManeLabs_cart_timestamp';
 
 // Cart provider component
 interface CartProviderProps {
@@ -399,7 +399,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         email: null, // Will be populated when user enters email in checkout
         items: [item],
       };
-      localStorage.setItem('blueDreamTea_cart_abandonment', JSON.stringify(abandonmentData));
+      localStorage.setItem('lionsManeLabs_cart_abandonment', JSON.stringify(abandonmentData));
     } catch (error) {
       console.error('Error tracking cart abandonment:', error);
     }

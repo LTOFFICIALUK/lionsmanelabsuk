@@ -5,20 +5,20 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   const productLinks = [
-    { path: '/products/blue-lotus-flower', label: 'Blue Lotus Flower Packs' },
-    { path: '/products/blue-lotus-flower-pre-rolls', label: 'Blue Lotus Pre Rolls' },
-    { path: '/products/blue-lotus-flower-smoking-blend', label: 'Blue Lotus Smoking Blend' },
-    { path: '/products/blue-lotus-flower-tea-bags', label: 'Blue Lotus Tea Bags' },
-    { path: '/products/blue-lotus-flower-tea-cut', label: 'Blue Lotus Tea Cut' },
+    { path: '/products/lions-mane-capsules', label: 'Lions Mane Capsules' },
+    { path: '/products/lions-mane-powder', label: 'Lions Mane Powder' },
+    { path: '/products/lions-mane-extract', label: 'Lions Mane Extract' },
+    { path: '/products/lions-mane-tea', label: 'Lions Mane Tea' },
+    { path: '/products/lions-mane-tincture', label: 'Lions Mane Tincture' },
   ];
 
   const essentialArticles = [
-    { path: '/articles/what-is-blue-lotus-flower', label: 'What is Blue Lotus Flower?' },
-    { path: '/articles/how-to-use-blue-lotus-flower', label: 'How to Use Blue Lotus Flower' },
-    { path: '/articles/blue-lotus-flower-effects', label: 'Blue Lotus Flower Effects' },
-    { path: '/articles/is-blue-lotus-flower-legal-in-the-uk', label: 'Is Blue Lotus Legal in UK?' },
-    { path: '/articles/blue-lotus-flower-side-effects', label: 'Blue Lotus Side Effects' },
-    { path: '/articles/how-to-make-blue-lotus-tea', label: 'How to Make Blue Lotus Tea' },
+    { path: '/articles/lions-mane-cognitive-benefits', label: 'Lions Mane Benefits' },
+    { path: '/articles/how-to-use-lions-mane-powder', label: 'How to Use Lions Mane' },
+    { path: '/articles/lions-mane-dosage-guide', label: 'Lions Mane Dosage Guide' },
+    { path: '/articles/lions-mane-vs-other-nootropics', label: 'Lions Mane vs Nootropics' },
+    { path: '/articles/lions-mane-memory-enhancement', label: 'Lions Mane for Memory' },
+    { path: '/articles/lions-mane-tea-benefits', label: 'Lions Mane Tea Benefits' },
   ];
 
   const quickLinks = [
@@ -37,12 +37,12 @@ const Footer = () => {
           <div className="lg:col-span-1 lg:pr-8">
             <div className="flex items-center space-x-3 mb-4">
               <div className="text-2xl font-bold text-white whitespace-nowrap">
-                <span className="hidden md:inline">Blue Dream Tea UK</span>
-                <span className="md:hidden">Blue Dream Tea UK</span>
+                <span className="hidden md:inline">Lions Mane Labs UK</span>
+                <span className="md:hidden">Lions Mane Labs UK</span>
               </div>
             </div>
             <p className="text-sm text-gray-400 mb-4">
-                Blue Dream Tea UK is a premium supplier of blue lotus flower products. Founded in early 2023, we have become a trusted name in the industry.
+                Lions Mane Labs UK is a premium supplier of Lions Mane mushroom supplements. Founded in early 2023, we have become a trusted name in the cognitive enhancement industry.
             </p>
           </div>
 
@@ -105,10 +105,10 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-500 mb-4 md:mb-0">
-              © {currentYear} Blue Dream Tea UK. All rights reserved.
+              © {currentYear} Lion's Mane Labs UK. All rights reserved.
             </p>
             <div className="flex items-center space-x-4 text-sm text-gray-500">
-              <span>Premium Tea Supplier</span>
+              <span>Premium Lion's Mane Supplier</span>
               <span>•</span>
               <span>UK Based</span>
             </div>

@@ -35,12 +35,9 @@ import {
 import { Bar, Line } from 'react-chartjs-2';
 import { orderService, DatabaseOrder } from '../utils/supabase';
 import { debugSupabase } from '../utils/debug-supabase';
-import { brevoApiService } from '../utils/brevo-api';
 import { discountService } from '../utils/discount-service';
 import { DiscountCode } from '../types';
 import jsPDF from 'jspdf';
-import RoyalMailOrderSubmission from '../components/RoyalMailOrderSubmission';
-import { triggerPostPurchaseUpsellEmails } from '../email/post-purchase-upsell';
 
 // Register Chart.js components
 ChartJS.register(
@@ -54,7 +51,7 @@ ChartJS.register(
   Legend
 );
 
-const ADMIN_CODE = '1901012001';
+const ADMIN_CODE = import.meta.env.VITE_ADMIN_AUTH_CODE;
 
 interface EditOrderForm {
   customer_first_name: string;
@@ -154,7 +151,7 @@ const AdminPage: React.FC = () => {
 
   // Check if already authenticated on mount
   useEffect(() => {
-    const savedAuth = sessionStorage.getItem('blueDreamTea_admin_auth');
+    const savedAuth = sessionStorage.getItem('lionsManeLabs_admin_auth');
     if (savedAuth === 'true') {
       setIsAuthenticated(true);
     }
@@ -186,7 +183,7 @@ const AdminPage: React.FC = () => {
     e.preventDefault();
     if (authCode === ADMIN_CODE) {
       setIsAuthenticated(true);
-      sessionStorage.setItem('blueDreamTea_admin_auth', 'true');
+      sessionStorage.setItem('lionsManeLabs_admin_auth', 'true');
       setAuthError('');
     } else {
       setAuthError('Invalid authentication code');
@@ -195,7 +192,7 @@ const AdminPage: React.FC = () => {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem('blueDreamTea_admin_auth');
+    sessionStorage.removeItem('lionsManeLabs_admin_auth');
     setAuthCode('');
   };
 
@@ -452,11 +449,9 @@ const AdminPage: React.FC = () => {
       };
 
       return (
-        <RoyalMailOrderSubmission
-          order={royalMailOrderData}
-          onSuccess={handleRoyalMailSuccess}
-          onError={handleRoyalMailError}
-        />
+        <div className="p-4 bg-yellow-100 border border-yellow-400 rounded">
+          <p className="text-yellow-800">Royal Mail integration has been disabled. Component removed.</p>
+        </div>
       );
 
     } catch (error) {
@@ -527,7 +522,7 @@ const AdminPage: React.FC = () => {
     // Company name
     pdf.setFontSize(12);
     pdf.setFont('helvetica', 'normal');
-    pdf.text('Blue Dream Tea UK', 2, 0.65, { align: 'center' });
+    pdf.text('Lion\'s Mane Labs UK', 2, 0.65, { align: 'center' });
     
     // Order details
     pdf.setFontSize(10);
@@ -632,7 +627,7 @@ const AdminPage: React.FC = () => {
     pdf.setFontSize(10);
     pdf.text('Thank you for your order!', 2, 5.7, { align: 'center' });
     pdf.setFontSize(9);
-    pdf.text('www.bluedreamtea.co.uk', 2, 5.9, { align: 'center' });
+    pdf.text('www.lionsmanelabs.co.uk', 2, 5.9, { align: 'center' });
     
     return pdf;
   };
@@ -671,7 +666,7 @@ const AdminPage: React.FC = () => {
         // Company name
         pdf.setFontSize(12);
         pdf.setFont('helvetica', 'normal');
-        pdf.text('Blue Dream Tea UK', 2, 0.65, { align: 'center' });
+        pdf.text('Lion\'s Mane Labs UK', 2, 0.65, { align: 'center' });
         
         // Order details
         pdf.setFontSize(10);
@@ -776,7 +771,7 @@ const AdminPage: React.FC = () => {
         pdf.setFontSize(10);
         pdf.text('Thank you for your order!', 2, 5.7, { align: 'center' });
         pdf.setFontSize(9);
-        pdf.text('www.bluedreamtea.co.uk', 2, 5.9, { align: 'center' });
+        pdf.text('www.lionsmanelabs.co.uk', 2, 5.9, { align: 'center' });
       });
       
       pdf.save(`packing-slips-${selectedOrderData.length}-orders.pdf`);
@@ -787,7 +782,8 @@ const AdminPage: React.FC = () => {
       console.log('Triggering post-purchase upsell emails for selected orders...');
       const selectedOrderIds = Array.from(selectedOrders);
       
-      const result = await triggerPostPurchaseUpsellEmails(selectedOrderIds);
+      // Post-purchase upsell emails disabled - service removed
+      const result = { success: true, processed: 0, failed: 0, results: [] };
       
       if (result.success) {
         console.log(`✅ Post-purchase upsell emails sent successfully for ${result.processed} orders`);
@@ -798,7 +794,7 @@ const AdminPage: React.FC = () => {
       }
       
       // Log detailed results
-      result.results.forEach((result, index) => {
+      result.results.forEach((result: any, index: number) => {
         if (result.success) {
           console.log(`✅ Order ${result.orderNumber}: Email sent to ${result.customerEmail}`);
         } else {
@@ -985,7 +981,7 @@ const AdminPage: React.FC = () => {
     return (
       <>
         <Helmet>
-          <title>Admin Login - Blue Dream Tea UK</title>
+          <title>Admin Login - Lion\'s Mane Labs UK</title>
           <meta name="robots" content="noindex" />
         </Helmet>
 
@@ -1039,7 +1035,7 @@ const AdminPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Order Management - Blue Dream Tea UK</title>
+        <title>Order Management - Lion\'s Mane Labs UK</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 
@@ -1840,51 +1836,6 @@ const AdminPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Brevo Integration Status */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Brevo Integration</h3>
-                <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  brevoApiService.isConfigured() 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {brevoApiService.isConfigured() ? 'Connected' : 'Not Configured'}
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">API Key Status:</span>
-                  <span className={`text-sm font-medium ${
-                    brevoApiService.isConfigured() ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {brevoApiService.isConfigured() ? 'Configured' : 'Missing'}
-                  </span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Customer Creation:</span>
-                  <span className="text-sm font-medium text-gray-900">Automatic on Checkout</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Event Tracking:</span>
-                  <span className="text-sm font-medium text-gray-900">Order Completed</span>
-                </div>
-                
-                {!brevoApiService.isConfigured() && (
-                  <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-                    <p className="text-sm text-yellow-800">
-                      <strong>Setup Required:</strong> Add your Brevo API key to the environment variables to enable customer creation and event tracking.
-                    </p>
-                    <p className="text-xs text-yellow-700 mt-1">
-                      See <code className="bg-yellow-100 px-1 rounded">BREVO_CUSTOMER_INTEGRATION.md</code> for setup instructions.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
 
             {/* Charts Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

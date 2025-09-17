@@ -166,8 +166,8 @@ const CartPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Shopping Cart - Blue Dream Tea UK</title>
-        <meta name="description" content="Review your blue lotus flower tea products and proceed to checkout." />
+        <title>Shopping Cart - Lion's Mane Labs UK</title>
+        <meta name="description" content="Review your Lion's Mane mushroom supplements and proceed to checkout." />
       </Helmet>
 
       <div className="max-w-6xl mx-auto py-8 lg:py-12 px-4 sm:px-6 lg:px-12">
@@ -178,7 +178,7 @@ const CartPage: React.FC = () => {
             <HiShoppingBag className="h-24 w-24 text-gray-300 mx-auto mb-6" />
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Your cart is empty</h2>
             <p className="text-gray-500 mb-8 max-w-md mx-auto">
-              Discover our beautiful collection of blue lotus flower products and start your wellness journey.
+              Discover our beautiful collection of Lion's Mane mushroom supplements and start your cognitive enhancement journey.
             </p>
             <Link
               to="/products"

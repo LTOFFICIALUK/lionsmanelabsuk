@@ -1,83 +1,84 @@
 import { Products } from '../types';
 
-// Import product images
-import blueLotusPre1 from '../assets/images/products/blue-lotus-flower-pre-rolls/blue-lotus-flower-pre-rolls-1.jpg';
-import blueLotusPre2 from '../assets/images/products/blue-lotus-flower-pre-rolls/blue-lotus-flower-pre-rolls-2.jpg';
-import blueLotusPre3 from '../assets/images/products/blue-lotus-flower-pre-rolls/blue-lotus-flower-pre-rolls-3.jpg';
+// Import product images - Lion's Mane products
+import lionsManeCapsules1 from '../assets/images/products/lions-mane-capsules/blue-lotus-flower-packs-1.jpg';
+import lionsManeCapsules2 from '../assets/images/products/lions-mane-capsules/blue-lotus-flower-pack.jpg';
+import lionsManeCapsules3 from '../assets/images/products/lions-mane-capsules/blue-lotus-flower.jpg';
 
-// Import blue lotus flower pack images
-import blueLotusPack1 from '../assets/images/products/blue-lotus-flower-packs/blue-lotus-flower-packs-1.jpg';
-import blueLotusPack2 from '../assets/images/products/blue-lotus-flower-packs/blue-lotus-flower-pack.jpg';
-import blueLotusPack3 from '../assets/images/products/blue-lotus-flower-packs/blue-lotus-flower.jpg';
+// Import lions mane powder images
+import lionsManePowder1 from '../assets/images/products/lions-mane-powder/blue-lotus-flower-tea-cut-1.jpg';
+import lionsManePowder2 from '../assets/images/products/lions-mane-powder/blue-lotus-flower-tea-cut-2.jpg';
+import lionsManePowder3 from '../assets/images/products/lions-mane-powder/blue-lotus-flower-tea-cut.jpg';
 
-// Import blue lotus flower tea bags images
-import blueLotusTeaBags1 from '../assets/images/products/blue-lotus-flower-tea-bags/blue-lotus-flower-tea-bags.jpg';
-import blueLotusTeaBags2 from '../assets/images/products/blue-lotus-flower-tea-bags/blue-lotus-flower-tea.jpg';
+// Import lions mane extract images
+import lionsManeExtract1 from '../assets/images/products/lions-mane-extract/blue-lotus-flower-smoking-blend-1.jpg';
+import lionsManeExtract2 from '../assets/images/products/lions-mane-extract/blue-lotus-flower-smoking-blend-2.jpg';
+import lionsManeExtract3 from '../assets/images/products/lions-mane-extract/blue-lotus-flower-smoking-blend-3.jpg';
 
-// Import blue lotus flower smoking blend images
-import blueLotusSmokingBlend1 from '../assets/images/products/blue-lotus-flower-smoking-blend/blue-lotus-flower-smoking-blend-1.jpg';
-import blueLotusSmokingBlend2 from '../assets/images/products/blue-lotus-flower-smoking-blend/blue-lotus-flower-smoking-blend-2.jpg';
-import blueLotusSmokingBlend3 from '../assets/images/products/blue-lotus-flower-smoking-blend/blue-lotus-flower-smoking-blend-3.jpg';
+// Import lions mane tea images
+import lionsManeTea1 from '../assets/images/products/lions-mane-tea/blue-lotus-flower-tea-bags.jpg';
+import lionsManeTea2 from '../assets/images/products/lions-mane-tea/blue-lotus-flower-tea.jpg';
+import lionsManeTea3 from '../assets/images/products/lions-mane-tea/chamomile-blue-lotus-flower-tea-bags.jpg';
 
-// Import blue lotus flower tea cut images
-import blueLotusTeaCut1 from '../assets/images/products/blue-lotus-flower-tea-cut/blue-lotus-flower-tea-cut-1.jpg';
-import blueLotusTeaCut2 from '../assets/images/products/blue-lotus-flower-tea-cut/blue-lotus-flower-tea-cut-2.jpg';
-import blueLotusTeaCut3 from '../assets/images/products/blue-lotus-flower-tea-cut/blue-lotus-flower-tea-cut.jpg';
+// Import lions mane tincture images
+import lionsManeTincture1 from '../assets/images/products/lions-mane-tincture/blue-lotus-flower-pre-rolls-1.jpg';
+import lionsManeTincture2 from '../assets/images/products/lions-mane-tincture/blue-lotus-flower-pre-rolls-2.jpg';
+import lionsManeTincture3 from '../assets/images/products/lions-mane-tincture/blue-lotus-flower-pre-rolls-3.jpg';
 
 // list of products
-//- blue lotus flower pre rolls 
-//- blue lotus flower smoking blend
-//- blue lotus flower packs 
-//- blue lotus flower tea bags 
-//- blue lotus flower tea cut 
+//- lions mane capsules
+//- lions mane powder
+//- lions mane extract
+//- lions mane tea
+//- lions mane tincture
 
 export const PRODUCTS: Products = {
-  'blue-lotus-flower-pre-rolls': {
-    title: 'Blue Lotus Flower King Size Pre-Rolls (100% Blue Lotus Flower ONLY)',
-    description: 'Buy Blue Lotus Flower Pre Rolls from the leading supplier in the UK. At Blue Dream Tea UK, we pride ourselves on top quality Blue Lotus Flower Pre Rolls.',
-    price: 15.99,
-    salePrice: 12.99,
+  'lions-mane-capsules': {
+    title: 'Lions Mane Mushroom Capsules (Premium Quality)',
+    description: 'Buy Lions Mane Capsules from the leading supplier in the UK. At Lions Mane Labs UK, we pride ourselves on top quality Lions Mane Mushroom Capsules.',
+    price: 24.99,
+    salePrice: 19.99,
     images: {
-      main: blueLotusPre1,
-      thumbnail: blueLotusPre2,
-      additional: [blueLotusPre3],
+      main: lionsManeCapsules1,
+      thumbnail: lionsManeCapsules2,
+      additional: [lionsManeCapsules3],
     },
     variants: [
-      { value: '6', label: '6 Pack', price: 22.99, salePrice: 18.99 },
-      { value: '12', label: '12 Pack', price: 40.99, salePrice: 32.99 },
-      { value: '24', label: '24 Pack', price: 72.99, salePrice: 58.99 },
-      { value: '48', label: '48 Pack', price: 132.99, salePrice: 108.99 },
+      { value: '30', label: '30 Capsules', price: 24.99, salePrice: 19.99 },
+      { value: '60', label: '60 Capsules', price: 44.99, salePrice: 35.99 },
+      { value: '120', label: '120 Capsules', price: 79.99, salePrice: 64.99 },
+      { value: '240', label: '240 Capsules', price: 139.99, salePrice: 114.99 },
     ],
     reviews: [
-      { user: 'Alice', rating: 5, comment: 'Amazing product!' },
-      { user: 'Bob', rating: 4, comment: 'Very relaxing.' },
+      { user: 'Sarah', rating: 5, comment: 'Amazing cognitive enhancement!' },
+      { user: 'Mike', rating: 4, comment: 'Great for focus and memory.' },
     ],
     details: {
       description: {
         content: [
-          "Step into a world of refined relaxation with our signature Blue Lotus Pre-Rolls. Each pre-roll is a masterpiece of craftsmanship, featuring 100% pure Blue Lotus Flower (Nymphaea Caerulea) meticulously prepared to offer an experience that transcends the ordinary.",
+          "Experience the power of premium Lions Mane Mushroom with our expertly crafted capsules. Each capsule contains 100% pure Lions Mane extract, carefully processed to preserve the mushroom's natural cognitive-enhancing properties.",
           
-          "What makes our pre-rolls extraordinary? It's the perfect marriage of convenience and authenticity. We've mastered the art of rolling to deliver a consistent, smooth experience every time. Unlike mass-produced alternatives, our pre-rolls contain absolutely no fillers or additives - just pure, premium Blue Lotus Flower in its most elegant form. <a href='/articles/what-is-blue-lotus-flower' class='text-blue-600 hover:text-blue-800'>Discover the mystique of Blue Lotus</a>.",
+          "What makes our capsules extraordinary? It's the perfect combination of potency and convenience. We've sourced the finest Lions Mane mushrooms and processed them using advanced extraction methods to ensure maximum bioavailability. Unlike inferior products, our capsules contain standardized extracts with guaranteed active compounds. <a href='/articles/what-is-lions-mane-mushroom' class='text-blue-600 hover:text-blue-800'>Discover the science behind Lions Mane</a>.",
           
-          "Sourced from our pristine gardens in Sri Lanka, each flower is organically cultivated and harvested at its peak. Our artisans carefully preserve the flower's natural essence through gentle processing, ensuring every pre-roll delivers the authentic character that Blue Lotus is cherished for. Interested in its traditional benefits? Explore our guide about <a href='/articles/blue-lotus-detoxifying-effects' class='text-blue-600 hover:text-blue-800'>Blue Lotus's calming properties</a>.",
+          "Sourced from our certified organic farms, each mushroom is cultivated under optimal conditions and harvested at peak potency. Our state-of-the-art processing facility ensures every capsule delivers consistent quality and maximum benefits. Interested in its cognitive benefits? Explore our guide about <a href='/articles/lions-mane-cognitive-benefits' class='text-blue-600 hover:text-blue-800'>Lions Mane's brain-boosting properties</a>.",
           
-          "Connoisseurs choose our pre-rolls for:",
-          "• Perfectly balanced draw and burn",
-          "• Pure, unadulterated Blue Lotus Flower",
-          "• Consistent quality in every roll",
-          "• Subtle, enchanting aroma",
-          "• Convenient, ready-to-use format",
+          "Cognitive enhancement enthusiasts choose our capsules for:",
+          "• Standardized extract for consistent results",
+          "• High bioavailability for maximum absorption",
+          "• Convenient daily supplementation",
+          "• Third-party tested for purity and potency",
+          "• No fillers, binders, or artificial additives",
           
-          "Each pre-roll is crafted to exacting standards, designed to be enjoyed slowly and mindfully. For the best experience, take gentle draws with 30-45 seconds between puffs, allowing the natural floral notes to unfold gradually. This measured approach ensures an even burn and helps preserve the delicate properties of the Blue Lotus Flower.",
+          "Each capsule is designed for optimal absorption, allowing you to experience the full benefits of Lions Mane without the earthy taste. For best results, take 1-2 capsules daily with food, allowing your body to gradually build up the beneficial compounds. This measured approach ensures optimal cognitive enhancement and supports long-term brain health.",
           
           "🌿 Important Notes & Legal Information:",
-          "• Intended for aromatherapy and decorative purposes only",
-          "• This product is restricted in: Russia, Poland, Latvia, Lithuania, or Louisiana (USA)",
-          "• Orders from restricted regions will be cancelled and refunded",
-          "• Our products are not intended to diagnose, treat, cure, or prevent any disease",
+          "• Dietary supplement - not intended to diagnose, treat, cure, or prevent any disease",
+          "• Consult with a healthcare professional before use if pregnant, nursing, or taking medications",
+          "• Keep out of reach of children",
+          "• Store in a cool, dry place away from direct sunlight",
           "• These statements have not been evaluated by the Food and Drug Administration",
           
-          "At Blue Dream Tea UK, we take pride in offering premium Blue Lotus products while maintaining complete transparency about their uses and legal status. Your trust in our quality and authenticity drives everything we do."
+          "At Lions Mane Labs UK, we take pride in offering premium Lions Mane supplements while maintaining complete transparency about their benefits and proper usage. Your cognitive enhancement journey starts here."
         ],
         schema: {
           "@type": "Product",
@@ -85,22 +86,22 @@ export const PRODUCTS: Products = {
             {
               "@type": "PropertyValue",
               "name": "composition",
-              "value": "100% Pure Blue Lotus Flower"
+              "value": "100% Pure Lions Mane Mushroom Extract"
             },
             {
               "@type": "PropertyValue",
-              "name": "origin",
-              "value": "Sri Lanka"
+              "name": "extraction_method",
+              "value": "Dual Extraction (Water + Alcohol)"
             },
             {
               "@type": "PropertyValue",
-              "name": "processing",
-              "value": "Hand-crafted pre-rolls"
+              "name": "standardization",
+              "value": "Standardized for Active Compounds"
             },
             {
               "@type": "PropertyValue",
               "name": "intended_use",
-              "value": "Aromatherapy and Decoration"
+              "value": "Cognitive Enhancement Supplement"
             }
           ]
         }
@@ -108,20 +109,20 @@ export const PRODUCTS: Products = {
       productInformation: {
         content: [
           {
-            heading: "What's so special about our Blue Lotus Pre Rolls?",
-            content: "Discover a new level of serenity with our premium Blue Lotus Pre-Rolls. Expertly crafted to offer a unique smoking experience that stands apart from traditional cigarettes and weed. Embrace the calming allure of Blue Lotus Flower as you smoke your worries away, exploring the soothing effects that set it apart."
+            heading: "What's so special about our Lions Mane Capsules?",
+            content: "Discover a new level of cognitive enhancement with our premium Lions Mane Capsules. Expertly formulated to support memory, focus, and overall brain health, these capsules offer a convenient way to harness the power of this remarkable mushroom."
           },
           {
-            heading: "What Is Blue Lotus Flower?",
-            content: "Organically grown and dried in Sri Lanka, our Blue Lotus Flowers are shipped to the UK where they are crafted into the perfect product for our customer. Blue Lotus Flower is a captivating herb with a rich history and cultural significance. It's delicate celestial blue petals and subtle fragrance evoke tranquility and wonder."
+            heading: "What Is Lions Mane Mushroom?",
+            content: "Lions Mane (Hericium erinaceus) is a unique mushroom known for its distinctive appearance and remarkable cognitive benefits. Traditionally used in Asian medicine, modern research has confirmed its potential to support brain health and cognitive function."
           },
           {
-            heading: "What Are The Effects?",
-            content: "Our herbal smokes are traditionally enjoyed for its calming and soothing properties. It may offer the following benefits: Promotes relaxation and a sense of calm, Supports restful sleep, Helps to ease everyday stress and tension, Enhances feelings of well-being, Traditionally used for its aromatic qualities, Supports healthy skin and hair."
+            heading: "What Are The Benefits?",
+            content: "Our Lions Mane supplements are designed to support cognitive function and may offer the following benefits: Enhanced memory and learning, Improved focus and concentration, Support for nerve regeneration, Natural mood support, Antioxidant protection for brain cells, Support for healthy aging."
           },
           {
             heading: "What Will I Receive?",
-            content: "When ordering your Blue Lotus Pre Rolls from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world to places like: UK, Canada, USA, Asia, Europe and Oceania."
+            content: "When ordering your Lions Mane Capsules from us, you'll receive your discrete package through the mail, containing the quantity requested in a secure, airtight container to maintain freshness and potency. We offer fast shipping across the UK and worldwide."
           }
         ]
       },
@@ -129,18 +130,18 @@ export const PRODUCTS: Products = {
         content: [
           {
             icon: "weight",
-            label: "Weight per Pre-roll",
-            value: "0.8g"
+            label: "Capsule Count",
+            value: "30, 60, 120, or 240 capsules per bottle"
           },
           {
             icon: "packSize",
-            label: "Pack Sizes",
-            value: "Available in 6, 12, 24, or 48 pre-rolls"
+            label: "Extract Strength",
+            value: "500mg per capsule (10:1 extract ratio)"
           },
           {
             icon: "origin",
             label: "Origin",
-            value: "Premium grade blue lotus flowers from Sri Lanka"
+            value: "Premium grade Lions Mane mushrooms from certified organic farms"
           }
         ]
       },
@@ -166,110 +167,106 @@ export const PRODUCTS: Products = {
       },
       instructions: {
         content: [
-          "Remove pre-roll from packaging and inspect for quality",
-          "Light the pre-roll evenly at the tip, rotating while lighting",
-          "Take slow, gentle draws with 30-45 seconds between puffs",
-          "Avoid smoking too quickly as this can cause uneven burning",
-          "If needed, gently tap off ash to maintain even burning",
-          "Extinguish completely when finished",
-          "Store unused pre-rolls in the original packaging in a cool, dry place"
+          "Take 1-2 capsules daily with food",
+          "Best taken in the morning or early afternoon",
+          "Allow 2-4 weeks to experience full benefits",
+          "Maintain consistent daily use for optimal results",
+          "Store in a cool, dry place away from direct sunlight",
+          "Keep out of reach of children",
+          "Consult healthcare professional if taking medications"
         ],
         schema: {
           "@type": "HowTo",
-          "name": "How to Use Blue Lotus Pre-Rolls",
+          "name": "How to Use Lions Mane Capsules",
           "steps": [
             {
               "@type": "HowToStep",
-              "text": "Remove pre-roll from packaging and inspect for quality"
+              "text": "Take 1-2 capsules daily with food"
             },
             {
               "@type": "HowToStep",
-              "text": "Light the pre-roll evenly at the tip, rotating while lighting"
+              "text": "Best taken in the morning or early afternoon"
             },
             {
               "@type": "HowToStep",
-              "text": "Take slow, gentle draws with 30-45 seconds between puffs"
+              "text": "Allow 2-4 weeks to experience full benefits"
             },
             {
               "@type": "HowToStep",
-              "text": "Avoid smoking too quickly as this can cause uneven burning"
+              "text": "Maintain consistent daily use for optimal results"
             },
             {
               "@type": "HowToStep",
-              "text": "If needed, gently tap off ash to maintain even burning"
-            },
-            {
-              "@type": "HowToStep",
-              "text": "Extinguish completely when finished"
+              "text": "Store in a cool, dry place away from direct sunlight"
             }
           ]
         }
       },
       relatedArticles: [
         {
-          slug: 'smoking-blue-lotus-flower-a-users-guide',
-          title: 'Complete Guide to Using Blue Lotus Pre-Rolls',
-          description: 'Learn the proper techniques and best practices for using Blue Lotus pre-rolls.'
+          slug: 'lions-mane-cognitive-benefits',
+          title: 'Complete Guide to Lions Mane Benefits',
+          description: 'Learn about the cognitive and health benefits of Lions Mane mushroom.'
         },
         {
-          slug: 'blue-lotus-flower-effects',
-          title: 'Understanding Blue Lotus Effects',
-          description: 'Discover the traditional effects and properties of Blue Lotus Flower.'
+          slug: 'lions-mane-dosage-guide',
+          title: 'Lions Mane Dosage Guide',
+          description: 'Find the optimal dosage for your Lions Mane supplementation.'
         },
         {
-          slug: 'is-it-safe-to-smoke-blue-lotus-flower',
-          title: 'Safety Guide: Blue Lotus Pre-Rolls',
-          description: 'Everything you need to know about safely using Blue Lotus pre-rolls.'
+          slug: 'lions-mane-vs-other-nootropics',
+          title: 'Lions Mane vs Other Nootropics',
+          description: 'Compare Lions Mane with other cognitive enhancement supplements.'
         }
       ]
     }
   },
-  'blue-lotus-flower-smoking-blend': {
-    title: 'Blue Lotus Flower Smoking Blend',
-    description: 'Buy Blue Lotus Smoking Blend from the top supplier in the UK. At Blue Dream Worldwide, we pride ourselves on supplying top quality dried Blue Lotus Blends.',
-    price: 15.99,
-    salePrice: 12.99,
+  'lions-mane-powder': {
+    title: 'Lions Mane Mushroom Powder (Premium Grade)',
+    description: 'Buy Lions Mane Powder from the top supplier in the UK. At Lions Mane Labs UK, we pride ourselves on supplying top quality dried Lions Mane Powder.',
+    price: 19.99,
+    salePrice: 15.99,
     images: {
-      main: blueLotusSmokingBlend1,
-      thumbnail: blueLotusSmokingBlend2,
-      additional: [blueLotusSmokingBlend3],
+      main: lionsManePowder1,
+      thumbnail: lionsManePowder2,
+      additional: [lionsManePowder3],
     },
     variants: [
-      { value: '10g', label: '10g Pack', price: 22.99, salePrice: 18.99 },
-      { value: '25g', label: '25g Pack', price: 40.99, salePrice: 32.99 },
-      { value: '50g', label: '50g Pack', price: 72.99, salePrice: 58.99 },
-      { value: '100g', label: '100g Pack', price: 132.99, salePrice: 108.99 },
+      { value: '50g', label: '50g Pack', price: 19.99, salePrice: 15.99 },
+      { value: '100g', label: '100g Pack', price: 34.99, salePrice: 27.99 },
+      { value: '250g', label: '250g Pack', price: 69.99, salePrice: 55.99 },
+      { value: '500g', label: '500g Pack', price: 119.99, salePrice: 95.99 },
     ],
     reviews: [
-      { user: 'Alice', rating: 5, comment: 'Amazing product!' },
-      { user: 'Bob', rating: 4, comment: 'Very relaxing.' },
+      { user: 'Emma', rating: 5, comment: 'Perfect for smoothies!' },
+      { user: 'James', rating: 4, comment: 'Great quality powder.' },
     ],
     details: {
       description: {
         content: [
-          "Discover our meticulously crafted Blue Lotus Smoking Blend, where tradition meets purity. Each blend is thoughtfully prepared using only the finest parts of the flower - the delicate petals, precious stamen, and pistils, creating a natural alternative that's worlds apart from conventional options.",
+          "Discover the versatility of our premium Lions Mane Powder, carefully ground from whole fruiting bodies to preserve maximum nutritional value. This fine powder offers endless possibilities for incorporating Lions Mane into your daily routine.",
           
-          "What sets our blend apart? It's the purity. While others might add fillers or additives, our blend is 100% pure Blue Lotus Flower, nothing more, nothing less. Each batch is carefully ground to the perfect consistency, making it ideal for those seeking a natural alternative to tobacco. <a href='/articles/what-is-blue-lotus-flower' class='text-blue-600 hover:text-blue-800'>Learn more about Blue Lotus's rich history</a>.",
+          "What sets our powder apart? It's the purity and potency. We use only the finest Lions Mane mushrooms, carefully dried and ground to a fine consistency that dissolves easily in liquids. Unlike extracts, our powder contains the complete mushroom profile, including beneficial fibers and compounds. <a href='/articles/what-is-lions-mane-mushroom' class='text-blue-600 hover:text-blue-800'>Learn more about Lions Mane's complete benefits</a>.",
           
-          "Sourced from our sustainable gardens in Sri Lanka, every flower is organically grown and harvested at peak maturity. Our artisanal processing methods preserve the flower's natural properties, ensuring you experience Blue Lotus in its most authentic form. Curious about the traditional benefits? Explore our guide on <a href='/articles/blue-lotus-detoxifying-effects' class='text-blue-600 hover:text-blue-800'>Blue Lotus's natural properties</a>.",
+          "Sourced from our certified organic farms, each mushroom is harvested at peak maturity and processed using gentle methods to preserve its natural properties. Our fine grinding process ensures optimal absorption while maintaining the mushroom's complete nutritional profile. Curious about preparation methods? Explore our guide on <a href='/articles/how-to-use-lions-mane-powder' class='text-blue-600 hover:text-blue-800'>creative ways to use Lions Mane powder</a>.",
           
-          "Traditional enthusiasts appreciate our blend for its:",
-          "• Smooth, natural character",
-          "• Perfect consistency for rolling",
-          "• Subtle, aromatic qualities",
-          "• Calming botanical properties",
-          "• Pure, additive-free composition",
+          "Health enthusiasts appreciate our powder for its:",
+          "• Complete mushroom profile with all natural compounds",
+          "• Fine grind for easy mixing and absorption",
+          "• Versatile use in drinks, foods, and recipes",
+          "• No fillers or additives",
+          "• Rich in beneficial fibers and nutrients",
           
-          "Each batch is expertly ground to achieve the perfect balance between texture and usability. The natural floral notes create a uniquely smooth experience, while our careful processing preserves the flower's delicate properties. Unlike harsh alternatives, our blend offers a gentle, refined character that true enthusiasts have come to prefer.",
-
+          "Each batch is carefully processed to achieve the perfect consistency for optimal absorption. The fine powder dissolves easily in water, smoothies, or can be added to your favorite recipes. Unlike capsules, powder form allows for flexible dosing and creative culinary applications.",
+          
           "🌿 Important Notes & Legal Information:",
-          "• Intended for aromatherapy and decorative purposes only",
-          "• This product is restricted in: Russia, Poland, Latvia, Lithuania, or Louisiana (USA)",
-          "• Orders from restricted regions will be cancelled and refunded",
-          "• Our products are not intended to diagnose, treat, cure, or prevent any disease",
+          "• Dietary supplement - not intended to diagnose, treat, cure, or prevent any disease",
+          "• Consult with a healthcare professional before use if pregnant, nursing, or taking medications",
+          "• Keep out of reach of children",
+          "• Store in a cool, dry place away from direct sunlight",
           "• These statements have not been evaluated by the Food and Drug Administration",
           
-          "At Blue Dream Tea UK, we're dedicated to providing premium quality Blue Lotus products while maintaining complete transparency about their uses and legal status. Your satisfaction and trust are paramount to us."
+          "At Lions Mane Labs UK, we're dedicated to providing premium quality Lions Mane powder while maintaining complete transparency about its benefits and proper usage. Your journey to enhanced cognitive function starts here."
         ],
         schema: {
           "@type": "Product",
@@ -277,22 +274,22 @@ export const PRODUCTS: Products = {
             {
               "@type": "PropertyValue",
               "name": "composition",
-              "value": "100% Pure Blue Lotus Flower (petals, stamen, and pistils)"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "origin",
-              "value": "Sri Lanka"
+              "value": "100% Pure Lions Mane Mushroom Powder"
             },
             {
               "@type": "PropertyValue",
               "name": "processing",
-              "value": "Artisanal ground blend"
+              "value": "Whole fruiting body, fine ground"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "origin",
+              "value": "Certified Organic Farms"
             },
             {
               "@type": "PropertyValue",
               "name": "intended_use",
-              "value": "Aromatherapy and Decoration"
+              "value": "Dietary Supplement and Culinary Use"
             }
           ]
         }
@@ -300,20 +297,20 @@ export const PRODUCTS: Products = {
       productInformation: {
         content: [
           {
-            heading: "What's so special about our Blue Lotus Smoking Blend?",
-            content: "Discover the perfect harmony of tradition and convenience with our premium Blue Lotus Smoking Blend. Expertly crafted to offer a unique smoking experience that stands apart from traditional alternatives, this blend combines the finest Blue Lotus Flower with complementary herbs for an enhanced experience."
+            heading: "What's so special about our Lions Mane Powder?",
+            content: "Discover the versatility and potency of our premium Lions Mane Powder. Made from whole fruiting bodies and ground to perfection, this powder offers maximum flexibility in how you incorporate Lions Mane into your daily routine."
           },
           {
-            heading: "What Is Blue Lotus Flower?",
-            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+            heading: "What Is Lions Mane Mushroom?",
+            content: "Lions Mane (Hericium erinaceus) is a unique mushroom known for its distinctive appearance and remarkable cognitive benefits. Our powder is made from whole fruiting bodies, preserving all the natural compounds and beneficial fibers."
           },
           {
-            heading: "What Are The Effects?",
-            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+            heading: "What Are The Benefits?",
+            "content": "Our Lions Mane powder is designed to support cognitive function and may offer the following benefits: Enhanced memory and learning, Improved focus and concentration, Support for nerve regeneration, Natural mood support, Antioxidant protection, Digestive health support from natural fibers."
           },
           {
             heading: "What Will I Receive?",
-            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested in a resealable, airtight pouch to maintain freshness and potency. We offer fast shipping across the UK and worldwide."
           }
         ]
       },
@@ -322,7 +319,7 @@ export const PRODUCTS: Products = {
           {
             icon: "weight",
             label: "Available Weights",
-            value: "10g, 25g, 50g, 100g"
+            value: "50g, 100g, 250g, 500g"
           },
           {
             icon: "packSize",
@@ -338,36 +335,36 @@ export const PRODUCTS: Products = {
       },
       instructions: {
         content: [
-          "Use your preferred rolling papers or smoking device",
-          "Take a small amount (0.25-0.5g) of the blend",
-          "Roll evenly, ensuring not to pack too tightly",
-          "Light evenly and take gentle draws",
-          "Allow 15-20 minutes between uses to assess effects",
-          "Store unused blend in the airtight container provided"
+          "Mix 1-2 teaspoons into smoothies, coffee, or tea",
+          "Can be added to soups, sauces, or baked goods",
+          "Start with smaller amounts and adjust to taste",
+          "Best taken with food for optimal absorption",
+          "Store in a cool, dry place away from direct sunlight",
+          "Keep out of reach of children"
         ],
         schema: {
           "@type": "HowTo",
-          "name": "How to Use Blue Lotus Smoking Blend",
+          "name": "How to Use Lions Mane Powder",
           "steps": [
             {
               "@type": "HowToStep",
-              "text": "Use your preferred rolling papers or smoking device"
+              "text": "Mix 1-2 teaspoons into smoothies, coffee, or tea"
             },
             {
               "@type": "HowToStep",
-              "text": "Take a small amount (0.25-0.5g) of the blend"
+              "text": "Can be added to soups, sauces, or baked goods"
             },
             {
               "@type": "HowToStep",
-              "text": "Roll evenly, ensuring not to pack too tightly"
+              "text": "Start with smaller amounts and adjust to taste"
             },
             {
               "@type": "HowToStep",
-              "text": "Light evenly and take gentle draws"
+              "text": "Best taken with food for optimal absorption"
             },
             {
               "@type": "HowToStep",
-              "text": "Store unused blend in the airtight container provided"
+              "text": "Store in a cool, dry place away from direct sunlight"
             }
           ]
         }
@@ -394,81 +391,93 @@ export const PRODUCTS: Products = {
       },
       relatedArticles: [
         {
-          slug: 'smoking-blue-lotus-flower-everything-you-should-know',
-          title: 'Complete Guide to Blue Lotus Smoking Blend',
-          description: 'Master the art of using Blue Lotus smoking blend with our comprehensive guide.'
+          slug: 'how-to-use-lions-mane-powder',
+          title: 'Creative Ways to Use Lions Mane Powder',
+          description: 'Discover delicious recipes and methods for incorporating Lions Mane powder into your diet.'
         },
         {
-          slug: 'smoking-blue-lotus-flower-effects',
-          title: 'Effects of Blue Lotus Smoking Blend',
-          description: 'Learn about the traditional effects and properties of Blue Lotus smoking blend.'
+          slug: 'lions-mane-smoothie-recipes',
+          title: 'Lions Mane Smoothie Recipes',
+          description: 'Try these delicious smoothie recipes featuring Lions Mane powder.'
         },
         {
-          slug: 'is-it-safe-to-smoke-blue-lotus-flower',
-          title: 'Safety Guide: Blue Lotus Smoking',
-          description: 'Essential safety information for using Blue Lotus smoking blend.'
+          slug: 'lions-mane-cooking-guide',
+          title: 'Cooking with Lions Mane',
+          description: 'Learn how to cook with Lions Mane powder in various dishes.'
         }
       ]
     }
   },
 
-  'blue-lotus-flower': {
-    title: 'Blue Lotus Flower',
-    description: 'Buy Blue Lotus Flower from the top supplier in the UK. At Blue Dream Tea UK, we pride ourselves on supplying top quality dried Blue Lotus Flower.',
-    price: 15.99,
-    salePrice: 12.99,
+  'lions-mane-extract': {
+    title: 'Lions Mane Mushroom Extract (High Potency)',
+    description: 'Buy Lions Mane Extract from the top supplier in the UK. At Lions Mane Labs UK, we pride ourselves on supplying top quality concentrated Lions Mane Extract.',
+    price: 29.99,
+    salePrice: 23.99,
     images: {
-      main: blueLotusPack1,
-      thumbnail: blueLotusPack2,
-      additional: [blueLotusPack3],
+      main: lionsManeExtract1,
+      thumbnail: lionsManeExtract2,
+      additional: [lionsManeExtract3],
     },
     variants: [
-      { value: '10g', label: '10g Pack', price: 22.99, salePrice: 18.99 },
-      { value: '25g', label: '25g Pack', price: 40.99, salePrice: 32.99 },
-      { value: '50g', label: '50g Pack', price: 72.99, salePrice: 58.99 },
-      { value: '100g', label: '100g Pack', price: 132.99, salePrice: 108.99 },
+      { value: '30ml', label: '30ml Bottle', price: 29.99, salePrice: 23.99 },
+      { value: '60ml', label: '60ml Bottle', price: 49.99, salePrice: 39.99 },
+      { value: '120ml', label: '120ml Bottle', price: 79.99, salePrice: 64.99 },
+      { value: '240ml', label: '240ml Bottle', price: 139.99, salePrice: 114.99 },
     ],
     reviews: [
-      { user: 'Alice', rating: 5, comment: 'Amazing product!' },
-      { user: 'Bob', rating: 4, comment: 'Very relaxing.' },
+      { user: 'Alex', rating: 5, comment: 'Most potent Lions Mane I\'ve tried!' },
+      { user: 'Lisa', rating: 4, comment: 'Great for cognitive enhancement.' },
     ],
     details: {
       description: {
         content: [
-          "Step into the world of ancient wisdom with our premium Blue Lotus Flower, thoughtfully cultivated in the pristine fields of Sri Lanka. As the UK's leading supplier, we take pride in bringing you this remarkable botanical treasure in its purest form.",
+          "Experience the ultimate in Lions Mane potency with our premium extract. This concentrated liquid extract delivers maximum active compounds in every drop, making it the most efficient way to experience Lions Mane's cognitive benefits.",
           
-          "Each petal tells a story of careful cultivation and meticulous harvesting, preserving the flower's natural essence and delicate properties. Perfect for creating serene moments through various traditional practices, our Blue Lotus Flower offers versatility in every pack. Whether you're drawn to the art of tea crafting (discover our complete <a href='/articles/how-to-make-blue-lotus-tea' class='text-blue-600 hover:text-blue-800'>tea preparation guide</a>) or exploring other traditional uses, you'll find our premium grade flowers exceed expectations.",
+          "What makes our extract extraordinary? It's the dual extraction process that captures both water-soluble and alcohol-soluble compounds. This advanced method ensures you get the complete spectrum of Lions Mane's beneficial compounds, including hericenones and erinacines. <a href='/articles/what-is-lions-mane-mushroom' class='text-blue-600 hover:text-blue-800'>Learn about Lions Mane's active compounds</a>.",
           
-          "Curious about the rich history and traditional significance of this mystical flower? Dive deeper into our <a href='/articles/what-is-blue-lotus-flower' class='text-blue-600 hover:text-blue-800'>comprehensive Blue Lotus guide</a>. From its ancient origins to modern appreciation, understand why this flower has captivated cultures for millennia.",
+          "Sourced from premium Lions Mane mushrooms and processed in our state-of-the-art facility, each batch is tested for potency and purity. Our liquid extract offers superior bioavailability compared to capsules or powder, allowing for faster absorption and more immediate effects. Interested in the science? Explore our guide on <a href='/articles/lions-mane-extraction-methods' class='text-blue-600 hover:text-blue-800'>extraction methods and potency</a>.",
           
-          "Our Blue Lotus Flower is perfect for various traditional uses, including aromatherapy, herbal tea preparation, and botanical collections. Many of our customers appreciate its natural cleansing properties, which you can explore in our article about its <a href='/articles/blue-lotus-detoxifying-effects' class='text-blue-600 hover:text-blue-800'>traditional cleansing benefits</a>.",
+          "Serious cognitive enhancement enthusiasts choose our extract for:",
+          "• Maximum potency with dual extraction",
+          "• Superior bioavailability and absorption",
+          "• Precise dosing with included dropper",
+          "• Fast-acting liquid format",
+          "• Third-party tested for purity and potency",
+          
+          "Each bottle comes with a precision dropper for accurate dosing. The liquid format allows for sublingual administration, bypassing the digestive system for faster absorption. This makes our extract ideal for those seeking immediate cognitive enhancement or those who prefer liquid supplements.",
           
           "🌿 Important Notes & Legal Information:",
-          "• Intended for aromatherapy, tea preparation, and decorative purposes only",
-          "• This product is restricted in: Russia, Poland, Latvia, Lithuania, or Louisiana (USA)",
-          "• Orders from restricted regions will be cancelled and refunded",
-          "• Our products are not intended to diagnose, treat, cure, or prevent any disease",
+          "• Dietary supplement - not intended to diagnose, treat, cure, or prevent any disease",
+          "• Consult with a healthcare professional before use if pregnant, nursing, or taking medications",
+          "• Keep out of reach of children",
+          "• Store in a cool, dry place away from direct sunlight",
           "• These statements have not been evaluated by the Food and Drug Administration",
           
-          "At Blue Dream Tea UK, we're committed to providing you with the highest quality Blue Lotus Flower while maintaining full transparency about its uses and legal status. Your trust and satisfaction are our top priorities."
+          "At Lions Mane Labs UK, we're committed to providing the most potent Lions Mane extract while maintaining complete transparency about its benefits and proper usage. Your cognitive enhancement journey reaches new heights here."
         ],
         schema: {
           "@type": "Product",
           "additionalProperty": [
             {
               "@type": "PropertyValue",
-              "name": "origin",
-              "value": "Sri Lanka"
+              "name": "composition",
+              "value": "Dual Extracted Lions Mane Mushroom Extract"
             },
             {
               "@type": "PropertyValue",
-              "name": "quality",
-              "value": "Premium Grade"
+              "name": "extraction_ratio",
+              "value": "10:1 Concentrated Extract"
+            },
+            {
+              "@type": "PropertyValue",
+              "name": "extraction_method",
+              "value": "Dual Extraction (Water + Alcohol)"
             },
             {
               "@type": "PropertyValue",
               "name": "intended_use",
-              "value": "Aromatherapy, Tea Preparation, Decoration"
+              "value": "High Potency Cognitive Enhancement"
             }
           ]
         }
@@ -476,20 +485,20 @@ export const PRODUCTS: Products = {
       productInformation: {
         content: [
           {
-            heading: "What's so special about our Blue Lotus Flower?",
-            content: "Step into the world of ancient wisdom with our premium Blue Lotus Flower, thoughtfully cultivated in the pristine fields of Sri Lanka. As the UK's leading supplier, we take pride in bringing you this remarkable botanical treasure in its purest form."
+            heading: "What's so special about our Lions Mane Extract?",
+            content: "Discover the ultimate in Lions Mane potency with our premium dual-extracted liquid. This concentrated extract delivers maximum active compounds for superior cognitive enhancement and faster absorption."
           },
           {
-            heading: "What Is Blue Lotus Flower?",
-            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+            heading: "What Is Lions Mane Mushroom?",
+            content: "Lions Mane (Hericium erinaceus) is a unique mushroom known for its cognitive benefits. Our extract uses dual extraction to capture both water-soluble and alcohol-soluble compounds for maximum potency."
           },
           {
-            heading: "What Are The Effects?",
-            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+            heading: "What Are The Benefits?",
+            content: "Our Lions Mane extract is designed for maximum cognitive enhancement and may offer the following benefits: Enhanced memory and learning, Improved focus and concentration, Support for nerve regeneration, Natural mood support, Antioxidant protection, Fast-acting liquid absorption."
           },
           {
             heading: "What Will I Receive?",
-            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested in a dark glass bottle with precision dropper to maintain potency and ensure accurate dosing."
           }
         ]
       },
@@ -497,61 +506,53 @@ export const PRODUCTS: Products = {
         content: [
           {
             icon: "weight",
-            label: "Available Weights",
-            value: "10g, 25g, 50g, 100g"
+            label: "Bottle Sizes",
+            value: "30ml, 60ml, 120ml, 240ml"
           },
           {
             icon: "packSize",
-            label: "Packaging",
-            value: "Resealable, airtight pouch"
+            label: "Extract Ratio",
+            value: "10:1 Concentrated Extract"
           },
           {
             icon: "storage",
             label: "Storage",
             value: "Store in a cool, dry place away from direct sunlight"
-          },
-          {
-            icon: "origin",
-            label: "Origin",
-            value: "Premium grade blue lotus flowers from Sri Lanka"
           }
         ]
       },
       instructions: {
         content: [
-          "For Tea Preparation:",
-          "Use 1-2 grams of blue lotus flower per cup",
-          "Heat water to just below boiling (95°C/203°F)",
-          "Steep for 5-10 minutes",
-          "Strain and enjoy",
-          "For Smoking Blend:",
-          "Use 0.25-0.5g per roll",
-          "Mix gently with other herbs if desired",
-          "Store unused portion in the airtight container provided"
+          "Take 1-2 droppers full (1-2ml) daily",
+          "Can be taken directly or mixed with water/juice",
+          "For faster absorption, hold under tongue for 30 seconds",
+          "Best taken in the morning or early afternoon",
+          "Store in a cool, dry place away from direct sunlight",
+          "Keep out of reach of children"
         ],
         schema: {
           "@type": "HowTo",
-          "name": "How to Use Blue Lotus Flower Packs",
+          "name": "How to Use Lions Mane Extract",
           "steps": [
             {
               "@type": "HowToStep",
-              "text": "For tea, use 1-2 grams of blue lotus flower per cup"
+              "text": "Take 1-2 droppers full (1-2ml) daily"
             },
             {
               "@type": "HowToStep",
-              "text": "Heat water to just below boiling (95°C/203°F)"
+              "text": "Can be taken directly or mixed with water/juice"
             },
             {
               "@type": "HowToStep",
-              "text": "Steep for 5-10 minutes"
+              "text": "For faster absorption, hold under tongue for 30 seconds"
             },
             {
               "@type": "HowToStep",
-              "text": "For smoking, use 0.25-0.5g per roll"
+              "text": "Best taken in the morning or early afternoon"
             },
             {
               "@type": "HowToStep",
-              "text": "Store unused portion in the airtight container"
+              "text": "Store in a cool, dry place away from direct sunlight"
             }
           ]
         }
@@ -574,104 +575,73 @@ export const PRODUCTS: Products = {
             estimatedDays: "3-5 working days on orders over £30"
           }
         ],
-        freeShippingThreshold: 30,
-        schema: [
-          {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-              "@type": "MonetaryAmount",
-              "value": 3.99,
-              "currency": "GBP"
-            },
-            "deliveryTime": {
-              "@type": "ShippingDeliveryTime",
-              "businessDays": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-              }
-            }
-          }
-        ]
+        freeShippingThreshold: 30
       },
       relatedArticles: [
         {
-          slug: 'what-is-blue-lotus-flower',
-          title: 'Understanding Blue Lotus Flower',
-          description: 'A comprehensive guide to Blue Lotus Flower and its traditional uses.'
+          slug: 'lions-mane-extraction-methods',
+          title: 'Understanding Lions Mane Extraction',
+          description: 'Learn about different extraction methods and their benefits.'
         },
         {
-          slug: 'how-to-make-blue-lotus-tea',
-          title: 'How to Make Blue Lotus Tea',
-          description: 'Learn to brew the perfect cup of Blue Lotus tea with our step-by-step guide.'
+          slug: 'lions-mane-dosage-guide',
+          title: 'Lions Mane Dosage Guide',
+          description: 'Find the optimal dosage for your Lions Mane supplementation.'
         },
         {
-          slug: 'blue-lotus-detoxifying-effects',
-          title: 'Blue Lotus Benefits Guide',
-          description: 'Discover the traditional benefits and properties of Blue Lotus Flower.'
+          slug: 'lions-mane-vs-other-nootropics',
+          title: 'Lions Mane vs Other Nootropics',
+          description: 'Compare Lions Mane with other cognitive enhancement supplements.'
         }
       ]
     }
   },
-  'blue-lotus-flower-tea-bags': {
-    title: 'Blue Lotus Flower Tea Bags (Ready To Use)',
-    description: 'Introducing our Blue Lotus Flower Tea Bags – the perfect blend of elegance and wellness in every sip. Get free shipping this month only...',
-    price: 10.99,
-    salePrice: 8.99,
+  'lions-mane-tea': {
+    title: 'Lions Mane Mushroom Tea (Organic Blend)',
+    description: 'Buy Lions Mane Tea from the top supplier in the UK. At Lions Mane Labs UK, we pride ourselves on supplying top quality organic Lions Mane Tea.',
+    price: 14.99,
+    salePrice: 11.99,
     images: {
-      main: blueLotusTeaBags1,
-      thumbnail: blueLotusTeaBags2,
-      additional: [blueLotusTeaBags1],
+      main: lionsManeTea1,
+      thumbnail: lionsManeTea2,
+      additional: [lionsManeTea3],
     },
     variants: [
-      {
-        name: 'type',
-        label: 'Tea Type',
-        options: [
-          { value: 'blue-lotus', label: 'Blue Lotus', price: 0, salePrice: 0 },
-          { value: 'chamomile-blue-lotus', label: '& Chamomile', price: 0, salePrice: 2.00 },
-        ]
-      },
-      {
-        name: 'size',
-        label: 'Pack Size',
-        options: [
-          { value: '6', label: '6 Pack', price: 10.99, salePrice: 8.99 },
-          { value: '12', label: '12 Pack', price: 19.99, salePrice: 16.99 },
-          { value: '24', label: '24 Pack', price: 29.99, salePrice: 24.99 },
-          { value: '48', label: '48 Pack', price: 39.99, salePrice: 31.99 },
-        ]
-      }
+      { value: '20', label: '20 Tea Bags', price: 14.99, salePrice: 11.99 },
+      { value: '40', label: '40 Tea Bags', price: 24.99, salePrice: 19.99 },
+      { value: '80', label: '80 Tea Bags', price: 39.99, salePrice: 31.99 },
+      { value: '160', label: '160 Tea Bags', price: 69.99, salePrice: 55.99 },
     ],
     reviews: [
-      { user: 'Charlie', rating: 5, comment: 'Best tea ever!' },
-      { user: 'Diana', rating: 4, comment: 'Great flavor.' },
+      { user: 'Tom', rating: 5, comment: 'Perfect morning tea!' },
+      { user: 'Rachel', rating: 4, comment: 'Great taste and benefits.' },
     ],
     details: {
       description: {
         content: [
-          "Transform your daily tea ritual with our exquisite Blue Lotus Flower Tea Bags. Each sachet is a gateway to tranquility, carefully crafted to bring you the pure essence of this ancient botanical treasure. Available in both pure Blue Lotus and our harmonious Blue Lotus & Chamomile blend, these tea bags offer convenience without compromising on the authentic experience.",
+          "Transform your daily tea ritual with our premium Lions Mane Tea. Each tea bag contains a perfect blend of Lions Mane mushroom and complementary herbs, creating a delicious and beneficial beverage that supports cognitive health.",
           
-          "What sets our tea bags apart? It's the meticulous attention to quality. Each bag contains premium Blue Lotus Flower, harvested at its peak from our sustainable gardens in Sri Lanka. We've perfected the art of preservation, ensuring every cup delivers the flower's full character and natural properties. <a href='/articles/what-is-blue-lotus-flower' class='text-blue-600 hover:text-blue-800'>Explore the rich heritage of Blue Lotus</a>.",
+          "What makes our tea special? It's the perfect balance of taste and benefits. We've carefully selected premium Lions Mane mushrooms and blended them with complementary herbs to create a smooth, earthy flavor that's both enjoyable and beneficial. <a href='/articles/what-is-lions-mane-mushroom' class='text-blue-600 hover:text-blue-800'>Discover the benefits of Lions Mane tea</a>.",
           
-          "Our signature blends are cherished for their:",
-          "• Pure, unadulterated Blue Lotus Flower",
-          "• Delicate, aromatic bouquet",
-          "• Soothing botanical properties",
-          "• Perfect portion control",
-          "• Convenient, ready-to-brew format",
+          "Sourced from our certified organic farms, each tea bag contains carefully measured amounts of Lions Mane and complementary herbs. Our gentle processing preserves the beneficial compounds while creating a pleasant drinking experience. Want to learn more about preparation? Check out our <a href='/articles/how-to-brew-lions-mane-tea' class='text-blue-600 hover:text-blue-800'>complete brewing guide</a>.",
           
-          "The magic lies in the details - we've carefully calibrated each tea bag to deliver the perfect strength. The gentle floral notes create a serene experience, while our optional chamomile blend adds a subtle layer of complementary calm. Want to learn more about preparation? Check out our <a href='/articles/how-to-make-blue-lotus-tea' class='text-blue-600 hover:text-blue-800'>complete brewing guide</a>.",
+          "Tea enthusiasts appreciate our blend for its:",
+          "• Smooth, earthy flavor profile",
+          "• Convenient tea bag format",
+          "• Cognitive enhancement benefits",
+          "• Organic and natural ingredients",
+          "• Perfect for daily consumption",
           
-          "Discover why tea enthusiasts are embracing Blue Lotus as their new daily ritual. Our blend offers a moment of tranquility in your busy day, inviting you to pause, reflect, and rejuvenate. Curious about the traditional benefits? Read about its <a href='/articles/blue-lotus-detoxifying-effects' class='text-blue-600 hover:text-blue-800'>natural properties</a>.",
+          "Each tea bag is individually wrapped to maintain freshness and potency. The blend is designed to be enjoyed daily as part of your wellness routine, providing gentle cognitive support while you enjoy a delicious cup of tea.",
           
           "🌿 Important Notes & Legal Information:",
-          "• Intended for tea preparation only",
-          "• This product is restricted in: Russia, Poland, Latvia, Lithuania, or Louisiana (USA)",
-          "• Orders from restricted regions will be cancelled and refunded",
-          "• Our products are not intended to diagnose, treat, cure, or prevent any disease",
+          "• Dietary supplement - not intended to diagnose, treat, cure, or prevent any disease",
+          "• Consult with a healthcare professional before use if pregnant, nursing, or taking medications",
+          "• Keep out of reach of children",
+          "• Store in a cool, dry place away from direct sunlight",
           "• These statements have not been evaluated by the Food and Drug Administration",
           
-          "At Blue Dream Tea UK, we're passionate about bringing you the finest Blue Lotus tea experience while maintaining complete transparency about its uses and legal status. Your satisfaction and well-being are our highest priorities."
+          "At Lions Mane Labs UK, we're passionate about bringing you the finest Lions Mane tea experience while maintaining complete transparency about its benefits and proper usage. Your daily cognitive enhancement ritual starts here."
         ],
         schema: {
           "@type": "Product",
@@ -679,12 +649,12 @@ export const PRODUCTS: Products = {
             {
               "@type": "PropertyValue",
               "name": "composition",
-              "value": "100% Pure Blue Lotus Flower or Blue Lotus & Chamomile Blend"
+              "value": "Lions Mane Mushroom and Complementary Herbs"
             },
             {
               "@type": "PropertyValue",
               "name": "origin",
-              "value": "Sri Lanka"
+              "value": "Certified Organic Farms"
             },
             {
               "@type": "PropertyValue",
@@ -694,7 +664,7 @@ export const PRODUCTS: Products = {
             {
               "@type": "PropertyValue",
               "name": "intended_use",
-              "value": "Herbal Tea Preparation"
+              "value": "Daily Cognitive Enhancement Tea"
             }
           ]
         }
@@ -702,20 +672,20 @@ export const PRODUCTS: Products = {
       productInformation: {
         content: [
           {
-            heading: "What's so special about our Blue Lotus Tea Bags?",
-            content: "Experience the convenience and elegance of our premium Blue Lotus Tea Bags. Each bag is carefully crafted to deliver the authentic Blue Lotus experience in a convenient, ready-to-use format that makes enjoying this ancient herb effortless and enjoyable."
+            heading: "What's so special about our Lions Mane Tea?",
+            content: "Experience the perfect blend of taste and cognitive benefits with our premium Lions Mane Tea. Each tea bag contains carefully selected Lions Mane mushrooms and complementary herbs for a delicious daily wellness ritual."
           },
           {
-            heading: "What Is Blue Lotus Flower?",
-            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+            heading: "What Is Lions Mane Mushroom?",
+            content: "Lions Mane (Hericium erinaceus) is a unique mushroom known for its cognitive benefits. Our tea blend combines Lions Mane with complementary herbs to create a smooth, enjoyable drinking experience."
           },
           {
-            heading: "What Are The Effects?",
-            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+            heading: "What Are The Benefits?",
+            content: "Our Lions Mane tea is designed to support cognitive function and may offer the following benefits: Enhanced memory and learning, Improved focus and concentration, Natural mood support, Antioxidant protection, Gentle daily cognitive support, Relaxing tea ritual."
           },
           {
             heading: "What Will I Receive?",
-            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested in individually wrapped tea bags to maintain freshness and potency."
           }
         ]
       },
@@ -723,35 +693,18 @@ export const PRODUCTS: Products = {
         content: [
           {
             icon: "weight",
-            label: "Net Weight per Tea Bag",
-            value: "1.5g"
+            label: "Tea Bags per Pack",
+            value: "20, 40, 80, or 160 tea bags"
           },
           {
             icon: "packSize",
-            label: "Tea Bags per Pack",
-            value: "Available in 6, 12, 24, or 48 bags"
+            label: "Packaging",
+            value: "Individually wrapped tea bags"
           },
           {
             icon: "storage",
-            label: "Storage Instructions",
+            label: "Storage",
             value: "Store in a cool, dry place away from direct sunlight"
-          },
-          {
-            icon: "origin",
-            label: "Origin",
-            value: "Premium grade blue lotus flowers from Sri Lanka"
-          }
-        ],
-        schema: [
-          {
-            "@type": "PropertyValue",
-            "name": "Tea Bag Weight",
-            "value": "1.5g"
-          },
-          {
-            "@type": "PropertyValue",
-            "name": "Product Origin",
-            "value": "Sri Lanka"
           }
         ]
       },
@@ -760,14 +713,14 @@ export const PRODUCTS: Products = {
           "Bring fresh water to just below boiling (95°C/203°F)",
           "Place one tea bag in your cup or mug",
           "Pour hot water over the tea bag",
-          "Steep for 5-7 minutes for optimal flavor",
+          "Steep for 5-7 minutes for optimal flavor and benefits",
           "Remove tea bag and enjoy",
-          "Can be enjoyed hot or cold - for iced tea, steep longer and pour over ice",
+          "Can be enjoyed hot or cold",
           "Store unused tea bags in their original packaging"
         ],
         schema: {
           "@type": "HowTo",
-          "name": "How to Prepare Blue Lotus Tea",
+          "name": "How to Brew Lions Mane Tea",
           "steps": [
             {
               "@type": "HowToStep",
@@ -783,7 +736,7 @@ export const PRODUCTS: Products = {
             },
             {
               "@type": "HowToStep",
-              "text": "Steep for 5-7 minutes for optimal flavor"
+              "text": "Steep for 5-7 minutes for optimal flavor and benefits"
             },
             {
               "@type": "HowToStep",
@@ -810,90 +763,73 @@ export const PRODUCTS: Products = {
             estimatedDays: "3-5 working days on orders over £30"
           }
         ],
-        freeShippingThreshold: 30,
-        schema: [
-          {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-              "@type": "MonetaryAmount",
-              "value": 3.99,
-              "currency": "GBP"
-            },
-            "deliveryTime": {
-              "@type": "ShippingDeliveryTime",
-              "businessDays": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-              }
-            }
-          }
-        ]
+        freeShippingThreshold: 30
       },
       relatedArticles: [
         {
-          slug: 'how-to-make-blue-lotus-tea',
-          title: 'Perfect Blue Lotus Tea Guide',
-          description: 'Master the art of brewing Blue Lotus tea with our comprehensive guide.'
+          slug: 'how-to-brew-lions-mane-tea',
+          title: 'Perfect Lions Mane Tea Guide',
+          description: 'Master the art of brewing Lions Mane tea for maximum benefits.'
         },
         {
-          slug: 'blue-lotus-lucid-dreaming-deep-sleep',
-          title: 'Blue Lotus for Better Sleep',
-          description: 'Learn how Blue Lotus tea can support relaxation and better sleep.'
+          slug: 'lions-mane-tea-benefits',
+          title: 'Benefits of Lions Mane Tea',
+          description: 'Learn about the cognitive and health benefits of Lions Mane tea.'
         },
         {
-          slug: 'blue-lotus-detoxifying-effects',
-          title: 'Benefits of Blue Lotus Tea',
-          description: 'Explore the traditional benefits of Blue Lotus tea.'
+          slug: 'lions-mane-tea-recipes',
+          title: 'Lions Mane Tea Recipes',
+          description: 'Try these delicious variations of Lions Mane tea.'
         }
       ]
     }
   },
-  'blue-lotus-flower-tea-cut': {
-    title: 'Blue Lotus Flower Tea Cut',
-    description: 'Brew your own blue lotus flower tea. 100% pure and natural.',
-    price: 15.99,
-    salePrice: 12.99,
+  'lions-mane-tincture': {
+    title: 'Lions Mane Mushroom Tincture (Alcohol-Free)',
+    description: 'Buy Lions Mane Tincture from the top supplier in the UK. At Lions Mane Labs UK, we pride ourselves on supplying top quality alcohol-free Lions Mane Tincture.',
+    price: 22.99,
+    salePrice: 18.99,
     images: {
-      main: blueLotusTeaCut1,
-      thumbnail: blueLotusTeaCut2,
-      additional: [blueLotusTeaCut3],
+      main: lionsManeTincture1,
+      thumbnail: lionsManeTincture2,
+      additional: [lionsManeTincture3],
     },
     variants: [
-      { value: '10g', label: '10g Pack', price: 15.99, salePrice: 12.99 },
-      { value: '25g', label: '25g Pack', price: 28.99, salePrice: 22.99 },
-      { value: '50g', label: '50g Pack', price: 39.99, salePrice: 31.99 },
-      { value: '100g', label: '100g Pack', price: 49.99, salePrice: 39.99 },
+      { value: '30ml', label: '30ml Bottle', price: 22.99, salePrice: 18.99 },
+      { value: '60ml', label: '60ml Bottle', price: 39.99, salePrice: 31.99 },
+      { value: '120ml', label: '120ml Bottle', price: 69.99, salePrice: 55.99 },
+      { value: '240ml', label: '240ml Bottle', price: 119.99, salePrice: 95.99 },
     ],
     reviews: [
-      { user: 'Emily', rating: 5, comment: 'Perfect for brewing tea!' },
-      { user: 'Frank', rating: 4, comment: 'Great quality cut.' },
+      { user: 'Mark', rating: 5, comment: 'Great for those avoiding alcohol!' },
+      { user: 'Sophie', rating: 4, comment: 'Effective and convenient.' },
     ],
     details: {
       description: {
         content: [
-          "Experience the purest form of Blue Lotus tea with our premium Tea Cut blend. Each package contains perfectly sized Blue Lotus Flower pieces, meticulously processed to release their full potential in every brew. For tea enthusiasts who appreciate the art of loose-leaf preparation, this is your gateway to crafting the perfect cup.",
+          "Experience the benefits of Lions Mane with our premium alcohol-free tincture. This gentle yet effective formula is perfect for those who prefer to avoid alcohol-based extracts while still enjoying the cognitive benefits of Lions Mane.",
           
-          "What makes our Tea Cut special? It's the perfect balance of tradition and convenience. We've carefully calibrated the cut size to ensure optimal extraction, while preserving the flower's complete profile. Unlike pre-packaged tea bags, our loose-leaf cut gives you complete control over your brew's strength and character. <a href='/articles/what-is-blue-lotus-flower' class='text-blue-600 hover:text-blue-800'>Discover Blue Lotus's rich heritage</a>.",
+          "What makes our tincture special? It's the alcohol-free extraction process that preserves Lions Mane's beneficial compounds using glycerin and water. This gentle method creates a mild, slightly sweet tincture that's suitable for everyone, including children and those avoiding alcohol. <a href='/articles/what-is-lions-mane-mushroom' class='text-blue-600 hover:text-blue-800'>Learn about alcohol-free extraction methods</a>.",
           
-          "Sourced from our sustainable gardens in Sri Lanka, each flower is organically cultivated and harvested at its peak. Our artisanal processing preserves the delicate properties while creating the ideal cut size for brewing. Want to perfect your technique? Explore our <a href='/articles/how-to-make-blue-lotus-tea' class='text-blue-600 hover:text-blue-800'>complete brewing guide</a>.",
+          "Sourced from premium Lions Mane mushrooms and processed using gentle extraction methods, each batch is tested for potency and purity. Our alcohol-free tincture offers excellent bioavailability while being gentle on the stomach and suitable for daily use. Interested in the benefits? Explore our guide on <a href='/articles/lions-mane-alcohol-free-benefits' class='text-blue-600 hover:text-blue-800'>alcohol-free Lions Mane benefits</a>.",
           
-          "Tea connoisseurs choose our Tea Cut for:",
-          "• Optimal cut size for perfect extraction",
-          "• Pure, unadulterated Blue Lotus Flower",
-          "• Superior aroma release",
-          "• Complete brewing control",
-          "• Ability to blend with other herbs",
+          "Health-conscious individuals choose our tincture for its:",
+          "• Alcohol-free, gentle extraction",
+          "• Mild, slightly sweet taste",
+          "• Suitable for all ages",
+          "• Easy to take and absorb",
+          "• Convenient dropper bottle",
           
-          "Each batch is expertly processed to achieve the perfect balance between surface area and flavor retention. The natural floral notes unfold beautifully during steeping, while our precise cutting technique ensures consistent quality in every brew. Interested in its traditional benefits? Learn about <a href='/articles/blue-lotus-detoxifying-effects' class='text-blue-600 hover:text-blue-800'>Blue Lotus's calming properties</a>.",
+          "Each bottle comes with a precision dropper for accurate dosing. The alcohol-free formula makes it perfect for those who prefer to avoid alcohol-based extracts, while still providing the cognitive benefits of Lions Mane in an easy-to-take format.",
           
           "🌿 Important Notes & Legal Information:",
-          "• Intended for tea preparation only",
-          "• This product is restricted in: Russia, Poland, Latvia, Lithuania, or Louisiana (USA)",
-          "• Orders from restricted regions will be cancelled and refunded",
-          "• Our products are not intended to diagnose, treat, cure, or prevent any disease",
+          "• Dietary supplement - not intended to diagnose, treat, cure, or prevent any disease",
+          "• Consult with a healthcare professional before use if pregnant, nursing, or taking medications",
+          "• Keep out of reach of children",
+          "• Store in a cool, dry place away from direct sunlight",
           "• These statements have not been evaluated by the Food and Drug Administration",
           
-          "At Blue Dream Tea UK, we're committed to providing the finest loose-leaf Blue Lotus experience while maintaining complete transparency about its uses and legal status. Your journey into traditional tea crafting begins here."
+          "At Lions Mane Labs UK, we're committed to providing premium Lions Mane tinctures while maintaining complete transparency about their benefits and proper usage. Your gentle cognitive enhancement journey starts here."
         ],
         schema: {
           "@type": "Product",
@@ -901,22 +837,22 @@ export const PRODUCTS: Products = {
             {
               "@type": "PropertyValue",
               "name": "composition",
-              "value": "100% Pure Blue Lotus Flower - Loose Leaf Cut"
+              "value": "Alcohol-Free Lions Mane Mushroom Tincture"
             },
             {
               "@type": "PropertyValue",
-              "name": "origin",
-              "value": "Sri Lanka"
+              "name": "extraction_method",
+              "value": "Glycerin and Water Extraction"
             },
             {
               "@type": "PropertyValue",
-              "name": "processing",
-              "value": "Artisanal tea cut"
+              "name": "alcohol_content",
+              "value": "0% Alcohol"
             },
             {
               "@type": "PropertyValue",
               "name": "intended_use",
-              "value": "Loose Leaf Tea Preparation"
+              "value": "Gentle Cognitive Enhancement"
             }
           ]
         }
@@ -924,20 +860,20 @@ export const PRODUCTS: Products = {
       productInformation: {
         content: [
           {
-            heading: "What's so special about our Blue Lotus Tea Cut?",
-            content: "Discover the perfect balance of tradition and convenience with our premium Blue Lotus Tea Cut. Expertly processed to the ideal size for tea preparation, this cut preserves all the natural properties while making it easy to brew the perfect cup."
+            heading: "What's so special about our Lions Mane Tincture?",
+            content: "Discover the gentle power of our alcohol-free Lions Mane tincture. Perfect for those who prefer to avoid alcohol-based extracts, this tincture provides the cognitive benefits of Lions Mane in a mild, easy-to-take format."
           },
           {
-            heading: "What Is Blue Lotus Flower?",
-            content: "Blue Lotus Flower (Nymphaea Caerulea) is a revered herb with a rich history dating back to ancient Egypt. Known for its beautiful blue petals and traditional uses, it has been cherished for centuries for its calming and soothing properties."
+            heading: "What Is Lions Mane Mushroom?",
+            content: "Lions Mane (Hericium erinaceus) is a unique mushroom known for its cognitive benefits. Our alcohol-free tincture uses glycerin and water extraction to preserve the beneficial compounds while being gentle on the body."
           },
           {
-            heading: "What Are The Effects?",
-            content: "Our Blue Lotus products are traditionally enjoyed for their calming and soothing properties. They may help promote relaxation, support restful sleep, ease everyday stress and tension, and enhance feelings of well-being."
+            heading: "What Are The Benefits?",
+            content: "Our Lions Mane tincture is designed for gentle cognitive enhancement and may offer the following benefits: Enhanced memory and learning, Improved focus and concentration, Natural mood support, Antioxidant protection, Gentle daily cognitive support, Suitable for all ages."
           },
           {
             heading: "What Will I Receive?",
-            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested packed inside a grip-lock bag to maintain freshness. We offer fast shipping all over the world."
+            content: "When you order from us, you'll receive your discrete package through the mail, containing the quantity requested in a dark glass bottle with precision dropper to maintain potency and ensure accurate dosing."
           }
         ]
       },
@@ -945,13 +881,13 @@ export const PRODUCTS: Products = {
         content: [
           {
             icon: "weight",
-            label: "Available Weights",
-            value: "10g, 25g, 50g, 100g"
+            label: "Bottle Sizes",
+            value: "30ml, 60ml, 120ml, 240ml"
           },
           {
             icon: "packSize",
-            label: "Packaging",
-            value: "Resealable, airtight pouch"
+            label: "Extraction Method",
+            value: "Glycerin and Water Extraction"
           },
           {
             icon: "storage",
@@ -962,38 +898,36 @@ export const PRODUCTS: Products = {
       },
       instructions: {
         content: [
-          "Use 1-2 teaspoons of tea cut per cup",
-          "Heat water to just below boiling (95°C/203°F)",
-          "Place tea cut in a tea infuser or filter",
-          "Pour hot water over the tea cut",
-          "Steep for 5-7 minutes",
-          "Remove infuser and enjoy",
-          "Can be re-steeped 1-2 times",
-          "Store unused tea cut in the airtight container provided"
+          "Take 1-2 droppers full (1-2ml) daily",
+          "Can be taken directly or mixed with water/juice",
+          "Best taken in the morning or early afternoon",
+          "Suitable for all ages (adjust dosage for children)",
+          "Store in a cool, dry place away from direct sunlight",
+          "Keep out of reach of children"
         ],
         schema: {
           "@type": "HowTo",
-          "name": "How to Prepare Blue Lotus Tea Cut",
+          "name": "How to Use Lions Mane Tincture",
           "steps": [
             {
               "@type": "HowToStep",
-              "text": "Use 1-2 teaspoons of tea cut per cup"
+              "text": "Take 1-2 droppers full (1-2ml) daily"
             },
             {
               "@type": "HowToStep",
-              "text": "Heat water to just below boiling (95°C/203°F)"
+              "text": "Can be taken directly or mixed with water/juice"
             },
             {
               "@type": "HowToStep",
-              "text": "Place tea cut in a tea infuser or filter"
+              "text": "Best taken in the morning or early afternoon"
             },
             {
               "@type": "HowToStep",
-              "text": "Pour hot water over the tea cut"
+              "text": "Suitable for all ages (adjust dosage for children)"
             },
             {
               "@type": "HowToStep",
-              "text": "Steep for 5-7 minutes"
+              "text": "Store in a cool, dry place away from direct sunlight"
             }
           ]
         }
@@ -1020,19 +954,19 @@ export const PRODUCTS: Products = {
       },
       relatedArticles: [
         {
-          slug: 'how-to-make-blue-lotus-tea',
-          title: 'Mastering Blue Lotus Tea',
-          description: 'Expert guide to brewing loose-leaf Blue Lotus tea.'
+          slug: 'lions-mane-alcohol-free-benefits',
+          title: 'Benefits of Alcohol-Free Lions Mane',
+          description: 'Learn about the advantages of alcohol-free Lions Mane tinctures.'
         },
         {
-          slug: 'what-is-blue-lotus-flower',
-          title: 'Blue Lotus: A Complete Guide',
-          description: 'Everything you need to know about Blue Lotus Flower.'
+          slug: 'lions-mane-dosage-guide',
+          title: 'Lions Mane Dosage Guide',
+          description: 'Find the optimal dosage for your Lions Mane supplementation.'
         },
         {
-          slug: 'blue-lotus-detoxifying-effects',
-          title: 'Blue Lotus Tea Benefits',
-          description: 'Discover the traditional benefits of Blue Lotus tea.'
+          slug: 'lions-mane-for-children',
+          title: 'Lions Mane for Children',
+          description: 'Learn about safe Lions Mane supplementation for children.'
         }
       ]
     }

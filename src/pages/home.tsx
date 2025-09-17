@@ -6,60 +6,60 @@ import { HiStar, HiShieldCheck, HiTruck, HiClock, HiChevronLeft, HiChevronRight 
 import CustomerReviews from '../components/CustomerReviews';
 import { ProductVariant, ProductVariantGroup } from '../types';
 
-// Tea product categories
-const teaCategories = [
+// Lions Mane product categories
+const lionsManeCategories = [
   {
     title: 'All Products',
-    description: 'All your blue lotus flower needs in one place.',
+    description: 'All your Lions Mane supplement needs in one place.',
     path: '/products',
-    gradient: 'from-pink-500 to-pink-700',
-    icon: '🌸'
+    gradient: 'from-orange-500 to-orange-700',
+    icon: '🍄'
   },
   {
-    title: 'Blue Lotus Flower Packs',
-    description: 'Pure blue lotus flower in various pack sizes and quantities.',
-    path: '/products',
+    title: 'Lions Mane Capsules',
+    description: 'Premium Lions Mane capsules for convenient daily supplementation.',
+    path: '/products/lions-mane-capsules',
     gradient: 'from-purple-500 to-purple-700',
-    icon: '🌸'
+    icon: '💊'
   },
   {
-    title: 'Pre Rolls',
-    description: 'Ready-to-use blue lotus flower pre rolls. 100% pure and natural.',
-    path: '/products/blue-lotus-flower-pre-rolls',
+    title: 'Lions Mane Powder',
+    description: 'Versatile Lions Mane powder for smoothies, drinks, and cooking.',
+    path: '/products/lions-mane-powder',
     gradient: 'from-blue-500 to-blue-700',
-    icon: '🌿'
+    icon: '🥄'
   },
   {
-    title: 'Blue Lotus Tea',
-    description: 'Premium blue lotus tea bags for a soothing experience.',
-    path: '/products',
+    title: 'Lions Mane Extract',
+    description: 'High-potency Lions Mane extract for maximum cognitive benefits.',
+    path: '/products/lions-mane-extract',
     gradient: 'from-green-500 to-green-700',
-    icon: '🫖'
+    icon: '🧪'
   }
 ];
 
 // Available articles for recommendations
 const recommendedArticles = [
   {
-    title: 'What is Blue Lotus Flower?',
-    description: 'Learn everything about blue lotus flower, its history, effects, and uses.',
-    path: '/articles/what-is-blue-lotus-flower',
+    title: 'Lions Mane: The Ultimate Brain Booster',
+    description: 'Learn everything about Lions Mane mushroom, its cognitive benefits, and how to use it.',
+    path: '/articles/lions-mane-cognitive-benefits',
     readTime: '12 min read',
     category: 'Education'
   },
   {
-    title: 'Smoking Blue Lotus Flower: A User\'s Guide',
-    description: 'Complete guide to smoking blue lotus flower safely and effectively.',
-    path: '/articles/smoking-blue-lotus-flower-a-users-guide',
+    title: 'How to Use Lions Mane Powder: Complete Guide',
+    description: 'Learn the best ways to incorporate Lions Mane powder into your daily routine.',
+    path: '/articles/how-to-use-lions-mane-powder',
     readTime: '10 min read',
     category: 'Usage Guide'
   },
   {
-    title: 'Is Blue Lotus Flower Legal in the UK?',
-    description: 'Understand the legal status of blue lotus flower in the United Kingdom.',
-    path: '/articles/is-blue-lotus-flower-legal-in-the-uk',
+    title: 'Lions Mane Dosage Guide: Finding Your Perfect Amount',
+    description: 'Learn the optimal Lions Mane dosage for different cognitive enhancement goals.',
+    path: '/articles/lions-mane-dosage-guide',
     readTime: '12 min read',
-    category: 'Legal Guide'
+    category: 'Dosage Guide'
   }
 ];
 
@@ -186,13 +186,13 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Blue Dream Tea UK - Leading Blue Lotus Flower Supplier</title>
-        <meta name="description" content="Buy premium Blue Lotus Flower products from the UK's leading supplier. High-quality pre-rolls, tea bags, and flower packs. Fast UK delivery, 100% satisfaction guarantee." />
-        <meta property="og:title" content="Blue Dream Tea UK - Leading Blue Lotus Flower Supplier" />
-        <meta property="og:description" content="Buy premium Blue Lotus Flower products from the UK's leading supplier. High-quality pre-rolls, tea bags, and flower packs. Fast UK delivery, 100% satisfaction guarantee." />
+        <title>Lion's Mane Labs UK - Leading Lion's Mane Mushroom Supplier</title>
+        <meta name="description" content="Buy premium Lion's Mane mushroom supplements from the UK's leading supplier. High-quality capsules, powder, extract, and tea. Fast UK delivery, 100% satisfaction guarantee." />
+        <meta property="og:title" content="Lion's Mane Labs UK - Leading Lion's Mane Mushroom Supplier" />
+        <meta property="og:description" content="Buy premium Lion's Mane mushroom supplements from the UK's leading supplier. High-quality capsules, powder, extract, and tea. Fast UK delivery, 100% satisfaction guarantee." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bluedreamtea.co.uk" />
-        <meta property="og:image" content="https://bluedreamtea.co.uk/logo.png" />
+        <meta property="og:url" content="https://lionsmanelabs.co.uk" />
+        <meta property="og:image" content="https://lionsmanelabs.co.uk/logo.png" />
         
         {/* Comprehensive Schema Markup for Homepage */}
         <script type="application/ld+json">
@@ -202,25 +202,25 @@ const Home = () => {
               // Organization Schema
               {
                 "@type": "Organization",
-                "@id": "https://bluedreamtea.co.uk/#/schema/organization/1",
-                "url": "https://bluedreamtea.co.uk",
-                "name": "Blue Dream Tea",
-                "alternateName": "BDT",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1",
+                "url": "https://lionsmanelabs.co.uk",
+                "name": "Lions Mane Labs",
+                "alternateName": "LML",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://bluedreamtea.co.uk/logo.png",
+                  "url": "https://lionsmanelabs.co.uk/logo.png",
                   "width": 500,
                   "height": 500
                 },
                 "hasMerchantReturnPolicy": {
                   "@type": "MerchantReturnPolicy",
-                  "merchantReturnLink": "https://bluedreamtea.co.uk/policies/refund-policy",
+                  "merchantReturnLink": "https://lionsmanelabs.co.uk/policies/refund-policy",
                   "applicableCountry": "GB",
                   "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
                   "merchantReturnDays": 30
                 },
                 "sameAs": [
-                  "https://www.tiktok.com/@bluedreamworldwide"
+                  "https://www.tiktok.com/@lionsmanelabs"
                 ],
                 "contactPoint": {
                   "@type": "ContactPoint",
@@ -235,27 +235,27 @@ const Home = () => {
               // WebSite Schema
               {
                 "@type": "WebSite",
-                "@id": "https://bluedreamtea.co.uk/#/schema/website/1",
-                "url": "https://bluedreamtea.co.uk",
-                "name": "Blue Dream Tea - Leading Blue Lotus Flower Supplier UK",
-                "alternateName": "Blue Dream Tea",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/website/1",
+                "url": "https://lionsmanelabs.co.uk",
+                "name": "Lions Mane Labs - Leading Lions Mane Supplements Supplier UK",
+                "alternateName": "Lions Mane Labs",
                 "potentialAction": {
                   "@type": "SearchAction",
-                  "target": "https://bluedreamtea.co.uk/search?q={search_term_string}",
+                  "target": "https://lionsmanelabs.co.uk/search?q={search_term_string}",
                   "query-input": "required name=search_term_string"
                 },
                 "publisher": {
-                  "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                  "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1"
                 },
                 "inLanguage": ["en"]
               },
               // CollectionPage Schema
               {
                 "@type": "CollectionPage",
-                "@id": "https://bluedreamtea.co.uk/#/schema/collectionpage/1",
-                "name": "Blue Lotus Flower Products Collection",
-                "description": "Premium Blue Lotus Flower products including pre-rolls, tea bags, and flower packs",
-                "url": "https://bluedreamtea.co.uk",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/collectionpage/1",
+                "name": "Lions Mane Supplements Collection",
+                "description": "Premium Lions Mane mushroom supplements including capsules, powder, extract, and tea",
+                "url": "https://lionsmanelabs.co.uk",
                 "mainEntity": {
                   "@type": "ItemList",
                   "itemListElement": featuredProducts.map((product, index) => ({
@@ -263,13 +263,13 @@ const Home = () => {
                     "position": index + 1,
                     "item": {
                       "@type": "Product",
-                      "@id": `https://bluedreamtea.co.uk/products/${product.slug}/#/schema/product`,
+                      "@id": `https://lionsmanelabs.co.uk/products/${product.slug}/#/schema/product`,
                       "name": product.title,
                       "description": product.description,
                       "image": product.images?.main || '',
                       "brand": {
                         "@type": "Brand",
-                        "name": "Blue Dream Tea - Blue Lotus Flower Supplier"
+                        "name": "Lions Mane Labs - Lions Mane Supplements Supplier"
                       },
                       "offers": {
                         "@type": "Offer",
@@ -277,26 +277,26 @@ const Home = () => {
                         "price": product.startingPrice,
                         "availability": "https://schema.org/InStock",
                         "seller": {
-                          "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                          "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1"
                         }
                       }
                     }
                   }))
                 },
                 "isPartOf": {
-                  "@id": "https://bluedreamtea.co.uk/#/schema/website/1"
+                  "@id": "https://lionsmanelabs.co.uk/#/schema/website/1"
                 }
               },
               // Breadcrumb Schema for Homepage
               {
                 "@type": "BreadcrumbList",
-                "@id": "https://bluedreamtea.co.uk/#/schema/breadcrumb/home",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/breadcrumb/home",
                 "itemListElement": [
                   {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://bluedreamtea.co.uk"
+                    "item": "https://lionsmanelabs.co.uk"
                   }
                 ]
               }
@@ -309,10 +309,10 @@ const Home = () => {
         {/* Hero Section with Search */}
         <section className="text-center lg:py-24 md:py-12 sm:py-8 py-8 px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Welcome to Blue Dream Tea UK
+            Welcome to Lions Mane Labs UK
           </h1>
           <p className="text-lg text-gray-500 mb-6 lg:px-36">
-            Your one-stop shop for premium Blue Lotus Flower products. We've been the UK's leading supplier of Blue Lotus Flower since early 2023, bringing you the finest quality products for relaxation and wellness.
+            Your one-stop shop for premium Lions Mane mushroom supplements. We've been the UK's leading supplier of Lions Mane supplements since early 2023, bringing you the finest quality products for cognitive enhancement and brain health.
           </p>
           <div className="max-w-2xl mx-auto lg:mt-12 md:mt-8 sm:mt-4">
             <form onSubmit={handleSearch} className="relative">
@@ -513,10 +513,10 @@ const Home = () => {
         <section className="py-4 bg-gray-50">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-4">Shop by Category</h2>
-            <p className="text-gray-600">Discover our range of premium blue lotus products</p>
+            <p className="text-gray-600">Discover our range of premium Lions Mane supplements</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {teaCategories.map((category) => (
+            {lionsManeCategories.map((category) => (
               <Link
                 key={category.path}
                 to={category.path}

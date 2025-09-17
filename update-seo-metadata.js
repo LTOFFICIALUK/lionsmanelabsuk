@@ -35,7 +35,7 @@ function updateProductMetadata() {
         const currentDesc = descMatch[1];
         
         // Update with scraped data
-        const newTitle = seoData.metadata.title.replace(' - Blue Dream Tea UK', '');
+        const newTitle = seoData.metadata.title.replace(' - Lion\'s Mane Labs UK', '');
         const newDesc = seoData.metadata.metaDescription;
         
         // Replace title and description

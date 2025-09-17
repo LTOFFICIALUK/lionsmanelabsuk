@@ -30,7 +30,7 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
   description,
   publishDate,
   lastModified,
-  author = 'Blue Dream Tea UK Team',
+  author = 'Lion\'s Mane Labs UK Team',
   category,
   featuredImage,
   keywords = [],
@@ -39,15 +39,14 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
 }) => {
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>([]);
   const [activeSection, setActiveSection] = useState<string>('');
-  const [isTocOpen, setIsTocOpen] = useState(false);
   const location = useLocation();
   const currentSlug = location.pathname.split('/').pop() || '';
   
   // Generate full URL for the current page
-  const fullUrl = `https://bluedreamtea.co.uk${location.pathname}`;
+  const fullUrl = `https://lionsmanelabs.co.uk${location.pathname}`;
   
   // Default featured image if none provided
-  const defaultFeaturedImage = 'https://bluedreamtea.co.uk/images/default-article-cover.jpg';
+  const defaultFeaturedImage = 'https://lionsmanelabs.co.uk/images/default-article-cover.jpg';
   
   // Calculate reading time if word count is provided
   const estimatedReadingTime = wordCount ? Math.ceil(wordCount / 200) : null;
@@ -68,19 +67,19 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://bluedreamtea.co.uk'
+        item: 'https://lionsmanelabs.co.uk'
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Articles',
-        item: 'https://bluedreamtea.co.uk/articles'
+        item: 'https://lionsmanelabs.co.uk/articles'
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: getCategoryName(category),
-        item: `https://bluedreamtea.co.uk/category/${category}`
+        item: `https://lionsmanelabs.co.uk/category/${category}`
       },
       {
         '@type': 'ListItem',
@@ -110,18 +109,18 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
     author: {
       '@type': 'Organization',
       name: author,
-      url: 'https://bluedreamtea.co.uk'
+      url: 'https://lionsmanelabs.co.uk'
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Blue Dream Tea UK',
+      name: 'Lion\'s Mane Labs UK',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://bluedreamtea.co.uk/images/logo.png',
+        url: 'https://lionsmanelabs.co.uk/images/logo.png',
         width: 279,
         height: 40
       },
-      url: 'https://bluedreamtea.co.uk'
+      url: 'https://lionsmanelabs.co.uk'
     },
     datePublished: publishDate || new Date().toISOString(),
     dateModified: lastModified || publishDate || new Date().toISOString(),
@@ -138,17 +137,17 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
     about: {
       '@type': 'Thing',
       name: getCategoryName(category),
-      description: `Learn about ${getCategoryName(category).toLowerCase()} for blue lotus flower`
+      description: `Learn about ${getCategoryName(category).toLowerCase()} for Lion's Mane mushroom`
     },
     articleSection: getCategoryName(category),
     inLanguage: 'en-US',
     isPartOf: {
       '@type': 'WebSite',
-      name: 'Blue Dream Tea UK',
-      url: 'https://bluedreamtea.co.uk'
+      name: 'Lion\'s Mane Labs UK',
+      url: 'https://lionsmanelabs.co.uk'
     },
     ...(relatedGuides.length > 0 && {
-      relatedLink: relatedGuides.map(([slug]) => `https://bluedreamtea.co.uk/articles/${slug}`)
+      relatedLink: relatedGuides.map(([slug]) => `https://lionsmanelabs.co.uk/articles/${slug}`)
     })
   };
 
@@ -156,14 +155,14 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
   const websiteStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Blue Dream Tea UK',
-    url: 'https://bluedreamteauk.co.uk',
-    description: 'The leading supplier of blue lotus flower tea, smoking, and wellness products.',
+    name: 'Lion\'s Mane Labs UK',
+    url: 'https://lionsmanelabs.co.uk',
+    description: 'The leading supplier of Lion\'s Mane mushroom supplements, tea, and wellness products.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://bluedreamteauk.co.uk/articles?search={search_term_string}'
+        urlTemplate: 'https://lionsmanelabs.co.uk/articles?search={search_term_string}'
       },
       'query-input': 'required name=search_term_string'
     }
@@ -173,65 +172,76 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
   const organizationStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Blue Dream Tea UK',
-    url: 'https://bluedreamteauk.co.uk',
+    name: 'Lion\'s Mane Labs UK',
+    url: 'https://lionsmanelabs.co.uk',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://bluedreamteauk.co.uk/images/logo.png'
+      url: 'https://lionsmanelabs.co.uk/images/logo.png'
     },
     sameAs: [
-      'https://twitter.com/bluedreamtea',
-      'https://instagram.com/bluedreamtea'
+      'https://twitter.com/lionsmanelabs',
+      'https://instagram.com/lionsmanelabs'
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      url: 'https://bluedreamtea.co.uk/contact'
+      url: 'https://lionsmanelabs.co.uk/contact'
     }
   };
 
   useEffect(() => {
-    // Get all h2 headings from the article
-    const article = document.querySelector('article');
-    if (!article) return;
+    const generateTOC = () => {
+      // Get all h2 headings from the article
+      const article = document.querySelector('article');
+      if (!article) return;
 
-    const headings = Array.from(article.querySelectorAll('h2'))
-      .filter(heading => !heading.closest('[data-cta-buttons]')) as HTMLElement[];
-    const toc: TableOfContentsItem[] = [];
+      const headings = Array.from(article.querySelectorAll('h2'))
+        .filter(heading => !heading.closest('[data-cta-buttons]')) as HTMLElement[];
+      
+      const toc: TableOfContentsItem[] = [];
 
-    headings.forEach((heading, index) => {
-      // Create an ID if none exists
-      if (!heading.id) {
-        heading.id = `heading-${index}`;
-      }
+      headings.forEach((heading, index) => {
+        // Create an ID if none exists
+        if (!heading.id) {
+          heading.id = `heading-${index}`;
+        }
 
-      toc.push({
-        id: heading.id,
-        text: heading.textContent || '',
-        level: 2
-      });
-    });
-
-    setTableOfContents(toc);
-
-    // Set up intersection observer for active section highlighting
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
+        toc.push({
+          id: heading.id,
+          text: heading.textContent || '',
+          level: 2
         });
-      },
-      {
-        rootMargin: '-20% 0px -80% 0px'
-      }
-    );
+      });
 
-    headings.forEach((heading) => observer.observe(heading));
+      setTableOfContents(toc);
 
-    return () => observer.disconnect();
-  }, []);
+      // Set up intersection observer for active section highlighting
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+            }
+          });
+        },
+        {
+          rootMargin: '-20% 0px -80% 0px'
+        }
+      );
+
+      headings.forEach((heading) => observer.observe(heading));
+
+      return () => observer.disconnect();
+    };
+
+    // Try immediately first
+    generateTOC();
+
+    // Also try after a short delay to catch any late-rendering content
+    const timer = setTimeout(generateTOC, 500);
+
+    return () => clearTimeout(timer);
+  }, [children]);
 
   // Get category name for breadcrumbs
   function getCategoryName(category: GuideCategory): string {
@@ -250,16 +260,13 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
     return names[category] || category;
   }
 
-  const handleTocToggle = () => {
-    setIsTocOpen(!isTocOpen);
-  };
 
   return (
     <>
       <Helmet>
         {/* Primary Meta Tags */}
-        <title>{`${title} | Blue Dream Tea UK`}</title>
-        <meta name="title" content={`${title} | Blue Dream Tea UK`} />
+        <title>{`${title} | Lion\'s Mane Labs UK`}</title>
+        <meta name="title" content={`${title} | Lion\'s Mane Labs UK`} />
         <meta name="description" content={description} />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -273,8 +280,8 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
         
         {/* Authorship and Publication */}
         <meta name="author" content={author} />
-        <meta name="publisher" content="Blue Dream Tea UK" />
-        <meta name="copyright" content="Blue Dream Tea UK" />
+        <meta name="publisher" content="Lion\'s Mane Labs UK" />
+        <meta name="copyright" content="Lion\'s Mane Labs UK" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:locale" content="en_US" />
@@ -282,7 +289,7 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={fullUrl} />
-        <meta property="og:site_name" content="Blue Dream Tea UK" />
+        <meta property="og:site_name" content="Lion\'s Mane Labs UK" />
         <meta property="og:image" content={featuredImage || defaultFeaturedImage} />
         <meta property="og:image:alt" content={title} />
         <meta property="og:image:width" content="1200" />
@@ -294,15 +301,15 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
         <meta property="article:modified_time" content={lastModified || publishDate || new Date().toISOString()} />
         <meta property="article:author" content={author} />
         <meta property="article:section" content={getCategoryName(category)} />
-        <meta property="article:publisher" content="https://bluedreamtea.co.uk" />
+        <meta property="article:publisher" content="https://lionsmanelabs.co.uk" />
         {keywords.map((keyword, index) => (
           <meta key={index} property="article:tag" content={keyword} />
         ))}
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@bluedreamteauk" />
-        <meta name="twitter:creator" content="@bluedreamteauk" />
+        <meta name="twitter:site" content="@lionsmanelabs" />
+        <meta name="twitter:creator" content="@lionsmanelabs" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={featuredImage || defaultFeaturedImage} />
@@ -311,8 +318,8 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
         {/* Additional SEO Meta Tags */}
         <meta name="theme-color" content="#3B82F6" />
         <meta name="msapplication-TileColor" content="#3B82F6" />
-        <meta name="application-name" content="Blue Dream Tea UK" />
-        <meta name="apple-mobile-web-app-title" content="Blue Dream Tea UK" />
+        <meta name="application-name" content="Lion\'s Mane Labs UK" />
+        <meta name="apple-mobile-web-app-title" content="Lion\'s Mane Labs UK" />
         <meta name="format-detection" content="telephone=no" />
         
         {/* Structured Data */}
@@ -352,7 +359,7 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
         </style>
       </Helmet>
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 min-h-screen">
         {/* Main content area with proper spacing for fixed header */}
         <div className="pt-8 pb-16">
           {/* Breadcrumbs - Updated for subtler appearance */}
@@ -367,12 +374,6 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
               </li>
               <li className="flex items-center">
                 <span className="mx-1.5">/</span>
-                <Link to={`/category/${category}`} className="hover:text-gray-600 transition-colors">
-                  {getCategoryName(category)}
-                </Link>
-              </li>
-              <li className="flex items-center">
-                <span className="mx-1.5">/</span>
                 <span className="text-gray-600 font-medium" aria-current="page">
                   {title}
                 </span>
@@ -381,7 +382,7 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
           </nav>
 
           {/* Two column layout container */}
-          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-12">
             {/* Main content column */}
             <article className="lg:col-span-8 xl:col-span-9" itemScope itemType="https://schema.org/Article">
               <div className="max-w-4xl">
@@ -407,48 +408,6 @@ const GuideLayout: React.FC<GuideLayoutProps> = ({
                   </div>
                 </header>
 
-                {/* Mobile ToC Toggle Button */}
-                <div className="lg:hidden">
-                  <button
-                    onClick={handleTocToggle}
-                    className="mb-6 flex items-center text-sm font-medium text-gray-600 hover:text-gray-900"
-                    aria-expanded={isTocOpen}
-                    aria-controls="mobile-toc"
-                  >
-                    <svg
-                      className={`w-5 h-5 mr-2 transform transition-transform ${isTocOpen ? 'rotate-180' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                    Table of Contents
-                  </button>
-
-                  {/* Mobile ToC Panel */}
-                  <div
-                    id="mobile-toc"
-                    className={`mb-6 bg-gray-50 rounded-lg p-4 ${isTocOpen ? 'block' : 'hidden'}`}
-                  >
-                    <nav className="space-y-2">
-                      {tableOfContents.map((item) => (
-                        <a
-                          key={item.id}
-                          href={`#${item.id}`}
-                          onClick={() => setIsTocOpen(false)}
-                          className={`block text-sm ${
-                            activeSection === item.id
-                              ? 'text-blue-600 font-medium'
-                              : 'text-gray-600 hover:text-gray-900'
-                          }`}
-                        >
-                          {item.text}
-                        </a>
-                      ))}
-                    </nav>
-                  </div>
-                </div>
 
                 {/* Article Content */}
                 <div itemProp="articleBody">

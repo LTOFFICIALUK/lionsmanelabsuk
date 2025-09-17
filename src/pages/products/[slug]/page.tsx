@@ -218,7 +218,7 @@ const ProductPage = () => {
         : `${getSimpleVariants().length} pack sizes`,
       origin: 'Sri Lanka',
       storage: 'Store in a cool, dry place away from direct sunlight',
-      ingredients: '100% Pure Blue Lotus Flower (Nymphaea Caerulea)',
+      ingredients: '100% Pure Lion\'s Mane Mushroom (Hericium Erinaceus)',
       quality: 'Premium grade, carefully selected and processed',
     },
     shippingMethods: [
@@ -243,13 +243,13 @@ const ProductPage = () => {
   return (
     <>
       <Helmet>
-        <title>{product.title} - Blue Dream Tea UK</title>
+        <title>{product.title} - Lion's Mane Labs UK</title>
         <meta name="description" content={product.description} />
         <meta property="og:title" content={product.title} />
         <meta property="og:description" content={product.description} />
         <meta property="og:type" content="product" />
         <meta property="og:image" content={product.images?.main || ''} />
-        <meta property="og:url" content={`https://bluedreamtea.co.uk/products/${slug}`} />
+        <meta property="og:url" content={`https://lionsmanelabs.co.uk/products/${slug}`} />
         
         {/* Comprehensive Schema Markup following Google's recommendations */}
         <script type="application/ld+json">
@@ -259,23 +259,23 @@ const ProductPage = () => {
               // Organization Schema
               {
                 "@type": "Organization",
-                "@id": "https://bluedreamtea.co.uk/#/schema/organization/1",
-                "url": "https://bluedreamtea.co.uk",
-                "name": "Blue Dream Tea",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1",
+                "url": "https://lionsmanelabs.co.uk",
+                "name": "Lion's Mane Labs",
                 "alternateName": "BDT",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://bluedreamtea.co.uk/logo.png"
+                  "url": "https://lionsmanelabs.co.uk/logo.png"
                 },
                 "hasMerchantReturnPolicy": {
                   "@type": "MerchantReturnPolicy",
-                  "merchantReturnLink": "https://bluedreamtea.co.uk/policies/refund-policy",
+                  "merchantReturnLink": "https://lionsmanelabs.co.uk/policies/refund-policy",
                   "applicableCountry": "GB",
                   "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
                   "merchantReturnDays": 30
                 },
                 "sameAs": [
-                  "https://www.tiktok.com/@bluedreamworldwide"
+                  "https://www.tiktok.com/@lionsmanelabs"
                 ],
                 "contactPoint": {
                   "@type": "ContactPoint",
@@ -286,49 +286,49 @@ const ProductPage = () => {
               // WebSite Schema
               {
                 "@type": "WebSite",
-                "@id": "https://bluedreamtea.co.uk/#/schema/website/1",
-                "url": "https://bluedreamtea.co.uk",
-                "name": "Blue Dream Tea - Leading Blue Lotus Flower Supplier UK",
-                "alternateName": "Blue Dream Tea",
+                "@id": "https://lionsmanelabs.co.uk/#/schema/website/1",
+                "url": "https://lionsmanelabs.co.uk",
+                "name": "Lion's Mane Labs - Leading Lion's Mane Mushroom Supplier UK",
+                "alternateName": "Lion's Mane Labs",
                 "potentialAction": {
                   "@type": "SearchAction",
-                  "target": "https://bluedreamtea.co.uk/search?q={search_term_string}",
+                  "target": "https://lionsmanelabs.co.uk/search?q={search_term_string}",
                   "query-input": "required name=search_term_string"
                 },
                 "publisher": {
-                  "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                  "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1"
                 },
                 "inLanguage": ["en"]
               },
               // ItemPage Schema
               {
                 "@type": "ItemPage",
-                "@id": `https://bluedreamtea.co.uk/products/${slug}`,
-                "name": `${product.title} - Blue Dream Tea UK`,
+                "@id": `https://lionsmanelabs.co.uk/products/${slug}`,
+                "name": `${product.title} - Lion's Mane Labs UK`,
                 "description": product.description,
                 "datePublished": "2023-07-30T19:07:49+01:00",
                 "dateModified": new Date().toISOString(),
                 "breadcrumb": {
-                  "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/breadcrumb`
+                  "@id": `https://lionsmanelabs.co.uk/products/${slug}/#/schema/breadcrumb`
                 },
                 "primaryImageOfPage": {
-                  "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`
+                  "@id": `https://lionsmanelabs.co.uk/#/schema/ImageObject/${slug}`
                 },
                 "image": [
                   {
-                    "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`
+                    "@id": `https://lionsmanelabs.co.uk/#/schema/ImageObject/${slug}`
                   }
                 ],
                 "isPartOf": {
-                  "@id": "https://bluedreamtea.co.uk/#/schema/website/1"
+                  "@id": "https://lionsmanelabs.co.uk/#/schema/website/1"
                 },
-                "url": `https://bluedreamtea.co.uk/products/${slug}`
+                "url": `https://lionsmanelabs.co.uk/products/${slug}`
               },
               // ImageObject Schema
               {
                 "@type": "ImageObject",
-                "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`,
-                "caption": `${product.title} - Premium Blue Lotus Flower Product`,
+                "@id": `https://lionsmanelabs.co.uk/#/schema/ImageObject/${slug}`,
+                "caption": `${product.title} - Premium Lion's Mane Mushroom Supplement`,
                 "inLanguage": "en",
                 "width": 1200,
                 "height": 1200,
@@ -338,42 +338,42 @@ const ProductPage = () => {
               // Breadcrumb Schema
               {
                 "@type": "BreadcrumbList",
-                "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/breadcrumb`,
+                "@id": `https://lionsmanelabs.co.uk/products/${slug}/#/schema/breadcrumb`,
                 "itemListElement": [
                   {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://bluedreamtea.co.uk"
+                    "item": "https://lionsmanelabs.co.uk"
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Products",
-                    "item": "https://bluedreamtea.co.uk/products"
+                    "item": "https://lionsmanelabs.co.uk/products"
                   },
                   {
                     "@type": "ListItem",
                     "position": 3,
                     "name": product.title,
-                    "item": `https://bluedreamtea.co.uk/products/${slug}`
+                    "item": `https://lionsmanelabs.co.uk/products/${slug}`
                   }
                 ]
               },
               // Product Schema (Enhanced)
               {
                 "@type": "Product",
-                "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/product`,
+                "@id": `https://lionsmanelabs.co.uk/products/${slug}/#/schema/product`,
                 "name": product.title,
                 "description": product.description,
                 "image": [
                   {
-                    "@id": `https://bluedreamtea.co.uk/#/schema/ImageObject/${slug}`
+                    "@id": `https://lionsmanelabs.co.uk/#/schema/ImageObject/${slug}`
                   }
                 ],
                 "brand": {
                   "@type": "Brand",
-                  "name": "Blue Dream Tea - Blue Lotus Flower Supplier"
+                  "name": "Lion's Mane Labs - Lion's Mane Mushroom Supplier"
                 },
                 "category": "Herbal Products",
                 "sku": slug,
@@ -381,15 +381,15 @@ const ProductPage = () => {
                 "gtin": slug,
                 "offers": {
                   "@type": "Offer",
-                  "@id": `https://bluedreamtea.co.uk/products/${slug}/#/schema/offer`,
-                  "url": `https://bluedreamtea.co.uk/products/${slug}`,
+                  "@id": `https://lionsmanelabs.co.uk/products/${slug}/#/schema/offer`,
+                  "url": `https://lionsmanelabs.co.uk/products/${slug}`,
                   "priceCurrency": "GBP",
                   "price": currentPrice || product.price,
                   "priceValidUntil": new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
                   "itemCondition": "https://schema.org/NewCondition",
                   "availability": "https://schema.org/InStock",
                   "seller": {
-                    "@id": "https://bluedreamtea.co.uk/#/schema/organization/1"
+                    "@id": "https://lionsmanelabs.co.uk/#/schema/organization/1"
                   },
                   "priceSpecification": {
                     "@type": "UnitPriceSpecification",
@@ -424,7 +424,7 @@ const ProductPage = () => {
                   {
                     "@type": "PropertyValue",
                     "name": "composition",
-                    "value": "100% Pure Blue Lotus Flower"
+                    "value": "100% Pure Lion's Mane Mushroom"
                   },
                   {
                     "@type": "PropertyValue",
@@ -443,7 +443,7 @@ const ProductPage = () => {
                   }
                 ],
                 "mainEntityOfPage": {
-                  "@id": `https://bluedreamtea.co.uk/products/${slug}`
+                  "@id": `https://lionsmanelabs.co.uk/products/${slug}`
                 }
               }
             ]
@@ -484,7 +484,7 @@ const ProductPage = () => {
               {allImages.length > 0 ? (
                 <img
                   src={allImages[selectedImage]}
-                  alt={`${product.title} - Premium Blue Lotus Flower Product`}
+                  alt={`${product.title} - Premium Lion's Mane Mushroom Supplement`}
                   className="w-full h-full object-center object-cover"
                 />
               ) : (

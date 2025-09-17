@@ -2,199 +2,239 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Main Pages -->
   <url>
-    <loc>https://successfulstreamer.com/</loc>
+    <loc>https://lionsmanelabs.co.uk/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://successfulstreamer.com/about</loc>
+    <loc>https://lionsmanelabs.co.uk/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://successfulstreamer.com/guides</loc>
+    <loc>https://lionsmanelabs.co.uk/products</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://successfulstreamer.com/privacy</loc>
+    <loc>https://lionsmanelabs.co.uk/articles</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/privacy-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://successfulstreamer.com/terms</loc>
+    <loc>https://lionsmanelabs.co.uk/terms-of-service</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+
+  <!-- Product Pages -->
+  <url>
+    <loc>https://lionsmanelabs.co.uk/products/lions-mane-capsules</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/products/lions-mane-powder</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/products/lions-mane-extract</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/products/lions-mane-tea</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/products/lions-mane-tincture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Article Pages -->
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-cognitive-benefits</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/how-to-use-lions-mane-powder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-vs-other-nootropics</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-dosage-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-scientific-research</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-memory-enhancement</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-tea-benefits</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-focus-concentration</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-extract-vs-powder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-nerve-regeneration</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/what-is-lions-mane-mushroom</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-side-effects</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-effects</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-for-anxiety</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-for-sleep</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-capsules-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-tincture-benefits</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-for-students</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-for-seniors</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-growing-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-nutritional-profile</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-and-meditation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-for-creativity</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-quality-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-timing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-long-term-benefits</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-and-exercise</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-for-work</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-history</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lionsmanelabs.co.uk/articles/lions-mane-myths</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Category Pages -->
   <url>
-    <loc>https://successfulstreamer.com/category/stream-setup</loc>
+    <loc>https://lionsmanelabs.co.uk/categories/health-benefits</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://successfulstreamer.com/category/growth-marketing</loc>
+    <loc>https://lionsmanelabs.co.uk/categories/usage-guides</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://successfulstreamer.com/category/community-building</loc>
+    <loc>https://lionsmanelabs.co.uk/categories/comparisons</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://successfulstreamer.com/category/monetization</loc>
+    <loc>https://lionsmanelabs.co.uk/categories/science-research</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/category/content-strategy</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Guide Pages -->
-  <url>
-    <loc>https://successfulstreamer.com/guides/how-to-start-streaming-on-twitch</loc>
-    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/how-to-live-stream</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/how-to-live-stream-on-AVIE-Streaming</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/best-places-to-live-stream</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/how-to-stream-from-mobile</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/earn-more-from-live-streaming-with-avie</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/earn-more-multi-streaming</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/monetize-your-live-stream-content</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/monetize-your-clips</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/strategies-to-make-money-from-live-streaming</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/what-is-the-best-mic-for-streaming</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/streaming-equipment-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/obs-setup-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/content-planning-strategy</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/content-calendar-creation</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/growth-hacking-twitch</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/social-media-for-streamers</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/twitch-monetization</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/sponsorship-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/building-community</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/discord-server-setup</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/guides/how-much-revenue-can-you-make-from-streaming</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Pillar Pages -->
-  <url>
-    <loc>https://successfulstreamer.com/stream-setup-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/content-strategy-for-streamers</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/grow-your-stream</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/streaming-monetization-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/streamer-community-building-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://successfulstreamer.com/avie-streaming-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-</urlset> 
+</urlset>

@@ -17,11 +17,11 @@ const Header = () => {
   // Create navigation items based on products
   const navItems = [
     { path: '/', label: 'Home' },
-    { path: '/products/blue-lotus-flower', label: 'Flower Packs' },
-    { path: '/products/blue-lotus-flower-pre-rolls', label: 'Pre Rolls' },
-    { path: '/products/blue-lotus-flower-smoking-blend', label: 'Smoking Blend' },
-    { path: '/products/blue-lotus-flower-tea-bags', label: 'Tea Bags' },
-    { path: '/products/blue-lotus-flower-tea-cut', label: 'Tea Cut' },
+    { path: '/products/lions-mane-capsules', label: 'Capsules' },
+    { path: '/products/lions-mane-powder', label: 'Powder' },
+    { path: '/products/lions-mane-extract', label: 'Extract' },
+    { path: '/products/lions-mane-tea', label: 'Tea' },
+    { path: '/products/lions-mane-tincture', label: 'Tincture' },
   ];
 
   const handleMenuToggle = () => {
@@ -72,11 +72,11 @@ const Header = () => {
                 <Link 
                   to="/" 
                   className="block hover:opacity-80 transition-opacity"
-                  aria-label="Blue Dream Tea UK Home"
+                  aria-label="Lion's Mane Labs UK Home"
                 >
                   <img 
                     src={logo} 
-                    alt="Blue Dream Tea UK"
+                    alt="Lion's Mane Labs UK"
                     className="h-10 sm:h-12 w-auto"
                   />
                 </Link>
@@ -122,11 +122,11 @@ const Header = () => {
                 <Link 
                   to="/" 
                   className="block hover:opacity-80 transition-opacity"
-                  aria-label="Blue Dream Tea UK Home"
+                  aria-label="Lion's Mane Labs UK Home"
                 >
                   <img 
                     src={logo} 
-                    alt="Blue Dream Tea UK"
+                    alt="Lion's Mane Labs UK"
                     className="h-14 w-auto"
                   />
                 </Link>
@@ -229,29 +229,29 @@ const Header = () => {
                     <ul className="space-y-1">
                       <li>
                         <Link
-                          to="/products/blue-lotus-flower"
+                          to="/products/lions-mane-capsules"
                           className="text-sm text-gray-600 hover:text-blue-600 transition-colors block"
                           onClick={() => setIsSearchOpen(false)}
                         >
-                          Blue Lotus Flower Packs
+                          Lion's Mane Capsules
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/products/blue-lotus-flower-tea-bags"
+                          to="/products/lions-mane-tea"
                           className="text-sm text-gray-600 hover:text-blue-600 transition-colors block"
                           onClick={() => setIsSearchOpen(false)}
                         >
-                          Blue Lotus Tea Bags
+                          Lion's Mane Tea
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/products/blue-lotus-flower-pre-rolls"
+                          to="/products/lions-mane-powder"
                           className="text-sm text-gray-600 hover:text-blue-600 transition-colors block"
                           onClick={() => setIsSearchOpen(false)}
                         >
-                          Blue Lotus Pre Rolls
+                          Lion's Mane Powder
                         </Link>
                       </li>
                     </ul>
@@ -261,16 +261,16 @@ const Header = () => {
                     <ul className="space-y-1">
                       <li>
                         <Link
-                          to="/articles/how-to-use-blue-lotus-flower"
+                          to="/articles/how-to-use-lions-mane-powder"
                           className="text-sm text-gray-600 hover:text-blue-600 transition-colors block"
                           onClick={() => setIsSearchOpen(false)}
                         >
-                          How to Use Blue Lotus
+                          How to Use Lion's Mane
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/articles/blue-lotus-flower-effects"
+                          to="/articles/lions-mane-cognitive-benefits"
                           className="text-sm text-gray-600 hover:text-blue-600 transition-colors block"
                           onClick={() => setIsSearchOpen(false)}
                         >
@@ -279,11 +279,11 @@ const Header = () => {
                       </li>
                       <li>
                         <Link
-                          to="/articles/is-blue-lotus-flower-legal-in-the-uk"
+                          to="/articles/lions-mane-scientific-research"
                           className="text-sm text-gray-600 hover:text-blue-600 transition-colors block"
                           onClick={() => setIsSearchOpen(false)}
                         >
-                          Legal Information
+                          Scientific Research
                         </Link>
                       </li>
                     </ul>

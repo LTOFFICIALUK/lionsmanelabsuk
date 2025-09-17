@@ -14,12 +14,6 @@ interface ImportMetaEnv {
   readonly VITE_ROYAL_MAIL_SENDER_COUNTY: string
   readonly VITE_ROYAL_MAIL_SENDER_POSTCODE: string
   readonly VITE_ROYAL_MAIL_NOTIFICATION_EMAILS: string
-  readonly VITE_BREVO_API_KEY: string
-  readonly VITE_BREVO_DEFAULT_LIST_ID: string
-  readonly VITE_PIXXLES_MERCHANT_ID: string
-  readonly VITE_PIXXLES_SIGNATURE_KEY: string
-  readonly VITE_PIXXLES_GATEWAY_URL: string
-  readonly VITE_PIXXLES_ENVIRONMENT: 'sandbox' | 'production'
 }
 
 interface ImportMeta {

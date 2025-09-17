@@ -5,13 +5,8 @@ import { useCart } from '../contexts/CartContext';
 import { ShippingAddress, BillingAddress, Order } from '../types';
 import { HiLockClosed, HiCreditCard, HiTruck } from 'react-icons/hi';
 import { orderService } from '../utils/supabase';
-import { royalMailService } from '../utils/royal-mail-api';
-import { brevoApiService } from '../utils/brevo-api';
 import { discountService } from '../utils/discount-service';
 import { shippingOptions, calculateShippingCost, getShippingOptionsByCountry } from '../constants/shipping-options';
-import PaymentForm from '../components/PaymentForm';
-import PaymentTestPanel from '../components/PaymentTestPanel';
-import { PixxlesTransactionResponse } from '../utils/pixxles-api';
 
 const CheckoutPage: React.FC = () => {
   const { cart, clearCart } = useCart();
@@ -45,15 +40,7 @@ const CheckoutPage: React.FC = () => {
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
   const [showAlert, setShowAlert] = useState(false); // New state for alert visibility
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
-  const [paymentProcessing, setPaymentProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState<'details' | 'payment'>('details');
-  const [selectedTestCard, setSelectedTestCard] = useState<{
-    cardNumber: string;
-    cardCVV: string;
-    cardExpiryMonth: string;
-    cardExpiryYear: string;
-  } | undefined>(undefined);
 
   // Get available shipping options based on selected country
   const availableShippingOptions = getShippingOptionsByCountry(shippingAddress.country);
@@ -158,7 +145,7 @@ const CheckoutPage: React.FC = () => {
     setCurrentStep('payment');
   };
 
-  const handlePaymentSuccess = async (paymentResponse: PixxlesTransactionResponse) => {
+  const handlePaymentSuccess = async (paymentResponse: any) => {
     setIsPlacingOrder(true);
 
     try {
@@ -185,11 +172,11 @@ const CheckoutPage: React.FC = () => {
             discount_amount: cart.discountAmount || 0,
             total: finalTotal,
             status: 'paid',
-            notes: `Payment processed via Pixxles. Transaction ID: ${paymentResponse.transactionID}, XRef: ${paymentResponse.xref}`,
+            notes: `Payment processed. Transaction ID: ${paymentResponse?.transactionID || 'N/A'}, XRef: ${paymentResponse?.xref || 'N/A'}`,
             tracking_number: '',
-            payment_transaction_id: paymentResponse.transactionID,
-            payment_xref: paymentResponse.xref,
-            payment_authorisation_code: paymentResponse.authorisationCode
+            payment_transaction_id: paymentResponse?.transactionID || '',
+            payment_xref: paymentResponse?.xref || '',
+            payment_authorisation_code: paymentResponse?.authorisationCode || ''
         };
 
         console.log('Creating order with data:', orderData);
@@ -223,37 +210,6 @@ const CheckoutPage: React.FC = () => {
             }
         }
 
-        // Create customer in Brevo
-        try {
-            const productNames = cart.items.map(item => item.productTitle);
-            await brevoApiService.createOrUpdateCustomer({
-                email: billingAddress.email,
-                firstName: shippingAddress.firstName,
-                lastName: shippingAddress.lastName,
-                phone: shippingAddress.phone,
-                address: shippingAddress.addressLine1 + (shippingAddress.addressLine2 ? `, ${shippingAddress.addressLine2}` : ''),
-                city: shippingAddress.city,
-                postalCode: shippingAddress.postalCode,
-                country: shippingAddress.country,
-                company: shippingAddress.company,
-                orderNumber: savedOrder.order_number,
-                orderTotal: finalTotal,
-                products: productNames,
-            });
-
-            // Track the order completion event
-            await brevoApiService.trackEvent(billingAddress.email, 'order_completed', {
-                orderNumber: savedOrder.order_number,
-                orderTotal: finalTotal,
-                products: productNames,
-                shippingMethod: selectedShipping.name,
-            });
-
-            console.log('✅ Customer created/updated in Brevo');
-        } catch (brevoError) {
-            console.error('Brevo customer creation failed:', brevoError);
-            // Don't throw error - we don't want to break the checkout flow
-        }
 
         // Get country code for Royal Mail
         const getCountryCode = (countryName: string): string => {
@@ -334,7 +290,7 @@ const CheckoutPage: React.FC = () => {
                 heightInCm: 10
             },
             shippingService: {
-                code: royalMailService.getServiceCode(selectedShipping.name),
+                code: 'STANDARD', // Royal Mail service removed - using default
                 name: selectedShipping.name
             },
             label: {
@@ -363,15 +319,20 @@ const CheckoutPage: React.FC = () => {
         let trackingNumber = '';
         
         try {
-            royalMailResponse = await royalMailService.createOrder(royalMailOrderData);
-            console.log('Royal Mail response:', royalMailResponse);
+            // Royal Mail service removed - using mock response
+            // royalMailResponse = await royalMailService.createOrder(royalMailOrderData);
+            // console.log('Royal Mail response:', royalMailResponse);
 
             // Create shipping label
-            labelResponse = await royalMailService.createShippingLabel(savedOrder.order_number);
-            console.log('Shipping label response:', labelResponse);
+            // labelResponse = await royalMailService.createShippingLabel(savedOrder.order_number);
+            // console.log('Shipping label response:', labelResponse);
+            
+            // Mock response for testing
+            royalMailResponse = { trackingNumber: 'MOCK-TRACKING-' + savedOrder.order_number };
+            labelResponse = { success: true };
 
             // Get tracking number from response
-            trackingNumber = royalMailResponse.trackingNumber || royalMailResponse.orderReference || '';
+            trackingNumber = royalMailResponse.trackingNumber || '';
             
             // Update order with tracking number and status
             await orderService.updateOrder(savedOrder.id, {
@@ -420,72 +381,69 @@ const CheckoutPage: React.FC = () => {
     } finally {
         setIsPlacingOrder(false);
     }
-};
-
-  const handlePaymentError = (error: string) => {
-    alert(`Payment failed: ${error}`);
-    setShowPaymentForm(false);
   };
 
-  const handlePaymentProcessing = (isProcessing: boolean) => {
-    setPaymentProcessing(isProcessing);
-  };
+  const handleOrderPlacement = async () => {
+    setIsPlacingOrder(true);
 
-  // Test payment handler for development
-  const handleTestPayment = (testData: {
-    cardNumber: string;
-    expiryMonth: string;
-    expiryYear: string;
-    cvv: string;
-    customerName: string;
-    customerEmail: string;
-    customerPhone: string;
-    customerAddress: string;
-    customerPostCode: string;
-    customerTown: string;
-    customerCountryCode: string;
-  }) => {
-    // Set the selected test card data
-    setSelectedTestCard({
-      cardNumber: testData.cardNumber,
-      cardCVV: testData.cvv,
-      cardExpiryMonth: testData.expiryMonth,
-      cardExpiryYear: testData.expiryYear
-    });
+    try {
+      const selectedShipping = shippingOptions.find(option => option.id === selectedShippingOptionId)!;
+      
+      // Create order data for database
+      const orderData = {
+        order_number: generateOrderNumber(),
+        customer_first_name: shippingAddress.firstName,
+        customer_last_name: shippingAddress.lastName,
+        customer_email: billingAddress.email,
+        customer_phone: shippingAddress.phone,
+        shipping_address_line1: shippingAddress.addressLine1,
+        shipping_address_line2: shippingAddress.addressLine2 || '',
+        shipping_city: shippingAddress.city,
+        shipping_postal_code: shippingAddress.postalCode,
+        shipping_country: shippingAddress.country,
+        billing_email: billingAddress.email,
+        items: JSON.stringify(cart.items),
+        subtotal: cart.subtotal,
+        shipping_cost: shippingCost,
+        shipping_method: `${selectedShipping.name} - ${selectedShipping.description}`,
+        discount_code: cart.discountCode || '',
+        discount_amount: cart.discountAmount || 0,
+        total: finalTotal,
+        status: 'pending',
+        notes: 'Order placed via checkout',
+        tracking_number: '',
+        payment_transaction_id: '',
+        payment_xref: '',
+        payment_authorisation_code: ''
+      };
 
-    // Update form data with test data
-    setShippingAddress(prev => ({
-      ...prev,
-      firstName: testData.customerName.split(' ')[0] || '',
-      lastName: testData.customerName.split(' ').slice(1).join(' ') || '',
-      phone: testData.customerPhone,
-      addressLine1: testData.customerAddress,
-      postalCode: testData.customerPostCode,
-      city: testData.customerTown,
-      country: testData.customerCountryCode === 'GB' ? 'United Kingdom' : 'United States'
-    }));
+      const { data: savedOrder, error } = await orderService.createOrder(orderData);
 
-    setBillingAddress(prev => ({
-      ...prev,
-      email: testData.customerEmail,
-      firstName: testData.customerName.split(' ')[0] || '',
-      lastName: testData.customerName.split(' ').slice(1).join(' ') || '',
-      phone: testData.customerPhone,
-      addressLine1: testData.customerAddress,
-      postalCode: testData.customerPostCode,
-      city: testData.customerTown,
-      country: testData.customerCountryCode === 'GB' ? 'United Kingdom' : 'United States'
-    }));
+      if (error || !savedOrder) {
+        throw new Error(error?.message || 'Failed to save order');
+      }
 
-    // Move to payment step
-    setCurrentStep('payment');
+      // Clear cart and redirect to success page
+      clearCart();
+      navigate('/order-confirmation', { 
+        state: { 
+          orderNumber: savedOrder.order_number,
+          total: finalTotal
+        } 
+      });
+    } catch (error) {
+      console.error('Error creating order:', error);
+      alert('Order created but there was an error. Please contact support.');
+    } finally {
+      setIsPlacingOrder(false);
+    }
   };
 
   return (
     <>
       <Helmet>
-        <title>Checkout - Blue Dream Tea UK</title>
-        <meta name="description" content="Complete your blue lotus flower tea order securely." />
+        <title>Checkout - Lion's Mane Labs UK</title>
+        <meta name="description" content="Complete your Lion's Mane mushroom supplement order securely." />
       </Helmet>
 
       <div className="max-w-6xl mx-auto py-12 lg:px-12 md:px-8 sm:px-4 px-4">
@@ -848,11 +806,11 @@ const CheckoutPage: React.FC = () => {
                 {/* Continue to Payment Button */}
                 <button
                   type="submit"
-                  disabled={isPlacingOrder || paymentProcessing}
+                  disabled={isPlacingOrder}
                   className="w-full mt-8 bg-blue-600 text-white py-4 px-6 rounded-md font-semibold text-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
                 >
                   <HiCreditCard className="h-5 w-5" />
-                  <span>{isPlacingOrder ? 'Placing Order...' : paymentProcessing ? 'Processing Payment...' : 'Continue to Payment'}</span>
+                  <span>{isPlacingOrder ? 'Placing Order...' : 'Continue to Payment'}</span>
                 </button>
 
                 {/* Alert Message */}
@@ -884,7 +842,6 @@ const CheckoutPage: React.FC = () => {
               <button
                 onClick={() => setCurrentStep('details')}
                 className="text-blue-600 hover:text-blue-700 font-medium flex items-center space-x-1"
-                disabled={paymentProcessing}
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -894,29 +851,23 @@ const CheckoutPage: React.FC = () => {
             </div>
 
             {/* Development Test Panel - Only show in development */}
-            {import.meta.env.DEV && (
-              <PaymentTestPanel onTestPayment={handleTestPayment} />
-            )}
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Payment Form */}
               <div>
-                <PaymentForm
-                  amount={finalTotal}
-                  currency="GBP"
-                  orderRef={generateOrderNumber()}
-                  customerName={`${shippingAddress.firstName} ${shippingAddress.lastName}`}
-                  customerEmail={billingAddress.email}
-                  customerPhone={shippingAddress.phone}
-                  customerAddress={`${shippingAddress.addressLine1}${shippingAddress.addressLine2 ? `, ${shippingAddress.addressLine2}` : ''}, ${shippingAddress.city}`}
-                  customerPostCode={shippingAddress.postalCode}
-                  customerTown={shippingAddress.city}
-                  customerCountryCode={shippingAddress.country === 'United Kingdom' ? 'GB' : 'US'}
-                  onPaymentSuccess={handlePaymentSuccess}
-                  onPaymentError={handlePaymentError}
-                  onPaymentProcessing={handlePaymentProcessing}
-                  preFilledCardData={selectedTestCard}
-                />
+                <div className="bg-white p-6 rounded-lg border">
+                  <h3 className="text-lg font-semibold mb-4">Payment Information</h3>
+                  <p className="text-gray-600 mb-4">
+                    Payment processing will be implemented here. For now, this is a placeholder.
+                  </p>
+                  <button
+                    onClick={handleOrderPlacement}
+                    disabled={isPlacingOrder}
+                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-md font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isPlacingOrder ? 'Placing Order...' : 'Place Order'}
+                  </button>
+                </div>
               </div>
 
               {/* Order Summary */}

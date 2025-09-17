@@ -61,12 +61,12 @@ const GuidesIndex: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Helmet>
-        <title>Blue Lotus Flower Articles & Guides | Blue Dream Tea UK</title>
-        <meta name="description" content="Explore our comprehensive collection of articles about blue lotus flower, including guides on usage, benefits, history, and more." />
+        <title>Lion's Mane Mushroom Articles & Guides | Lion\'s Mane Labs UK</title>
+        <meta name="description" content="Explore our comprehensive collection of articles about Lion's Mane mushroom, including guides on cognitive benefits, usage, dosage, and scientific research." />
       </Helmet>
 
       <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-        Blue Lotus Flower Articles
+        Lion's Mane Mushroom Articles
       </h1>
       
       {/* Search Section */}

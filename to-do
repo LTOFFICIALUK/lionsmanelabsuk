@@ -1,14 +1,23 @@
-royal mail
-
 flow emails
 
-customer support chat with optional responses
-
-for here: Essential Blue Lotus Growing Supplies - we need to find some dropship blue lotus flower supplies
+- [x] customer support chat with optional responses
+- [x] chat button in bottom right on all pages except cart/checkout
+- [x] automated replies with no human intervention
+- [x] improved chat appearance and branding to Lion's Mane Labs
+- [x] fixed chat positioning and responsiveness
+- [x] option-based chat with text input only when needed
+- [x] removed scrollbar and added rounded bottom edges
+- [x] moved option pills up slightly
+- [x] fixed contextual options flow - clicking main options now shows relevant sub-options
+- [x] implemented three-level chat flow: main options → sub-options → answers with "I have another question"
+- [x] security audit: removed hardcoded API keys and admin codes, moved to environment variables
 
 info pages for each product, and on product-page info like description and how-to guides
 
-legal in us: - not in louisiana
-
-
 emails need to be updated with images
+
+
+customer support chat: 
+- link to orders table in supabase
+
+

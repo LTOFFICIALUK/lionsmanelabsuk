@@ -1,24 +1,22 @@
 export type ArticleCategory = 
   | 'getting-started'
-  | 'brewing-guides'
+  | 'health-benefits'
   | 'wellness'
-  | 'recipes'
-  | 'general'
   | 'usage-guides'
   | 'product-information'
   | 'education'
   | 'culture-history'
-  | 'comparison-guides';
+  | 'comparisons'
+  | 'science-research';
 
 export const ARTICLE_CATEGORIES: Record<ArticleCategory, string> = {
   'getting-started': 'Getting Started',
-  'brewing-guides': 'Brewing Guides',
-  'wellness': 'Wellness & Benefits',
-  'recipes': 'Tea Recipes',
-  'general': 'General Information',
+  'health-benefits': 'Health Benefits',
+  'wellness': 'Wellness & Lifestyle',
   'usage-guides': 'Usage Guides',
   'product-information': 'Product Information',
   'education': 'Educational Content',
   'culture-history': 'Culture & History',
-  'comparison-guides': 'Product Comparisons'
+  'comparisons': 'Product Comparisons',
+  'science-research': 'Science & Research'
 }; 

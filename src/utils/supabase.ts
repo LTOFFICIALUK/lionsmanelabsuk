@@ -81,9 +81,9 @@ const saveOrderToLocalStorage = async (orderData: Omit<DatabaseOrder, 'id' | 'cr
         };
         
         // Save to localStorage
-        const existingOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+        const existingOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
         existingOrders.push(order);
-        localStorage.setItem('blueDreamTea_orders', JSON.stringify(existingOrders));
+        localStorage.setItem('lionsManeLabs_orders', JSON.stringify(existingOrders));
         
         console.log('Order saved to localStorage:', order);
         return { data: order, error: null };
@@ -139,7 +139,7 @@ export const orderService = {
     if (!isSupabaseConfigured) {
       // Fallback to localStorage orders for demo purposes
       try {
-        const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+        const localOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
         const convertedOrders = localOrders.map((order: any) => ({
           id: order.id,
           order_number: order.orderNumber,
@@ -194,7 +194,7 @@ export const orderService = {
     if (!isSupabaseConfigured) {
       // Fallback to localStorage for demo
       try {
-        const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+        const localOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
         const orderIndex = localOrders.findIndex((order: any) => order.id === id);
         
         if (orderIndex >= 0) {
@@ -219,7 +219,7 @@ export const orderService = {
           if (updates.tracking_number) order.trackingNumber = updates.tracking_number;
           order.updatedAt = new Date().toISOString();
           
-          localStorage.setItem('blueDreamTea_orders', JSON.stringify(localOrders));
+          localStorage.setItem('lionsManeLabs_orders', JSON.stringify(localOrders));
           
           // Convert back to database format for response
           const dbOrder = {
@@ -270,9 +270,9 @@ export const orderService = {
     if (!isSupabaseConfigured) {
       // Fallback to localStorage for demo
       try {
-        const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+        const localOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
         const filteredOrders = localOrders.filter((order: any) => order.id !== id);
-        localStorage.setItem('blueDreamTea_orders', JSON.stringify(filteredOrders));
+        localStorage.setItem('lionsManeLabs_orders', JSON.stringify(filteredOrders));
         return { error: null };
       } catch (err) {
         return { error: { message: 'Failed to delete order' } };
@@ -289,7 +289,7 @@ export const orderService = {
             // Fallback to localStorage for development
             try {
                 console.log('Development mode: Searching for order in localStorage');
-                const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+                const localOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
                 const order = localOrders.find((order: any) => order.order_number === orderNumber);
                 
                 if (order) {
@@ -317,7 +317,7 @@ export const orderService = {
                 // If Supabase fails, try localStorage as fallback
                 try {
                     console.log('Trying localStorage fallback');
-                    const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+                    const localOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
                     const order = localOrders.find((order: any) => order.order_number === orderNumber);
                     
                     if (order) {
@@ -336,7 +336,7 @@ export const orderService = {
             // Try localStorage as final fallback
             try {
                 console.log('Trying localStorage as final fallback');
-                const localOrders = JSON.parse(localStorage.getItem('blueDreamTea_orders') || '[]');
+                const localOrders = JSON.parse(localStorage.getItem('lionsManeLabs_orders') || '[]');
                 const order = localOrders.find((order: any) => order.order_number === orderNumber);
                 
                 if (order) {

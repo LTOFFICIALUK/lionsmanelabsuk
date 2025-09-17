@@ -5,7 +5,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-console.log('🚀 Starting Blue Dream Tea development environment...\n');
+console.log('🚀 Starting Lion\'s Mane Labs development environment...\n');
 
 // Function to spawn a process with colored output
 const spawnProcess = (command, args, color, name) => {

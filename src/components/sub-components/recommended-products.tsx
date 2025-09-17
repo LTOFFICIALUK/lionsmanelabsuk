@@ -85,25 +85,26 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
   };
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+    <section className="py-12 bg-gray-50 -mx-4 sm:-mx-6 lg:-mx-8">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
             {heading || title}
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {description || "Discover more premium Blue Lotus products to enhance your experience"}
+          <p className="text-lg text-gray-600">
+            {description || "Discover more premium Lion's Mane products to enhance your cognitive health"}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {allProducts.map((product) => (
+        <div className="relative">
+          <div className="flex gap-8 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            {allProducts.map((product) => (
             <div
               key={product.slug}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
+              className="flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group w-80 flex-shrink-0"
             >
-              <Link to={`/products/${product.slug}`} className="block">
-                <div className="aspect-w-1 aspect-h-1 bg-gray-200 overflow-hidden">
+              <Link to={`/products/${product.slug}`} className="flex flex-col h-full">
+                <div className="flex-shrink-0 aspect-square bg-gray-200 overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.title}
@@ -111,16 +112,16 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
                   />
                 </div>
                 
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                <div className="flex flex-col flex-grow p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
                     {product.title}
                   </h3>
                   
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
                     {product.description}
                   </p>
                   
-                  <div className="flex items-center mb-3">
+                  <div className="flex items-center mb-3 flex-shrink-0">
                     <div className="flex space-x-1 mr-2">
                       {renderStars(product.rating)}
                     </div>
@@ -129,7 +130,7 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
                     </span>
                   </div>
                   
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between flex-shrink-0">
                     <div className="flex items-center space-x-2">
                       {product.salePrice ? (
                         <>
@@ -147,7 +148,7 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
                       )}
                     </div>
                     
-                    <span className="text-sm text-blue-600 font-medium group-hover:text-blue-700 transition-colors">
+                    <span className="text-sm text-blue-600 font-medium group-hover:text-blue-700 transition-colors whitespace-nowrap">
                       View Product →
                     </span>
                   </div>
@@ -155,9 +156,10 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
               </Link>
             </div>
           ))}
+          </div>
         </div>
 
-        <div className="text-center mt-12">
+        <div className="mt-12">
           <Link
             to="/products"
             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"

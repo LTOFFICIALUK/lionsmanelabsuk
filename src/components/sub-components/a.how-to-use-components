@@ -131,7 +131,7 @@ import CTAButtons from './cta-buttons';
 // Advanced CTA with SEO features
 <CTAButtons
   title="Ready to Start Your Streaming Journey?"
-  description="Join thousands of Blue Dream Tea UKs who started with our guides."
+  description="Join thousands of Lion\'s Mane Labs UKs who started with our guides."
   buttons={[
     {
       label: "Get Started Free",
@@ -178,7 +178,7 @@ import GuideLayout from '../../pages/guides/GuideLayout';
   category="stream-setup"
   publishDate="2025-01-15T10:00:00Z"
   lastModified="2025-01-20T14:30:00Z"
-  author="Blue Dream Tea UK Team"
+  author="Lion\'s Mane Labs UK Team"
   featuredImage="/images/streaming-equipment-guide.jpg"
   keywords={["streaming equipment", "OBS", "microphone", "webcam"]}
   wordCount={2500}

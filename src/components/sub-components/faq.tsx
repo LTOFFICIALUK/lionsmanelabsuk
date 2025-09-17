@@ -22,7 +22,7 @@ const FAQ: React.FC = () => {
     },
     {
       question: 'How much does it cost to start streaming?',
-      answer: 'Basic setup: $200-400 (webcam, USB mic, free software). Intermediate setup: $500-1000 (DSLR camera, audio interface, lighting). Professional setup: $1500+ (dual PC, professional audio/video equipment). Many Blue Dream Tea UKs started with just a webcam and built up over time.'
+      answer: 'Basic setup: $200-400 (webcam, USB mic, free software). Intermediate setup: $500-1000 (DSLR camera, audio interface, lighting). Professional setup: $1500+ (dual PC, professional audio/video equipment). Many Lion\'s Mane Labs UKs started with just a webcam and built up over time.'
     },
     {
       question: 'What internet speed do I need for streaming?',

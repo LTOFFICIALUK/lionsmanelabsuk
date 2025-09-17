@@ -7,9 +7,6 @@ import { PRODUCTS } from '../constants/products';
 import { calculateShippingCost, shippingOptions, getShippingOptionsByCountry } from '../constants/shipping-options';
 import { ShippingAddress, BillingAddress } from '../types';
 import { orderService } from '../utils/supabase';
-import { royalMailService } from '../utils/royal-mail-api';
-import { brevoApiService } from '../utils/brevo-api';
-import { discountService } from '../utils/discount-service';
 
 const PrePurchaseUpsellPage: React.FC = () => {
   const { cart, addToCartSilently, removeFromCart, updateQuantity, applyDiscountCode, replaceCartItem, clearCart } = useCart();
@@ -51,7 +48,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
 
   // Check if user has seen upsell in this session
   useEffect(() => {
-    const seen = sessionStorage.getItem('blueDreamTea_upsell_seen');
+    const seen = sessionStorage.getItem('lionsManeLabs_upsell_seen');
     if (seen) {
       setHasSeenUpsell(true);
     }
@@ -59,14 +56,14 @@ const PrePurchaseUpsellPage: React.FC = () => {
 
   // Mark as seen when component mounts
   useEffect(() => {
-    sessionStorage.setItem('blueDreamTea_upsell_seen', 'true');
+    sessionStorage.setItem('lionsManeLabs_upsell_seen', 'true');
   }, []);
 
   // For testing: Reset session storage when component mounts in development
   useEffect(() => {
     if (import.meta.env.DEV) {
       // Clear session storage for testing - remove this in production
-      sessionStorage.removeItem('blueDreamTea_upsell_seen');
+      sessionStorage.removeItem('lionsManeLabs_upsell_seen');
     }
   }, []);
 
@@ -373,53 +370,25 @@ const PrePurchaseUpsellPage: React.FC = () => {
       }
 
       // Record discount code usage if a discount was applied
-      if (cart.discountCode && cart.discountAmount > 0) {
-        try {
-          const { data: discountCode } = await discountService.validateDiscountCode(cart.discountCode, cart.subtotal);
-          if (discountCode) {
-            await discountService.recordDiscountUsage(
-              discountCode.id,
-              savedOrder.id,
-              billingAddress.email,
-              cart.discountAmount,
-              currentTotal
-            );
-            console.log('✅ Discount code usage recorded');
-          }
-        } catch (discountError) {
-          console.error('Failed to record discount code usage:', discountError);
-        }
-      }
+      // Discount service removed - functionality disabled
+      // if (cart.discountCode && cart.discountAmount > 0) {
+      //   try {
+      //     const { data: discountCode } = await discountService.validateDiscountCode(cart.discountCode, cart.subtotal);
+      //     if (discountCode) {
+      //       await discountService.recordDiscountUsage(
+      //         discountCode.id,
+      //         savedOrder.id,
+      //         billingAddress.email,
+      //         cart.discountAmount,
+      //         currentTotal
+      //       );
+      //       console.log('✅ Discount code usage recorded');
+      //     }
+      //   } catch (discountError) {
+      //     console.error('Failed to record discount code usage:', discountError);
+      //   }
+      // }
 
-      // Create customer in Brevo
-      try {
-        const productNames = cart.items.map(item => item.productTitle);
-        await brevoApiService.createOrUpdateCustomer({
-          email: billingAddress.email,
-          firstName: shippingAddress.firstName,
-          lastName: shippingAddress.lastName,
-          phone: shippingAddress.phone,
-          address: shippingAddress.addressLine1 + (shippingAddress.addressLine2 ? `, ${shippingAddress.addressLine2}` : ''),
-          city: shippingAddress.city,
-          postalCode: shippingAddress.postalCode,
-          country: shippingAddress.country,
-          company: shippingAddress.company,
-          orderNumber: savedOrder.order_number,
-          orderTotal: currentTotal,
-          products: productNames,
-        });
-
-        await brevoApiService.trackEvent(billingAddress.email, 'order_completed', {
-          orderNumber: savedOrder.order_number,
-          orderTotal: currentTotal,
-          products: productNames,
-          shippingMethod: selectedShipping.name,
-        });
-
-        console.log('✅ Customer created/updated in Brevo');
-      } catch (brevoError) {
-        console.error('Brevo customer creation failed:', brevoError);
-      }
 
       // Get country code for Royal Mail
       const getCountryCode = (countryName: string): string => {
@@ -498,7 +467,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
           heightInCm: 10
         },
         shippingService: {
-          code: royalMailService.getServiceCode(selectedShipping.name),
+          code: 'STANDARD', // Royal Mail service removed - using default
           name: selectedShipping.name
         },
         label: {
@@ -519,19 +488,21 @@ const PrePurchaseUpsellPage: React.FC = () => {
 
       console.log('Submitting to Royal Mail:', royalMailOrderData);
 
-      // Submit order to Royal Mail
+      // Submit order to Royal Mail - Service removed, functionality disabled
       let royalMailResponse;
       let labelResponse;
       let trackingNumber = '';
       
+      // Royal Mail service removed - using mock response
       try {
-        royalMailResponse = await royalMailService.createOrder(royalMailOrderData);
-        console.log('Royal Mail response:', royalMailResponse);
+        // royalMailResponse = await royalMailService.createOrder(royalMailOrderData);
+        // console.log('Royal Mail response:', royalMailResponse);
 
-        labelResponse = await royalMailService.createShippingLabel(savedOrder.order_number);
-        console.log('Shipping label response:', labelResponse);
+        // labelResponse = await royalMailService.createShippingLabel(savedOrder.order_number);
+        // console.log('Shipping label response:', labelResponse);
 
-        trackingNumber = royalMailResponse.trackingNumber || royalMailResponse.orderReference || '';
+        // trackingNumber = royalMailResponse.trackingNumber || royalMailResponse.orderReference || '';
+        trackingNumber = 'MOCK-TRACKING-' + savedOrder.order_number;
         
         await orderService.updateOrder(savedOrder.id, {
           tracking_number: trackingNumber,
@@ -593,7 +564,7 @@ const PrePurchaseUpsellPage: React.FC = () => {
   // Load checkout data from localStorage on component mount
   useEffect(() => {
     try {
-      const savedCheckoutData = localStorage.getItem('blueDreamTea_checkout_data');
+      const savedCheckoutData = localStorage.getItem('lionsManeLabs_checkout_data');
       if (savedCheckoutData) {
         const checkoutData = JSON.parse(savedCheckoutData);
         setShippingAddress(checkoutData.shippingAddress);
@@ -647,8 +618,8 @@ const PrePurchaseUpsellPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Special Offers - Blue Dream Tea UK</title>
-        <meta name="description" content="Exclusive pre-purchase offers on blue lotus flower products." />
+        <title>Special Offers - Lion's Mane Labs UK</title>
+        <meta name="description" content="Exclusive pre-purchase offers on Lion's Mane mushroom supplements." />
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">

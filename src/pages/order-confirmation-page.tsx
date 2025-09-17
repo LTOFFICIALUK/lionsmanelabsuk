@@ -81,7 +81,7 @@ const OrderConfirmationPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Order Confirmation - Blue Dream Tea UK</title>
+        <title>Order Confirmation - Lion\'s Mane Labs UK</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 
