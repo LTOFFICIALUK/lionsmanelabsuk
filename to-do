@@ -11,6 +11,7 @@ flow emails
 - [x] fixed contextual options flow - clicking main options now shows relevant sub-options
 - [x] implemented three-level chat flow: main options → sub-options → answers with "I have another question"
 - [x] security audit: removed hardcoded API keys and admin codes, moved to environment variables
+- [x] build fixes: resolved TypeScript errors and duplicate properties
 
 info pages for each product, and on product-page info like description and how-to guides
 

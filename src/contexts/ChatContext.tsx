@@ -59,14 +59,6 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         "All our products are made from premium quality Lion's Mane mushrooms and are third-party tested for purity and potency."
       ]
     },
-    shipping: {
-      keywords: ['shipping', 'delivery', 'postage', 'dispatch', 'when', 'how long'],
-      responses: [
-        "We offer free shipping on orders over £50 within the UK. Standard delivery takes 2-3 business days.",
-        "Orders are typically dispatched within 1-2 business days. You'll receive tracking information once your order ships.",
-        "We ship to the UK and selected international destinations. International shipping times vary by location."
-      ]
-    },
     orders: {
       keywords: ['order tracking', 'order', 'tracking', 'status', 'cancel', 'refund', 'return'],
       responses: [
@@ -553,7 +545,10 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     for (const [category, data] of Object.entries(automatedResponses)) {
       if (category === 'default') continue;
       
-      const hasKeyword = data.keywords.some(keyword => 
+      // Check if data has keywords property
+      if (!('keywords' in data)) continue;
+      
+      const hasKeyword = data.keywords.some((keyword: string) => 
         lowerMessage.includes(keyword.toLowerCase())
       );
       
@@ -566,7 +561,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         if (typeof selectedResponse === 'string') {
           return { text: selectedResponse, needsInput: false };
         } else {
-          console.log('Returning response with options:', selectedResponse.options);
+          console.log('Returning response with options:', (selectedResponse as any).options);
           return selectedResponse;
         }
       }
