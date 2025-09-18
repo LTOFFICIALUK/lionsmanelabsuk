@@ -80,7 +80,7 @@ export const createCheckoutSession = async (
       });
     }
 
-    const response = await fetch('/api/create-checkout-session', {
+    const response = await fetch('/api/create-checkout-session-v2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
