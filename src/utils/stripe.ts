@@ -56,6 +56,7 @@ export const createCheckoutSession = async (
           product_data: {
             name: 'Shipping',
             description: 'Shipping cost',
+            images: [],
           },
           unit_amount: Math.round(shippingCost * 100), // Convert to pence
         },
@@ -71,6 +72,7 @@ export const createCheckoutSession = async (
           product_data: {
             name: 'Discount',
             description: discountCode ? `Discount code: ${discountCode}` : 'Discount',
+            images: [],
           },
           unit_amount: -Math.round(discountAmount * 100), // Negative amount for discount
         },
