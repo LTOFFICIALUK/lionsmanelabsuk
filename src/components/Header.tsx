@@ -178,11 +178,15 @@ const Header = () => {
                 </button>
 
                 {/* Shopping Cart Icon */}
-                <div className="relative">
-                  <button 
-                    className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 relative transition-colors" 
+                <div 
+                  className="relative"
+                  onMouseEnter={openCart}
+                  onMouseLeave={closeCart}
+                >
+                  <Link
+                    to="/cart"
+                    className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 relative transition-colors block" 
                     aria-label="Shopping Cart"
-                    onMouseEnter={openCart}
                   >
                     <svg
                       className="h-5 w-5 text-gray-700"
@@ -203,7 +207,7 @@ const Header = () => {
                         {cart.totalItems > 99 ? '99+' : cart.totalItems}
                       </span>
                     )}
-                  </button>
+                  </Link>
                   
                   {/* Cart Dropdown */}
                   <CartDrawer />

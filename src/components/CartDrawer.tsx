@@ -36,8 +36,6 @@ const CartDrawer: React.FC = () => {
   return (
     <div 
       className="absolute right-0 top-full mt-2 w-72 sm:w-96 max-w-[calc(100vw-1rem)] z-50"
-      onMouseEnter={openCart}
-      onMouseLeave={closeCart}
     >
       {/* Cart Dropdown */}
       <div className="cart-dropdown bg-white rounded-lg shadow-xl border border-gray-200 max-h-80 sm:max-h-96 flex flex-col">

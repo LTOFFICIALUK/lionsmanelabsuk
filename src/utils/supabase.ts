@@ -350,6 +350,50 @@ export const orderService = {
         }
     },
 
+  // Get order by payment intent ID
+  getOrderByPaymentIntent: async (paymentIntentId: string) => {
+    if (!isSupabaseConfigured) {
+      console.warn('Supabase not configured, returning mock data');
+      return { data: null, error: { message: 'Supabase not configured' } };
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('payment_transaction_id', paymentIntentId)
+        .single();
+
+      return { data, error };
+    } catch (error) {
+      console.error('Error fetching order by payment intent:', error);
+      return { data: null, error };
+    }
+  },
+
+  // Get order by customer email
+  getOrderByEmail: async (email: string) => {
+    if (!isSupabaseConfigured) {
+      console.warn('Supabase not configured, returning mock data');
+      return { data: null, error: { message: 'Supabase not configured' } };
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('customer_email', email)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      return { data, error };
+    } catch (error) {
+      console.error('Error fetching order by email:', error);
+      return { data: null, error };
+    }
+  },
+
   sendOrderConfirmationEmail: async (email: string, orderDetails: EmailOrderDetails) => {
         try {
             const { data, error } = await supabase.functions.invoke('send-order-email', {

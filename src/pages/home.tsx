@@ -408,8 +408,8 @@ const Home = () => {
         </section>
 
         {/* Featured Products Section */}
-        <section className="py-0">
-          <div className="flex justify-between items-center mb-8">
+        <section className="py-0 -mt-8">
+          <div className="flex justify-between items-center mb-8 -mt-12">
             <h2 className="text-3xl font-bold">Featured Products</h2>
             <div className="flex items-center space-x-4">
               <div className="flex space-x-2">

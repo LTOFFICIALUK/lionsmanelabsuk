@@ -137,6 +137,7 @@ export interface CartState {
   discountCodeDetails?: DiscountCode; // Store the full discount code details for recalculation
   total: number;
   isOpen: boolean;
+  isModalOpen: boolean;
 }
 
 export interface ShippingAddress {
@@ -220,6 +221,8 @@ export interface CartContextType {
   clearCart: () => void;
   openCart: () => void;
   closeCart: () => void;
+  openCartModal: () => void;
+  closeCartModal: () => void;
   applyDiscountCode: (code: string) => Promise<boolean>;
   removeDiscountCode: () => void;
 } 

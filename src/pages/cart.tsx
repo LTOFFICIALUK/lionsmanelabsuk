@@ -11,7 +11,6 @@ const CartPage: React.FC = () => {
     cart, 
     updateQuantity, 
     removeFromCart, 
-    clearCart, 
     applyDiscountCode, 
     removeDiscountCode,
     addToCartSilently
@@ -170,7 +169,7 @@ const CartPage: React.FC = () => {
         <meta name="description" content="Review your Lion's Mane mushroom supplements and proceed to checkout." />
       </Helmet>
 
-      <div className="max-w-6xl mx-auto py-8 lg:py-12 px-4 sm:px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto py-8 lg:py-12 px-4 sm:px-6 lg:px-12">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
 
         {cart.items.length === 0 ? (
@@ -193,14 +192,8 @@ const CartPage: React.FC = () => {
             <div className="space-y-8">
               {/* Cart Items Section */}
               <div className="bg-white border border-gray-200 rounded-lg p-6">
-                <div className="flex items-center justify-between mb-6">
+                <div className="mb-6">
                   <h2 className="text-xl font-semibold text-gray-900">Cart Items</h2>
-                  <button
-                    onClick={clearCart}
-                    className="text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
-                  >
-                    Clear Cart
-                  </button>
                 </div>
                 
                 <div className="space-y-6">

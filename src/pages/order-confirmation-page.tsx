@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { HiCheckCircle, HiArrowLeft } from 'react-icons/hi';
 import { orderService } from '../utils/supabase';
+import { retrieveCheckoutSession } from '../utils/stripe';
 import type { DatabaseOrder } from '../utils/supabase';
 
 const OrderConfirmationPage: React.FC = () => {
@@ -10,31 +11,59 @@ const OrderConfirmationPage: React.FC = () => {
   
   const [searchParams] = useSearchParams();
   const orderNumber = searchParams.get('order');
+  const sessionId = searchParams.get('session_id');
   console.log('Order number from URL:', orderNumber);
+  console.log('Session ID from URL:', sessionId);
   
   const [order, setOrder] = useState<DatabaseOrder | null>(null);
+  const [stripeSession, setStripeSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      console.log('Fetching order details for:', orderNumber);
-      
-      if (!orderNumber) {
-        console.log('No order number provided');
-        setError('No order number provided');
-        setLoading(false);
-        return;
-      }
-
+    const fetchOrderData = async () => {
       try {
-        const { data, error } = await orderService.getOrderByNumber(orderNumber);
-        console.log('Order data received:', data);
-        console.log('Order error:', error);
+        // If we have a Stripe session ID, retrieve the session first
+        if (sessionId) {
+          console.log('Retrieving Stripe session:', sessionId);
+          const session = await retrieveCheckoutSession(sessionId);
+          setStripeSession(session);
+          console.log('Stripe session retrieved:', session);
+          
+          // Try to find order by payment intent ID or customer email
+          if (session.payment_intent) {
+            const { data: orderByPayment } = await orderService.getOrderByPaymentIntent(session.payment_intent.id);
+            if (orderByPayment) {
+              setOrder(orderByPayment);
+              setLoading(false);
+              return;
+            }
+          }
+          
+          // If no order found by payment intent, try by customer email
+          if (session.customer_details?.email) {
+            const { data: orderByEmail } = await orderService.getOrderByEmail(session.customer_details.email);
+            if (orderByEmail) {
+              setOrder(orderByEmail);
+              setLoading(false);
+              return;
+            }
+          }
+        }
         
-        if (error) throw error;
-        if (!data) throw new Error('Order not found');
-        setOrder(data);
+        // Fallback to order number if provided
+        if (orderNumber) {
+          console.log('Fetching order details for:', orderNumber);
+          const { data, error } = await orderService.getOrderByNumber(orderNumber);
+          console.log('Order data received:', data);
+          console.log('Order error:', error);
+          
+          if (error) throw error;
+          if (!data) throw new Error('Order not found');
+          setOrder(data);
+        } else if (!sessionId) {
+          throw new Error('No order number or session ID provided');
+        }
       } catch (err) {
         console.error('Error fetching order:', err);
         setError('Failed to load order details');
@@ -43,8 +72,8 @@ const OrderConfirmationPage: React.FC = () => {
       }
     };
 
-    fetchOrder();
-  }, [orderNumber]);
+    fetchOrderData();
+  }, [orderNumber, sessionId]);
 
   if (loading) {
     return (
@@ -76,7 +105,7 @@ const OrderConfirmationPage: React.FC = () => {
     );
   }
 
-  const orderItems = JSON.parse(order.items);
+  const orderItems = order ? JSON.parse(order.items) : [];
 
   return (
     <>
@@ -94,8 +123,13 @@ const OrderConfirmationPage: React.FC = () => {
             Thank You for Your Order!
           </h1>
           <p className="text-xl text-gray-600">
-            Order #{order.order_number}
+            {order ? `Order #${order.order_number}` : 'Payment Successful'}
           </p>
+          {stripeSession && (
+            <p className="text-sm text-gray-500 mt-2">
+              Payment ID: {stripeSession.payment_intent?.id || 'N/A'}
+            </p>
+          )}
         </div>
 
         <div className="bg-white shadow rounded-lg overflow-hidden mb-8">
@@ -107,17 +141,33 @@ const OrderConfirmationPage: React.FC = () => {
               <div>
                 <h3 className="font-medium text-gray-900 mb-3">Items Ordered</h3>
                 <div className="space-y-4">
-                  {orderItems.map((item: any, index: number) => (
-                    <div key={index} className="flex justify-between items-center">
-                      <div>
-                        <p className="font-medium text-gray-900">{item.productTitle}</p>
-                        <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                  {orderItems.length > 0 ? (
+                    orderItems.map((item: any, index: number) => (
+                      <div key={index} className="flex justify-between items-center">
+                        <div>
+                          <p className="font-medium text-gray-900">{item.productTitle}</p>
+                          <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                        </div>
+                        <p className="font-medium text-gray-900">
+                          £{(item.price * item.quantity).toFixed(2)}
+                        </p>
                       </div>
-                      <p className="font-medium text-gray-900">
-                        £{(item.price * item.quantity).toFixed(2)}
-                      </p>
-                    </div>
-                  ))}
+                    ))
+                  ) : stripeSession?.line_items?.data ? (
+                    stripeSession.line_items.data.map((item: any, index: number) => (
+                      <div key={index} className="flex justify-between items-center">
+                        <div>
+                          <p className="font-medium text-gray-900">{item.description}</p>
+                          <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                        </div>
+                        <p className="font-medium text-gray-900">
+                          £{(item.amount_total / 100).toFixed(2)}
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">No items found</p>
+                  )}
                 </div>
               </div>
 
@@ -125,42 +175,81 @@ const OrderConfirmationPage: React.FC = () => {
               <div>
                 <h3 className="font-medium text-gray-900 mb-3">Shipping Address</h3>
                 <div className="text-gray-600">
-                  <p>{order.customer_first_name} {order.customer_last_name}</p>
-                  <p>{order.shipping_address_line1}</p>
-                  {order.shipping_address_line2 && <p>{order.shipping_address_line2}</p>}
-                  <p>{order.shipping_city}, {order.shipping_postal_code}</p>
-                  <p>{order.shipping_country}</p>
+                  {order ? (
+                    <>
+                      <p>{order.customer_first_name} {order.customer_last_name}</p>
+                      <p>{order.shipping_address_line1}</p>
+                      {order.shipping_address_line2 && <p>{order.shipping_address_line2}</p>}
+                      <p>{order.shipping_city}, {order.shipping_postal_code}</p>
+                      <p>{order.shipping_country}</p>
+                    </>
+                  ) : stripeSession?.shipping_details ? (
+                    <>
+                      <p>{stripeSession.shipping_details.name}</p>
+                      <p>{stripeSession.shipping_details.address.line1}</p>
+                      {stripeSession.shipping_details.address.line2 && <p>{stripeSession.shipping_details.address.line2}</p>}
+                      <p>{stripeSession.shipping_details.address.city}, {stripeSession.shipping_details.address.postal_code}</p>
+                      <p>{stripeSession.shipping_details.address.country}</p>
+                    </>
+                  ) : (
+                    <p>Address information not available</p>
+                  )}
                 </div>
               </div>
 
               {/* Shipping Method */}
-              <div>
-                <h3 className="font-medium text-gray-900 mb-3">Shipping Method</h3>
-                <p className="text-gray-600">{order.shipping_method}</p>
-              </div>
+              {order && (
+                <div>
+                  <h3 className="font-medium text-gray-900 mb-3">Shipping Method</h3>
+                  <p className="text-gray-600">{order.shipping_method}</p>
+                </div>
+              )}
 
               {/* Order Summary */}
               <div>
                 <h3 className="font-medium text-gray-900 mb-3">Order Summary</h3>
                 <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Subtotal:</span>
-                    <span className="text-gray-900">£{order.subtotal.toFixed(2)}</span>
-                  </div>
-                  {order.discount_amount > 0 && (
-                    <div className="flex justify-between text-green-600">
-                      <span>Discount{order.discount_code ? ` (${order.discount_code})` : ''}:</span>
-                      <span>-£{order.discount_amount.toFixed(2)}</span>
-                    </div>
+                  {order ? (
+                    <>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Subtotal:</span>
+                        <span className="text-gray-900">£{order.subtotal.toFixed(2)}</span>
+                      </div>
+                      {order.discount_amount > 0 && (
+                        <div className="flex justify-between text-green-600">
+                          <span>Discount{order.discount_code ? ` (${order.discount_code})` : ''}:</span>
+                          <span>-£{order.discount_amount.toFixed(2)}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Shipping:</span>
+                        <span className="text-gray-900">£{order.shipping_cost.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+                        <span>Total:</span>
+                        <span>£{order.total.toFixed(2)}</span>
+                      </div>
+                    </>
+                  ) : stripeSession ? (
+                    <>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Subtotal:</span>
+                        <span className="text-gray-900">£{(stripeSession.amount_subtotal / 100).toFixed(2)}</span>
+                      </div>
+                      {stripeSession.total_details?.amount_tax > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Tax:</span>
+                          <span className="text-gray-900">£{(stripeSession.total_details.amount_tax / 100).toFixed(2)}</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between font-semibold border-t pt-2 mt-2">
+                        <span>Total:</span>
+                        <span>£{(stripeSession.amount_total / 100).toFixed(2)}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-gray-500">Order summary not available</p>
                   )}
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Shipping:</span>
-                    <span className="text-gray-900">£{order.shipping_cost.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between font-semibold border-t pt-2 mt-2">
-                    <span>Total:</span>
-                    <span>£{order.total.toFixed(2)}</span>
-                  </div>
                 </div>
               </div>
             </div>

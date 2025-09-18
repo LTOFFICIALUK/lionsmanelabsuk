@@ -7,6 +7,7 @@ import { HiLockClosed, HiCreditCard, HiTruck } from 'react-icons/hi';
 import { orderService } from '../utils/supabase';
 import { discountService } from '../utils/discount-service';
 import { shippingOptions, calculateShippingCost, getShippingOptionsByCountry } from '../constants/shipping-options';
+import { createCheckoutSession, redirectToCheckout } from '../utils/stripe';
 
 const CheckoutPage: React.FC = () => {
   const { cart, clearCart } = useCart();
@@ -39,8 +40,7 @@ const CheckoutPage: React.FC = () => {
   };
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
-  const [showAlert, setShowAlert] = useState(false); // New state for alert visibility
-  const [currentStep, setCurrentStep] = useState<'details' | 'payment'>('details');
+  const [showAlert, setShowAlert] = useState(false);
 
   // Get available shipping options based on selected country
   const availableShippingOptions = getShippingOptionsByCountry(shippingAddress.country);
@@ -141,8 +141,32 @@ const CheckoutPage: React.FC = () => {
         return;
     }
 
-    // Move to payment step
-    setCurrentStep('payment');
+    // Proceed directly to Stripe Checkout
+    await handleStripeCheckout();
+  };
+
+  const handleStripeCheckout = async () => {
+    setIsPlacingOrder(true);
+
+    try {
+      // Create Stripe checkout session
+      const sessionId = await createCheckoutSession(
+        cart.items,
+        billingAddress.email,
+        shippingAddress,
+        shippingCost,
+        cart.discountCode,
+        cart.discountAmount
+      );
+
+      // Redirect to Stripe Checkout
+      await redirectToCheckout(sessionId);
+    } catch (error) {
+      console.error('Error initiating Stripe checkout:', error);
+      alert('There was an error processing your payment. Please try again.');
+    } finally {
+      setIsPlacingOrder(false);
+    }
   };
 
   const handlePaymentSuccess = async (paymentResponse: any) => {
@@ -449,30 +473,6 @@ const CheckoutPage: React.FC = () => {
       <div className="max-w-6xl mx-auto py-12 lg:px-12 md:px-8 sm:px-4 px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
-        {/* Progress Indicator */}
-        <div className="mb-8">
-          <div className="flex items-center justify-center space-x-4">
-            <div className={`flex items-center space-x-2 ${currentStep === 'details' ? 'text-blue-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                currentStep === 'details' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
-              }`}>
-                1
-              </div>
-              <span className="font-medium">Order Details</span>
-            </div>
-            
-            <div className="w-12 h-0.5 bg-gray-300"></div>
-            
-            <div className={`flex items-center space-x-2 ${currentStep === 'payment' ? 'text-blue-600' : 'text-gray-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                currentStep === 'payment' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
-              }`}>
-                2
-              </div>
-              <span className="font-medium">Payment</span>
-            </div>
-          </div>
-        </div>
 
         <form onSubmit={handleContinueToPayment}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -803,14 +803,14 @@ const CheckoutPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Continue to Payment Button */}
+                {/* Proceed to Stripe Checkout Button */}
                 <button
                   type="submit"
                   disabled={isPlacingOrder}
                   className="w-full mt-8 bg-blue-600 text-white py-4 px-6 rounded-md font-semibold text-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
                 >
                   <HiCreditCard className="h-5 w-5" />
-                  <span>{isPlacingOrder ? 'Placing Order...' : 'Continue to Payment'}</span>
+                  <span>{isPlacingOrder ? 'Processing...' : 'Proceed to Secure Checkout'}</span>
                 </button>
 
                 {/* Alert Message */}
@@ -827,120 +827,13 @@ const CheckoutPage: React.FC = () => {
                 </div>
 
                 <p className="text-xs text-gray-500 text-center mt-2">
-                  Payment processing will be connected to secure payment gateway
+                  Secure payment processing powered by Stripe
                 </p>
               </div>
             </div>
           </div>
         </form>
 
-        {/* Payment Section */}
-        {currentStep === 'payment' && (
-          <div className="mt-12">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">Payment Information</h2>
-              <button
-                onClick={() => setCurrentStep('details')}
-                className="text-blue-600 hover:text-blue-700 font-medium flex items-center space-x-1"
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span>Back to Details</span>
-              </button>
-            </div>
-
-            {/* Development Test Panel - Only show in development */}
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Payment Form */}
-              <div>
-                <div className="bg-white p-6 rounded-lg border">
-                  <h3 className="text-lg font-semibold mb-4">Payment Information</h3>
-                  <p className="text-gray-600 mb-4">
-                    Payment processing will be implemented here. For now, this is a placeholder.
-                  </p>
-                  <button
-                    onClick={handleOrderPlacement}
-                    disabled={isPlacingOrder}
-                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-md font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    {isPlacingOrder ? 'Placing Order...' : 'Place Order'}
-                  </button>
-                </div>
-              </div>
-
-              {/* Order Summary */}
-              <div className="lg:sticky lg:top-8 lg:h-fit">
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Order Summary</h3>
-
-                  {/* Order Items */}
-                  <div className="space-y-4 mb-6">
-                    {cart.items.map((item) => (
-                      <div key={item.id} className="flex items-center space-x-4">
-                        <img
-                          src={item.productImage}
-                          alt={item.productTitle}
-                          className="h-16 w-16 object-cover rounded-md"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-gray-900 truncate">
-                            {item.productTitle}
-                          </h4>
-                          <p className="text-xs text-gray-500">{item.variantLabel}</p>
-                          <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
-                        </div>
-                        <div className="text-sm font-medium text-gray-900">
-                          £{(item.price * item.quantity).toFixed(2)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Order Totals */}
-                  <div className="space-y-3 border-t border-gray-200 pt-6">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Subtotal</span>
-                      <span className="text-sm font-medium text-gray-900">
-                        £{cart.subtotal.toFixed(2)}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Shipping</span>
-                      <span className="text-sm font-medium text-gray-900">
-                        {shippingCost === 0 ? 'Free' : `£${shippingCost.toFixed(2)}`}
-                      </span>
-                    </div>
-
-                    {cart.subtotal > cart.total && (
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-green-600">Total Savings</span>
-                        <span className="text-sm font-medium text-green-600">
-                          -£{(cart.subtotal - cart.total).toFixed(2)}
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="flex items-center justify-between border-t border-gray-200 pt-3">
-                      <span className="text-lg font-semibold text-gray-900">Total</span>
-                      <span className="text-lg font-semibold text-gray-900">
-                        £{finalTotal.toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Security Notice */}
-                  <div className="mt-6 flex items-center justify-center space-x-2 text-xs text-gray-500">
-                    <HiLockClosed className="h-4 w-4" />
-                    <span>Secure payment processing</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

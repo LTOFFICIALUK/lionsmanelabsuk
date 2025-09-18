@@ -11,6 +11,7 @@ const initialCartState: CartState = {
   discountCode: undefined,
   total: 0,
   isOpen: false,
+  isModalOpen: false,
 };
 
 // Cart action types
@@ -23,6 +24,8 @@ type CartAction =
   | { type: 'CLEAR_CART' }
   | { type: 'OPEN_CART' }
   | { type: 'CLOSE_CART' }
+  | { type: 'OPEN_CART_MODAL' }
+  | { type: 'CLOSE_CART_MODAL' }
   | { type: 'APPLY_DISCOUNT'; payload: { code: string; discountCodeDetails: DiscountCode } }
   | { type: 'REMOVE_DISCOUNT' }
   | { type: 'RECALCULATE_DISCOUNT' }
@@ -135,7 +138,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         ...state,
         items: newItems,
         ...totals,
-        isOpen: true, // Open cart when item is added
+        isModalOpen: true, // Open modal when item is added
       };
     }
     
@@ -267,6 +270,20 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       };
     }
     
+    case 'OPEN_CART_MODAL': {
+      return {
+        ...state,
+        isModalOpen: true,
+      };
+    }
+    
+    case 'CLOSE_CART_MODAL': {
+      return {
+        ...state,
+        isModalOpen: false,
+      };
+    }
+    
     case 'APPLY_DISCOUNT': {
       // Apply discount to items
       let newItems = applyDiscountToItems(state.items, action.payload.discountCodeDetails);
@@ -356,7 +373,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
             // Ensure cart is closed when loading from storage
             dispatch({ 
               type: 'LOAD_CART', 
-              payload: { ...parsedCart, isOpen: false } 
+              payload: { ...parsedCart, isOpen: false, isModalOpen: false } 
             });
           } else {
             // Clear expired cart
@@ -433,6 +450,14 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     dispatch({ type: 'CLOSE_CART' });
   };
 
+  const openCartModal = () => {
+    dispatch({ type: 'OPEN_CART_MODAL' });
+  };
+
+  const closeCartModal = () => {
+    dispatch({ type: 'CLOSE_CART_MODAL' });
+  };
+
   // Discount code validation using discount service
   const applyDiscountCode = async (code: string): Promise<boolean> => {
     try {
@@ -469,6 +494,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     clearCart,
     openCart,
     closeCart,
+    openCartModal,
+    closeCartModal,
     applyDiscountCode,
     removeDiscountCode,
   };
