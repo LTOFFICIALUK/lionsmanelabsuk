@@ -6,7 +6,7 @@ import ScrollToTop from './ScrollToTop';
 import AnnouncementBar from './AnnouncementBar';
 import ChatWidget from './ChatWidget';
 import CartModal from './CartModal';
-import StripeTestButton from './StripeTestButton';
+import DevelopmentWarning from './DevelopmentWarning';
 import { ChatProvider } from '../contexts/ChatContext';
 
 const Layout: React.FC = () => {
@@ -22,7 +22,7 @@ const Layout: React.FC = () => {
         <Footer />
         <ChatWidget />
         <CartModal />
-        <StripeTestButton />
+        <DevelopmentWarning />
       </div>
     </ChatProvider>
   );
