@@ -1,11 +1,19 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
+    console.log('Creating checkout session with data:', req.body);
+    
     const {
       line_items,
       customer_email,
@@ -15,6 +23,10 @@ export default async function handler(req, res) {
       cancel_url,
       metadata
     } = req.body;
+
+    if (!line_items || line_items.length === 0) {
+      return res.status(400).json({ error: 'No line items provided' });
+    }
 
     // Create checkout session
     const session = await stripe.checkout.sessions.create({
@@ -41,9 +53,13 @@ export default async function handler(req, res) {
       }),
     });
 
+    console.log('Checkout session created successfully:', session.id);
     res.status(200).json({ sessionId: session.id });
   } catch (error) {
     console.error('Error creating checkout session:', error);
-    res.status(500).json({ error: 'Failed to create checkout session' });
+    res.status(500).json({ 
+      error: 'Failed to create checkout session',
+      details: error.message 
+    });
   }
 }
