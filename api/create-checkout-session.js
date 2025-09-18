@@ -1,6 +1,10 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
+  console.log('API called with method:', req.method);
+  console.log('Request headers:', req.headers);
+  console.log('Request body:', req.body);
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     res.status(200).end();
@@ -8,7 +12,8 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    console.log('Method not allowed:', req.method);
+    return res.status(405).json({ error: 'Method not allowed', received: req.method });
   }
 
   try {

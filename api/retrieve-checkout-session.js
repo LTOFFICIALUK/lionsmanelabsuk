@@ -1,6 +1,6 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     res.status(200).end();
